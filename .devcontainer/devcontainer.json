@@ -1,0 +1,19 @@
+{
+  "name": "Company Full-Stack Scaffold",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.11-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {"version": "22"},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "postCreateCommand": "make setup",
+  "forwardPorts": [5173, 8000, 8080],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "charliermarsh.ruff",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  }
+}

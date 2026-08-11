@@ -1,0 +1,31 @@
+name: Template smoke test
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+      - 'scripts/create_project.py'
+      - 'tests/test_scaffold.py'
+      - 'Makefile'
+      - 'TEMPLATE_VERSION'
+permissions:
+  contents: read
+jobs:
+  generated-project:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - uses: actions/setup-node@v4
+        with: {node-version-file: 'frontend/.node-version'}
+      - name: Generate golden project
+        run: >-
+          python3 scripts/create_project.py /tmp/generated-project
+          --slug generated-project
+          --display-name "Generated Project"
+          --codeowner @example/platform-team
+      - name: Bootstrap and verify generated project
+        working-directory: /tmp/generated-project
+        run: make setup && make check

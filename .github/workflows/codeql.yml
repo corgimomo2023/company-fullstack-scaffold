@@ -1,0 +1,31 @@
+name: Security Scan
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 3 * * 1'
+permissions:
+  contents: read
+  security-events: write
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install semgrep==1.172.0
+      - run: semgrep scan --config p/python --config p/typescript --error backend/app frontend/src
+  codeql:
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python, javascript-typescript]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v4
+        with: {languages: '${{ matrix.language }}'}
+      - uses: github/codeql-action/analyze@v4

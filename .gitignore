@@ -1,0 +1,27 @@
+# secrets
+.env
+*.pem
+*.key
+# Python
+__pycache__/
+*.py[cod]
+*.tsbuildinfo
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+backend/data/
+# Node
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+# editors/OS
+.vscode/
+.idea/
+.DS_Store
+# generated proof project
+examples/reference-app/

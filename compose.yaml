@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: ./backend
+    environment:
+      APP_ENVIRONMENT: production
+      APP_DATABASE_URL: sqlite:////app/data/app.db
+      APP_CORS_ORIGINS: '[]'
+      APP_ALLOWED_HOSTS: '["localhost","127.0.0.1","frontend"]'
+      APP_AUTO_CREATE_SCHEMA: 'false'
+    volumes:
+      - app-data:/app/data
+    restart: unless-stopped
+  frontend:
+    build: ./frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8080:8080"
+    restart: unless-stopped
+volumes:
+  app-data:

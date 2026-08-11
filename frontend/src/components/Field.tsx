@@ -1,0 +1,4 @@
+import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react'
+interface BaseProps { label:string; error?:string|undefined; name:string }
+type Props = BaseProps & ({multiline:true; inputProps:TextareaHTMLAttributes<HTMLTextAreaElement>}|{multiline?:false; inputProps:InputHTMLAttributes<HTMLInputElement>})
+export function Field(props:Props) { const errorId=`${props.name}-error`; return <label className="field"><span>{props.label}</span>{props.multiline?<textarea {...props.inputProps} aria-invalid={Boolean(props.error)} aria-describedby={props.error?errorId:undefined}/>:<input {...props.inputProps} aria-invalid={Boolean(props.error)} aria-describedby={props.error?errorId:undefined}/>} {props.error&&<span className="field-error" id={errorId} role="alert">{props.error}</span>}</label> }

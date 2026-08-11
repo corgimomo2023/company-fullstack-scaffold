@@ -1,0 +1,21 @@
+name: Bug
+about: Report reproducible incorrect behaviour
+body:
+  - type: textarea
+    id: observed
+    attributes: {label: Observed behaviour, description: What happened, including request ID if available}
+    validations: {required: true}
+  - type: textarea
+    id: expected
+    attributes: {label: Expected behaviour}
+    validations: {required: true}
+  - type: textarea
+    id: reproduce
+    attributes: {label: Minimal reproduction, description: Steps and sanitized inputs; never paste secrets or PII}
+    validations: {required: true}
+  - type: textarea
+    id: impact
+    attributes: {label: User and operational impact}
+  - type: textarea
+    id: evidence
+    attributes: {label: Logs or screenshots, description: Redact credentials and personal data}

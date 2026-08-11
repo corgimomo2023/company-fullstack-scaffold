@@ -1,0 +1,27 @@
+schema_version: 1
+name: company-fullstack-scaffold
+owner: platform-engineering
+stack:
+  frontend: [react, typescript, vite, tanstack-query, react-hook-form, zod, vitest, playwright]
+  backend: [python-3.11, fastapi, sqlalchemy-2, alembic, pydantic-settings, pytest]
+  database: sqlite
+  deployment: [docker-compose, nginx]
+generator:
+  command: python3 scripts/create_project.py <destination> --slug <kebab-case> --display-name <name> --codeowner <@org/team>
+  parameters:
+    slug: lowercase kebab-case application identifier
+    display_name: human-readable application name
+    codeowner: real GitHub user or team written into generated CODEOWNERS
+quality_gate: make check
+production_gates:
+  - confirm generated CODEOWNERS maps to the correct protected GitHub team
+  - configure branch protection and required CI checks
+  - integrate approved identity provider and authorization policy
+  - choose secret manager and ingress/TLS standard
+  - define SLOs, alerts, backup retention and restore exercise
+  - record data classification and privacy requirements
+sqlite_exit_triggers:
+  - more than one backend replica
+  - sustained concurrent writers or lock errors
+  - high-availability database requirement
+  - backup or maintenance window exceeds service objective

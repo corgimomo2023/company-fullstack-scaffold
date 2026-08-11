@@ -1,0 +1,1 @@
+Follow `/AGENTS.md` and the nearest module `AGENTS.md`. Use tests first for behavior changes. Preserve feature boundaries, typed API contracts, Alembic-only production migrations, request-ID problem responses, accessible UI states and the `make check` gate. Never invent authentication, secrets, internal hosts or deployment claims.

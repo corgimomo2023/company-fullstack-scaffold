@@ -1,0 +1,8 @@
+**/.venv
+**/node_modules
+**/dist
+**/coverage
+**/__pycache__
+.git
+.env
+examples
