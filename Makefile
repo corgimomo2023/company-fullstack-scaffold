@@ -1,8 +1,9 @@
 SHELL := /bin/bash
-.PHONY: setup dev check backend-check frontend-check db-upgrade compose-check
+.PHONY: setup dev check backend-check frontend-check design-check db-upgrade compose-check
 setup:
 	python3 -m venv backend/.venv
 	cd backend && .venv/bin/pip install -r requirements-dev.lock
+	backend/.venv/bin/pip install -r requirements-design.txt
 	cd frontend && npm ci
 
 lock:
@@ -20,7 +21,13 @@ backend-check:
 frontend-check:
 	cd frontend && npm run lint && npm run typecheck && npm test && npm run build
 
-check: backend-check frontend-check
+design-check:
+	backend/.venv/bin/ruff format --check scripts/audit_aai_design_system.py scripts/export_design_system.py tests/test_design_system.py
+	backend/.venv/bin/ruff check scripts/audit_aai_design_system.py scripts/export_design_system.py tests/test_design_system.py
+	npx -y @google/design.md@0.4.0 lint DESIGN.md
+	backend/.venv/bin/python scripts/export_design_system.py --check
+
+check: backend-check frontend-check design-check
 	backend/.venv/bin/pytest tests -q
 
 db-upgrade:

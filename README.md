@@ -2,9 +2,14 @@
 
 ## Design system
 
-The machine-readable company visual baseline is defined in [`DESIGN.md`](DESIGN.md). It was derived from the public Asia Allied Infrastructure website for internal admin, CMS and operational applications, with accessibility corrections documented in the file.
+The normative company visual baseline is defined in [`DESIGN.md`](DESIGN.md). It was derived from an exhaustive three-language sitemap inventory and a reproducible template/CSS/logo audit of the public Asia Allied Infrastructure website, with accessibility corrections documented in the file.
 
-Coding agents must read `DESIGN.md` before changing colors, typography, layout or component styling. The extracted baseline is not a substitute for an official internal corporate brand manual.
+Coding agents must read `DESIGN.md` before changing colors, typography, layout or component styling. The extracted baseline is not a substitute for an official internal corporate brand manual. The existing Projects reference UI predates this baseline; the generated artifacts define its future migration contract rather than claiming that every current screen has already been restyled.
+
+- Generated Tailwind v4/v3, DTCG and component-contract artifacts: [`design-system/`](design-system/)
+- Research scope, hashes and reproducibility: [`docs/design-system/source-audit.md`](docs/design-system/source-audit.md)
+- Component/page-template inventory: [`docs/design-system/component-inventory.md`](docs/design-system/component-inventory.md)
+- Machine-readable sitemap/CSS evidence: [`docs/design-system/evidence/`](docs/design-system/evidence/)
 
 Production baseline for company applications using a React/Vite SPA, FastAPI, SQLAlchemy 2 and SQLite. The included **Projects** feature is a complete vertical slice, not sample-only architecture: validation, API error contracts, persistence, optimistic concurrency, tests and responsive UI all use the same boundaries expected of new features.
 

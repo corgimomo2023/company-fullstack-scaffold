@@ -37,8 +37,17 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
-      - run: pip install pytest
-      - run: pytest tests/test_scaffold.py -q
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - run: pip install pytest -r requirements-design.txt
+      - run: pytest tests/test_scaffold.py tests/test_design_system.py -q
+      - name: Validate DESIGN.md and generated token formats
+        run: |
+          npx -y @google/design.md@0.4.0 lint DESIGN.md
+          python3 scripts/export_design_system.py --check
+          curl -fsSL https://www.designtokens.org/schemas/2025.10/format.json -o /tmp/dtcg-format-schema.json
+          npx -y ajv-cli@5 validate --spec=draft7 --strict=false --all-errors \
+            -s /tmp/dtcg-format-schema.json -d design-system/tokens.json
   containers:
     runs-on: ubuntu-latest
     steps:
