@@ -22,10 +22,12 @@ frontend-check:
 	cd frontend && npm run lint && npm run typecheck && npm test && npm run build
 
 design-check:
-	backend/.venv/bin/ruff format --check scripts/audit_aai_design_system.py scripts/export_design_system.py tests/test_design_system.py
-	backend/.venv/bin/ruff check scripts/audit_aai_design_system.py scripts/export_design_system.py tests/test_design_system.py
+	backend/.venv/bin/ruff format --check scripts/audit_aai_design_system.py scripts/export_design_system.py tests/test_design_system.py tests/test_common_look_and_feel.py
+	backend/.venv/bin/ruff check scripts/audit_aai_design_system.py scripts/export_design_system.py tests/test_design_system.py tests/test_common_look_and_feel.py
 	npx -y @google/design.md@0.4.0 lint DESIGN.md
+	npx -y html-validate@10.4.0 .agents/skills/common-look-and-feel/templates/admin-cms.html
 	backend/.venv/bin/python scripts/export_design_system.py --check
+	backend/.venv/bin/pytest tests/test_design_system.py tests/test_common_look_and_feel.py -q
 
 check: backend-check frontend-check design-check
 	backend/.venv/bin/pytest tests -q

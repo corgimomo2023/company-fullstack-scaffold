@@ -10,6 +10,7 @@ Coding agents must read `DESIGN.md` before changing colors, typography, layout o
 - Research scope, hashes and reproducibility: [`docs/design-system/source-audit.md`](docs/design-system/source-audit.md)
 - Component/page-template inventory: [`docs/design-system/component-inventory.md`](docs/design-system/component-inventory.md)
 - Machine-readable sitemap/CSS evidence: [`docs/design-system/evidence/`](docs/design-system/evidence/)
+- Reusable UI-delivery skill and dependency-free Admin CMS composition reference: [`.agents/skills/common-look-and-feel/`](.agents/skills/common-look-and-feel/)
 
 Production baseline for company applications using a React/Vite SPA, FastAPI, SQLAlchemy 2 and SQLite. The included **Projects** feature is a complete vertical slice, not sample-only architecture: validation, API error contracts, persistence, optimistic concurrency, tests and responsive UI all use the same boundaries expected of new features.
 
@@ -54,7 +55,8 @@ Dependency changes must refresh and review both lock formats with `make lock` (r
 - `backend/app/api/`: HTTP adapters; services own business rules/transactions; repositories own SQLAlchemy persistence only.
 - `backend/alembic/`: schema history; production startup applies migrations.
 - `AGENTS.md`, module `AGENTS.md`, `.github/copilot-instructions.md`, `CLAUDE.md`: layered agent context.
-- `.agents/skills/fullstack-feature/SKILL.md`: reusable delivery procedure.
+- `.agents/skills/fullstack-feature/SKILL.md`: reusable full-stack delivery procedure.
+- `.agents/skills/common-look-and-feel/SKILL.md`: profile-aware visual delivery procedure; its bundled HTML is an Admin CMS reference, not a universal application shell.
 - `.github/prompts/`: task prompts with explicit acceptance/verification fields.
 - `docs/`: architecture decisions, operations, research and plans.
 
