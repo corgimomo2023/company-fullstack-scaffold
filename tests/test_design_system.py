@@ -2,9 +2,13 @@ from __future__ import annotations
 
 import json
 import re
+import runpy
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+is_allowed_source_url = runpy.run_path(
+    str(ROOT / "scripts" / "audit_aai_design_system.py")
+)["is_allowed_source_url"]
 EVIDENCE = ROOT / "docs" / "design-system" / "evidence"
 EXPECTED_COLORS = {
     "primary": "#006a63",
@@ -61,6 +65,23 @@ def contrast_ratio(foreground: str, background: str) -> float:
         (luminance(foreground), luminance(background)), reverse=True
     )
     return (lighter + 0.05) / (darker + 0.05)
+
+
+def test_public_audit_url_scope_uses_exact_origin_matching() -> None:
+    assert is_allowed_source_url("https://www.asiaalliedgroup.com/css/projectbase.css")
+    assert not is_allowed_source_url(
+        "http://www.asiaalliedgroup.com/css/projectbase.css"
+    )
+    assert not is_allowed_source_url("https://asiaalliedgroup.com/css/projectbase.css")
+    assert not is_allowed_source_url(
+        "https://www.asiaalliedgroup.com.evil.example/projectbase.css"
+    )
+    assert not is_allowed_source_url(
+        "https://evil.example/projectbase.css?from=asiaalliedgroup.com"
+    )
+    assert not is_allowed_source_url(
+        "https://www.asiaalliedgroup.com@evil.example/projectbase.css"
+    )
 
 
 def test_sitemap_and_template_audit_is_complete_and_error_free() -> None:

@@ -159,6 +159,13 @@ def normalize_url(url: str, base: str = BASE_URL) -> str:
     return urllib.parse.urlunsplit((parts.scheme, parts.netloc, parts.path, "", ""))
 
 
+def is_allowed_source_url(url: str) -> bool:
+    """Return whether a normalized URL belongs to the audited HTTPS origin."""
+    parts = urllib.parse.urlsplit(url)
+    source = urllib.parse.urlsplit(BASE_URL)
+    return parts.scheme == source.scheme and parts.netloc == source.netloc
+
+
 def normalize_hex(value: str) -> str:
     value = value.upper()
     if len(value) in {4, 5}:
@@ -417,12 +424,11 @@ def main() -> int:
             facts_parser = FactsParser()
             facts_parser.feed(text)
             facts = facts_parser.facts
+            normalized_stylesheets = {
+                normalize_url(href, final_url) for href in facts.stylesheets if href
+            }
             stylesheets = sorted(
-                {
-                    normalize_url(href, final_url)
-                    for href in facts.stylesheets
-                    if href and "asiaalliedgroup.com" in normalize_url(href, final_url)
-                }
+                url for url in normalized_stylesheets if is_allowed_source_url(url)
             )
             discovered_stylesheets.update(stylesheets)
             result.update(
