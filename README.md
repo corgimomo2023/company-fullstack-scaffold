@@ -1,5 +1,11 @@
 # Company Full-Stack Scaffold
 
+## Design system
+
+The machine-readable company visual baseline is defined in [`DESIGN.md`](DESIGN.md). It was derived from the public Asia Allied Infrastructure website for internal admin, CMS and operational applications, with accessibility corrections documented in the file.
+
+Coding agents must read `DESIGN.md` before changing colors, typography, layout or component styling. The extracted baseline is not a substitute for an official internal corporate brand manual.
+
 Production baseline for company applications using a React/Vite SPA, FastAPI, SQLAlchemy 2 and SQLite. The included **Projects** feature is a complete vertical slice, not sample-only architecture: validation, API error contracts, persistence, optimistic concurrency, tests and responsive UI all use the same boundaries expected of new features.
 
 ## Quick start

@@ -5,10 +5,11 @@ Maintain a production baseline. Prefer a small verified vertical slice over broa
 
 ## Required workflow
 1. Read this file and the nearest module `AGENTS.md`.
-2. Write or update a failing behavior test before production code.
-3. Keep transport, domain, persistence and UI state boundaries explicit.
-4. Run the narrow test, then `make check` before handoff.
-5. Update migrations, API contract and operations docs when behavior changes.
+2. For user-facing work, read root `DESIGN.md` before changing layout, color, typography or components.
+3. Write or update a failing behavior test before production code.
+4. Keep transport, domain, persistence and UI state boundaries explicit.
+5. Run the narrow test, then `make check` before handoff.
+6. Update migrations, API contract and operations docs when behavior changes.
 
 ## Commands
 - Setup: `make setup`
