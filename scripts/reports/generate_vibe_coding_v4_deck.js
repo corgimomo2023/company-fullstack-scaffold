@@ -50,6 +50,8 @@ const C = {
   danger: 'DC3545'
 };
 
+const HERO_IMAGE = path.join(__dirname, '..', '..', 'docs', 'reports', 'assets', 'v4-deck-ai-evaluation-hero.jpg');
+
 function addTitle(slide, eyebrow, title, subtitle, dark = false) {
   slide.addText(eyebrow.toUpperCase(), { x: 0.65, y: 0.62, w: 4.6, h: 0.28, fontFace: 'Arial', fontSize: 11, bold: true, color: dark ? 'E9A36F' : C.orangeDark, charSpacing: 1.5, margin: 0 });
   slide.addText(title, { x: 0.65, y: 1.02, w: 11.9, h: 0.68, fontFace: 'Arial', fontSize: 34, bold: true, color: dark ? C.white : C.dark, margin: 0, breakLine: false, fit: 'shrink' });
@@ -88,22 +90,41 @@ function node(slide, x, y, n, label, fill = C.green) {
 // 1 Cover
 {
   const s = pptx.addSlide('DARK');
-  s.addShape(pptx.ShapeType.ellipse, { x: 8.9, y: 0.9, w: 3.6, h: 3.6, fill: { color: '006A63', transparency: 20 }, line: { color: '006A63', transparency: 100 } });
-  s.addShape(pptx.ShapeType.ellipse, { x: 10.5, y: 3.6, w: 2.1, h: 2.1, fill: { color: 'E6762D', transparency: 12 }, line: { color: 'E6762D', transparency: 100 } });
-  s.addShape(pptx.ShapeType.ellipse, { x: 8.0, y: 4.5, w: 1.3, h: 1.3, fill: { color: 'FFFFFF', transparency: 88 }, line: { color: 'FFFFFF', transparency: 100 } });
+  card(s, 6.45, 1.05, 6.2, 4.35, { fill: C.white, transparency: 94, line: C.white, lineTransparency: 90, shadow: false });
+  s.addImage({ path: HERO_IMAGE, x: 6.58, y: 1.18, w: 5.94, h: 3.96, altText: 'AI evaluation hub linking candidate models to a to-do workflow, an original vertical shooter and evidence cards.' });
   s.addText('AI VIBE CODING', { x: 0.75, y: 1.08, w: 4.8, h: 0.35, fontFace: 'Arial', fontSize: 15, bold: true, color: 'E9A36F', charSpacing: 2, margin: 0 });
-  s.addText('Model Comparison\nEvaluation Report', { x: 0.75, y: 1.62, w: 7.8, h: 1.65, fontFace: 'Arial', fontSize: 42, bold: true, color: C.white, margin: 0, breakLine: false, fit: 'shrink' });
-  s.addText('Version 4', { x: 0.75, y: 3.58, w: 2.5, h: 0.45, fontFace: 'Arial', fontSize: 24, bold: true, color: 'B7DCD8', margin: 0 });
-  s.addText('Research complete. Controlled and human results intentionally unfilled.', { x: 0.75, y: 4.14, w: 7.4, h: 0.52, fontFace: 'Arial', fontSize: 17, color: 'D7EAE8', margin: 0, fit: 'shrink' });
-  pill(s, '3 candidate endpoints', 0.75, 5.2, 2.2, 'E7F3F1', C.dark);
-  pill(s, '2 complete app workflows', 3.1, 5.2, 2.4, 'FFF2EA', C.orangeDark);
-  pill(s, '15 / 55 / 30 evidence model', 5.65, 5.2, 2.7, 'D7EAE8', C.dark);
-  s.addText('Prepared for internal model-selection review', { x: 0.75, y: 6.1, w: 6.0, h: 0.35, fontFace: 'Arial', fontSize: 13, color: 'B7DCD8', margin: 0 });
+  s.addText('Model Comparison\nEvaluation Report', { x: 0.75, y: 1.62, w: 5.35, h: 1.65, fontFace: 'Arial', fontSize: 39, bold: true, color: C.white, margin: 0, breakLine: false, fit: 'shrink' });
+  s.addText('Version 4', { x: 0.75, y: 3.54, w: 2.5, h: 0.45, fontFace: 'Arial', fontSize: 24, bold: true, color: 'B7DCD8', margin: 0 });
+  s.addText('Research complete. Controlled and human results intentionally unfilled.', { x: 0.75, y: 4.12, w: 5.4, h: 0.60, fontFace: 'Arial', fontSize: 16, color: 'D7EAE8', margin: 0, fit: 'shrink' });
+  pill(s, '3 exact endpoints', 0.75, 5.35, 1.9, 'E7F3F1', C.dark);
+  pill(s, '2 complete app workflows', 2.82, 5.35, 2.4, 'FFF2EA', C.orangeDark);
+  pill(s, '15 / 55 / 30 evidence model', 5.39, 5.35, 2.7, 'D7EAE8', C.dark);
+  s.addText('Prepared for internal model-selection review', { x: 0.75, y: 6.16, w: 6.0, h: 0.35, fontFace: 'Arial', fontSize: 13, color: 'B7DCD8', margin: 0 });
   addSource(s, 'Companion to: ai-vibe-coding-model-comparison-test-report-v4.docx', true);
   s.addNotes('Open with the decision question. This V4 deck is deliberately honest: the methodology and research are complete, but no application-test or human-test winner is invented.');
 }
 
-// 2 Current result
+// 2 Agenda
+{
+  const s = pptx.addSlide('LIGHT');
+  addTitle(s, 'Deck map', 'The story moves from evidence gaps to an executable decision', 'Four chapters keep the management question visible from start to finish.');
+  const chapters = [
+    { n: '01', title: 'DECISION STATE', body: 'What V4 can conclude now — and why there is no winner yet.', x: 0.65, y: 2.55, fill: C.dark, color: C.white },
+    { n: '02', title: 'RESEARCH FINDINGS', body: 'Exact endpoints, context limits and checkpoint-versus-provider gaps.', x: 6.83, y: 2.55, fill: C.soft, color: C.dark },
+    { n: '03', title: 'CONTROLLED EXECUTION', body: 'Two applications, fair controls, run ledger and human evidence.', x: 0.65, y: 4.52, fill: C.orangePale, color: C.dark },
+    { n: '04', title: 'DECISION RULE', body: 'Mandatory gates, score weighting, boundaries and next action.', x: 6.83, y: 4.52, fill: C.white, color: C.dark }
+  ];
+  chapters.forEach((c) => {
+    card(s, c.x, c.y, 5.85, 1.55, { fill: c.fill, line: c.fill === C.white ? C.border : c.fill, lineTransparency: c.fill === C.white ? 20 : 100, shadow: c.fill !== C.dark });
+    s.addText(c.n, { x: c.x + 0.32, y: c.y + 0.28, w: 0.72, h: 0.40, fontFace: 'Arial', fontSize: 23, bold: true, color: c.fill === C.dark ? 'E9A36F' : C.orangeDark, margin: 0 });
+    s.addText(c.title, { x: c.x + 1.25, y: c.y + 0.24, w: 4.15, h: 0.28, fontFace: 'Arial', fontSize: 12, bold: true, color: c.color, charSpacing: 1.0, margin: 0 });
+    s.addText(c.body, { x: c.x + 1.25, y: c.y + 0.68, w: 4.15, h: 0.55, fontFace: 'Arial', fontSize: 15, color: c.fill === C.dark ? 'D7EAE8' : C.text, margin: 0, fit: 'shrink' });
+  });
+  addSource(s, 'Structure follows the V4 report from executive decision through controlled execution and final gate.');
+  s.addNotes('Use this map to set expectations: the deck first states the honest decision status, then shows the research, the controlled run design and the rule that will convert evidence into a recommendation.');
+}
+
+// 3 Current result
 {
   const s = pptx.addSlide('LIGHT');
   addTitle(s, 'Executive decision', 'The V4 result: evaluation-ready, not decision-ready', 'The responsible answer before controlled execution is “no winner yet”.');
@@ -222,7 +243,7 @@ function node(slide, x, y, n, label, fill = C.green) {
 // 7 App A
 {
   const s = pptx.addSlide('LIGHT');
-  addTitle(s, 'Application A', 'To-Do List: the business workflow test', 'A familiar UI makes requirement gaps, validation and persistence easy to verify.');
+  addTitle(s, 'Application A', 'A familiar business workflow exposes hidden quality gaps', 'The To-Do List makes requirement gaps, validation and persistence easy to verify.');
   const flow = [
     ['Create', 'valid input'], ['Edit', 'all fields'], ['Complete', 'reopen'], ['Filter', 'all / active / done'], ['Persist', 'reload'], ['Verify', 'tests + a11y']
   ];
@@ -244,7 +265,7 @@ function node(slide, x, y, n, label, fill = C.green) {
 // 8 App B
 {
   const s = pptx.addSlide('DARK');
-  addTitle(s, 'Application B', 'Original 1942-style vertical shooter', 'A harder systems test: real-time state, collision, input, performance and originality.', true);
+  addTitle(s, 'Application B', 'The shooter reveals real-time state and regression risk', 'A harder systems test: collision, input, performance and originality.', true);
   // simple plane and enemy field illustration
   s.addShape(pptx.ShapeType.chevron, { x: 1.35, y: 4.75, w: 1.0, h: 1.2, rotate: 270, fill: { color: 'E9A36F' }, line: { color: 'E9A36F', transparency: 100 } });
   for (let i = 0; i < 3; i++) s.addShape(pptx.ShapeType.ellipse, { x: 1.78, y: 4.0 - i * 0.65, w: 0.14, h: 0.34, fill: { color: C.white }, line: { color: C.white, transparency: 100 } });
@@ -429,7 +450,7 @@ function node(slide, x, y, n, label, fill = C.green) {
 // 16 case study
 {
   const s = pptx.addSlide('LIGHT');
-  addTitle(s, 'Case study', 'One end-to-end decision journey', 'Not six disconnected demos. Not ten interview answers. One traceable workflow.');
+  addTitle(s, 'Case study', 'A business question becomes one traceable evidence journey', 'Not six disconnected demos. Not ten interview answers. One controlled path to a decision.');
   const stages = ['Question', 'Research', 'Freeze', 'Build', 'Correct', 'Validate', 'Human test', 'Measure', 'Limit', 'Decide'];
   stages.forEach((l, i) => {
     const x = 0.65 + (i % 5) * 2.53;
