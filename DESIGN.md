@@ -1,74 +1,84 @@
 ---
 version: alpha
 name: Asia Allied Corporate Digital
-description: An evidence-based digital design baseline derived from the public Asia Allied Infrastructure website for company internal applications and admin surfaces.
+description: Evidence-based, accessibility-corrected digital design system derived from the public Asia Allied Infrastructure website for company admin, CMS and operational products.
 colors:
   primary: "#006A63"
   primary-dark: "#003531"
+  primary-active: "#001C19"
   accent: "#E6762D"
   accent-accessible: "#B15315"
+  accent-selected: "#733208"
   text: "#333333"
-  text-muted: "#6A6A6A"
+  text-muted: "#6C757D"
   surface: "#FFFFFF"
   surface-subtle: "#F7F7F7"
   surface-muted: "#ECECEC"
+  surface-disabled: "#EAEAEA"
   border: "#CECECE"
+  table-header: "#FFF2EA"
   focus: "#006A63"
-  danger: "#B42318"
-  danger-surface: "#FEE4E2"
+  danger: "#DC3545"
   success: "#006A63"
-  success-surface: "#E5F3F1"
+  logo-orange: "#F7941D"
+  logo-olive: "#7B7A1B"
 typography:
   display-lg:
-    fontFamily: "Pragati Narrow, Roboto, Arial, Microsoft JhengHei, sans-serif"
+    fontFamily: Pragati Narrow
+    fontSize: 3.125rem
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "0em"
+  heading-xl:
+    fontFamily: Pragati Narrow
     fontSize: 2.5rem
     fontWeight: 700
     lineHeight: 1.1
-    letterSpacing: "-0.01em"
-  heading-xl:
-    fontFamily: "Pragati Narrow, Roboto, Arial, Microsoft JhengHei, sans-serif"
+    letterSpacing: "0em"
+  heading-lg:
+    fontFamily: Pragati Narrow
     fontSize: 2rem
     fontWeight: 700
     lineHeight: 1.2
-    letterSpacing: "-0.005em"
-  heading-lg:
-    fontFamily: "Pragati Narrow, Roboto, Arial, Microsoft JhengHei, sans-serif"
+    letterSpacing: "0em"
+  heading-md:
+    fontFamily: Roboto
     fontSize: 1.5rem
     fontWeight: 700
     lineHeight: 1.25
     letterSpacing: "0em"
-  heading-md:
-    fontFamily: "Roboto, Arial, Microsoft JhengHei, sans-serif"
+  heading-sm:
+    fontFamily: Roboto
     fontSize: 1.25rem
     fontWeight: 700
     lineHeight: 1.3
     letterSpacing: "0em"
   body-lg:
-    fontFamily: "Roboto, Arial, Microsoft JhengHei, sans-serif"
+    fontFamily: Roboto
     fontSize: 1.125rem
     fontWeight: 400
     lineHeight: 1.55
     letterSpacing: "0em"
   body-md:
-    fontFamily: "Roboto, Arial, Microsoft JhengHei, sans-serif"
+    fontFamily: Roboto
     fontSize: 1rem
     fontWeight: 400
     lineHeight: 1.5
     letterSpacing: "0em"
   body-sm:
-    fontFamily: "Roboto, Arial, Microsoft JhengHei, sans-serif"
+    fontFamily: Roboto
     fontSize: 0.875rem
     fontWeight: 400
     lineHeight: 1.45
     letterSpacing: "0em"
   label:
-    fontFamily: "Roboto, Arial, Microsoft JhengHei, sans-serif"
+    fontFamily: Roboto
     fontSize: 0.875rem
     fontWeight: 700
     lineHeight: 1.25
     letterSpacing: "0.01em"
   caption:
-    fontFamily: "Roboto, Arial, Microsoft JhengHei, sans-serif"
+    fontFamily: Roboto
     fontSize: 0.75rem
     fontWeight: 400
     lineHeight: 1.35
@@ -79,13 +89,16 @@ rounded:
   md: 4px
   pill: 999px
 spacing:
-  xs: 4px
-  sm: 8px
+  2xs: 4px
+  xs: 8px
+  sm: 12px
   md: 16px
   lg: 24px
   xl: 32px
-  2xl: 48px
-  3xl: 64px
+  2xl: 40px
+  3xl: 48px
+  4xl: 64px
+  5xl: 80px
 components:
   button-primary:
     backgroundColor: "{colors.primary}"
@@ -96,6 +109,13 @@ components:
     height: 44px
   button-primary-hover:
     backgroundColor: "{colors.primary-dark}"
+    textColor: "{colors.surface}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: 12px
+    height: 44px
+  button-primary-active:
+    backgroundColor: "{colors.primary-active}"
     textColor: "{colors.surface}"
     typography: "{typography.label}"
     rounded: "{rounded.md}"
@@ -128,31 +148,28 @@ components:
     rounded: "{rounded.md}"
     padding: 12px
     height: 44px
+  input-disabled:
+    backgroundColor: "{colors.surface-disabled}"
+    textColor: "{colors.text}"
+    typography: "{typography.body-md}"
+    rounded: "{rounded.md}"
+    padding: 12px
+    height: 44px
   card-default:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.text}"
     rounded: "{rounded.md}"
     padding: 24px
-  status-success:
-    backgroundColor: "{colors.success-surface}"
-    textColor: "{colors.success}"
-    typography: "{typography.label}"
-    rounded: "{rounded.pill}"
-    padding: 8px
-  status-danger:
-    backgroundColor: "{colors.danger-surface}"
-    textColor: "{colors.danger}"
-    typography: "{typography.label}"
-    rounded: "{rounded.pill}"
-    padding: 8px
-  section-accent-rule:
-    backgroundColor: "{colors.accent}"
-    height: 2px
   page-canvas:
     backgroundColor: "{colors.surface-subtle}"
     textColor: "{colors.text}"
-  table-header:
+  panel-muted:
     backgroundColor: "{colors.surface-muted}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.none}"
+    padding: 16px
+  table-header:
+    backgroundColor: "{colors.table-header}"
     textColor: "{colors.text}"
     typography: "{typography.label}"
     padding: 12px
@@ -160,6 +177,27 @@ components:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.text-muted}"
     typography: "{typography.body-sm}"
+  status-success:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.success}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: 8px
+  status-danger:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.danger}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: 8px
+  status-warning:
+    backgroundColor: "{colors.accent-selected}"
+    textColor: "{colors.surface}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: 8px
+  section-accent-rule:
+    backgroundColor: "{colors.accent}"
+    height: 2px
   divider:
     backgroundColor: "{colors.border}"
     height: 1px
@@ -167,215 +205,264 @@ components:
     backgroundColor: "{colors.focus}"
     textColor: "{colors.surface}"
     rounded: "{rounded.md}"
+  logo-orange-swatch:
+    backgroundColor: "{colors.logo-orange}"
+    size: 24px
+  logo-olive-swatch:
+    backgroundColor: "{colors.logo-olive}"
+    size: 24px
 ---
 
 # Asia Allied Corporate Digital Design System
 
 ## Overview
 
-This file is an evidence-based digital baseline derived on 2026-08-13 from the public website at <https://www.asiaalliedgroup.com/>. It is intended to give coding agents and product teams a consistent company look and feel for internal applications, especially admin, CMS and operational interfaces.
+This is an evidence-based digital baseline derived from the public Asia Allied Infrastructure Holdings website, not an official corporate brand manual. The 2026-08-14 audit exhaustively parsed all three published sitemaps and inspected a deterministic cross-section of page templates, the live DOM, computed desktop/mobile styles, the public CSS and current logo assets.
 
-It is not represented as an official corporate brand manual. The source website was inspected through its rendered interface, computed browser styles, public stylesheet and public logo assets. Production tokens preserve the observed visual character while correcting accessibility risks found in literal reuse.
+The source character is practical, established and engineering-led: dark green provides structure and trust; orange supplies restrained momentum and emphasis; layouts are square, image-led and information-dense; typography is narrow and authoritative for English display copy and neutral for operational content.
 
-The design character is:
-
-- established Hong Kong infrastructure and engineering group;
-- practical, stable and corporate rather than playful;
-- image-led where project photography adds context;
-- high-contrast dark green structural surfaces;
-- restrained orange emphasis for momentum, headings and highlights;
-- square, engineered geometry with minimal decoration;
-- information-dense but orderly for operational use.
-
-For admin and CMS products, use the colors, typography, spacing and interaction semantics in this file. Do not copy the public website's page composition, hero carousel or content-heavy footer into internal products.
+For internal admin, CMS and operational products, preserve the identity rather than copying the public site's page composition. Use a predictable application shell, accessible controls, explicit states and reusable primitives. The public hero carousel, mega-menu and content-heavy footer are source patterns, not mandatory product components.
 
 ## Colors
 
-### Observed source palette
+### Normative production palette
 
-The public website's recurring UI colors are:
+| Token | Value | Production role |
+|---|---:|---|
+| `primary` | `#006A63` | Primary actions, links, selection and active navigation |
+| `primary-dark` | `#003531` | Hover, pressed framing and high-density navigation |
+| `primary-active` | `#001C19` | Active/pressed state where stronger separation is required |
+| `accent` | `#E6762D` | Decorative rules, large headings, charts and non-text emphasis |
+| `accent-accessible` | `#B15315` | Normal-sized white-on-orange interactive surfaces |
+| `accent-selected` | `#733208` | Selected warning/tag surfaces with white text |
+| `text` | `#333333` | Primary body and interface text |
+| `text-muted` | `#6C757D` | Secondary metadata on white only |
+| `surface` | `#FFFFFF` | Main surface, cards and reversed text |
+| `surface-subtle` | `#F7F7F7` | Alternate rows and page canvas |
+| `surface-muted` | `#ECECEC` | Muted structural regions |
+| `surface-disabled` | `#EAEAEA` | Disabled controls |
+| `border` | `#CECECE` | Dividers and control boundaries |
+| `table-header` | `#FFF2EA` | Warm table/list header tint |
+| `danger` | `#DC3545` | Error/destructive text and borders |
+| `success` | `#006A63` | Positive states, always paired with a label/icon |
 
-| Role observed | Value | Evidence |
-|---|---|---|
-| Structural green | `#006A63` | Navigation, announcement and report surfaces; 32 stylesheet occurrences |
-| Deep green | `#003531` | Dark overlays and navigation states |
-| Orange accent | `#E6762D` | Headings, section rules, labels and subscription surface; 60 stylesheet occurrences |
-| Logo orange | `#F7941D` | Dominant orange sampled from public logo asset |
-| Logo olive | `#7B7A1B` | Secondary logo color sampled from public logo asset |
-| Primary text | `#333333` | Dominant computed text color |
-| Muted text | `#6A6A6A` | Secondary computed text color |
-| Border | `#CECECE` | Light dividers and borders |
-| Pale surface | `#F7F7F7` | Section and card surfaces |
-| White | `#FFFFFF` | Main canvas, cards and reversed text |
+### Source evidence and classification
 
-### Accessible production use
+The current `projectbase.css` contains 2,883 parsed rules. Site-specific recurring values include `#E6762D` (60 declarations), `#006A63` (32), `#F7F7F7` (14), `#AAAAAA` (11), `#003531` (10), `#333333` (9), `#ECECEC` (8), `#CECECE` (7), `#733208` (4), `#B15315` (4), `#FFF2EA` (3) and `#EAEAEA` (3). Complete declaration counts/property distributions and a bounded set of selector/value examples—including bundled Bootstrap colors that are not promoted to brand tokens—are stored in `docs/design-system/evidence/css-token-evidence.json`.
 
-- Use `primary` (`#006A63`) for primary actions, active navigation, selected controls and high-emphasis operational states. White on this green has a measured contrast ratio of approximately **6.48:1**.
-- Use `primary-dark` (`#003531`) for hover, pressed, high-density navigation and dark overlays. White on this green is approximately **13.52:1**.
-- Use `accent` (`#E6762D`) for decorative rules, large headings, charts and non-text emphasis. White on this orange is only approximately **3.00:1**, so it must not be used for normal-sized white button text.
-- Use `accent-accessible` (`#B15315`) when orange carries normal-sized text or an interactive foreground. White on this darker orange is approximately **5.10:1**.
-- Use `text` (`#333333`) for body copy on white or pale surfaces. It provides approximately **12.63:1** against white.
-- Use `text-muted` (`#6A6A6A`) only for secondary text. It provides approximately **5.41:1** against white.
-- Keep logo colors reserved for approved logos and brand marks. Do not recolor text, controls or status states merely to mirror the logo.
-- Never use color as the only indicator of status. Pair it with text and, where useful, a recognizable icon.
+Observed values and normative roles are intentionally separate: the public CSS uses `#B15315` in hover shadow/framing declarations, not as its standard orange button fill. Promoting it to `accent-accessible` is an accessibility-led product decision based on its 5.10:1 white-text contrast. Likewise, the spacing scale, 44px controls and normalized typography in this document are production rules, not claims of literal source extraction.
 
-### Semantic hierarchy
+Observed state values retained as evidence but not promoted to independent normative tokens include:
 
-- **Primary green:** action, trust, navigation, governance and completion.
-- **Deep green:** authority, hierarchy, hover and structural framing.
-- **Orange:** momentum, highlight, attention and corporate energy.
-- **Neutral greys:** working surfaces, dividers, metadata and supporting hierarchy.
-- **Red:** destructive or failure states only; never substitute orange for danger.
+- orange button hover `#DF681B`;
+- deep-green button hover `#001C19`;
+- form success `#28A745` and danger `#DC3545` from the bundled Bootstrap layer;
+- generic Bootstrap blue focus `#007BFF` / `rgba(0, 123, 255, 0.25)`, which production implementations must replace with the green focus token;
+- placeholder/card-image grey `#AAAAAA`, which is an implementation fallback rather than a product surface;
+- pagination text `#707070` and light dividers `#EBEBEB`.
+
+The current main logo PNG was independently sampled: dominant opaque pixels are dark `#231F20`, orange `#F7941D` and olive `#7B7A1B`. Keep `logo-orange` and `logo-olive` inside approved brand marks; do not repurpose them for product statuses or controls. The tagline image uses closely rendered/rasterized `#F49233` and `#7C7835`, which must not replace the canonical main-logo values.
+
+### Contrast contract
+
+- White on `primary` is **6.48:1**.
+- White on `primary-dark` is **13.52:1**.
+- White on `accent` is only **3.00:1**; never use this pairing for normal text.
+- White on `accent-accessible` is **5.10:1**.
+- White on `accent-selected` is **9.59:1**.
+- `text` on white is **12.63:1**.
+- `text-muted` on white is **4.69:1** and must not be placed on darker grey surfaces.
+- `danger` on white is **4.53:1**, narrowly passing AA for normal text; prefer larger/bold error labels and never rely on red alone.
+- `border` is not a text color and does not need text contrast, but interactive boundaries need sufficient non-text contrast or an additional focus indicator.
+
+Never use color as the sole status cue. Add text and, where useful, an accessible icon.
 
 ## Typography
 
-The public website loads Roboto weights 300, 400, 500 and 700; Pragati Narrow weights 400 and 700; and falls back to Arial, Microsoft JhengHei and Helvetica. Rendered body content primarily uses Roboto, while navigation and prominent labels frequently use Pragati Narrow.
+### Observed source typography
 
-Apply the system as follows:
+The current site self-hosts:
 
-- Use **Roboto** for product UI, forms, tables, long-form copy and numerical information.
-- Use **Pragati Narrow** selectively for English display headings, navigation labels and compact corporate emphasis.
-- Use **Microsoft JhengHei** as the preferred Traditional Chinese fallback.
-- Do not use light weight 300 for small operational copy; prefer 400 or above.
-- Keep body text at 16px where space allows. Never reduce essential labels below 14px.
-- Use weight and spacing for hierarchy before introducing more colors.
-- Preserve comfortable line height for bilingual English and Chinese content.
+- Pragati Narrow 400 and 700;
+- Roboto 300, 400, 500 and 700;
+- a custom `wico` icon font.
+
+The body stack is `Roboto, Arial, Microsoft JhengHei, Helvetica, sans-serif` with a source root size of `100.1%` and base line height `1.3`. English display headings, navigation, buttons, cards and labels use Pragati Narrow first. Traditional/Simplified Chinese year headings explicitly switch to Microsoft JhengHei.
+
+Computed cross-checks on the current About page:
+
+| Element | Desktop 1440px | Mobile 375px |
+|---|---|---|
+| Root/body | `16.016px`; body line height `20.821px` | Same |
+| Page H1 | Pragati Narrow 700, `50.05px/50.05px`, green | `25.025px/25.025px`, green |
+| Content H2 | Roboto 700, `24.024px/30.03px` | `17.017px/21.271px` |
+| Content paragraph | Roboto 400, `18.018px/28.028px` | `14.014px/21.8px` |
+| Breadcrumb | Roboto 400, `14.014px`, green | `12.012px`, hidden on sampled page |
+
+### Production rules
+
+- Use Roboto for product UI, forms, tables, body copy and numerical data.
+- Use Pragati Narrow selectively for English display headings, section titles and compact corporate emphasis.
+- For Chinese UI, use a verified CJK sans stack such as `Noto Sans TC`, then `Microsoft JhengHei`; do not force Pragati Narrow onto Chinese glyphs.
+- Use weight 400 or above for operational copy. Source weight 300 is documentary evidence, not a default.
+- Keep essential labels at 14px or larger and body copy at 16px where space allows.
+- Use the normative product line heights in front matter rather than copying the source body's tight `1.3` everywhere.
+- Do not use the source `wico` font in new products. Use the approved SVG icon library with accessible names and pinned licensing.
+- If fonts are bundled, preserve their upstream licences. The current Google Fonts distributions of [Roboto](https://github.com/google/fonts/blob/main/ofl/roboto/OFL.txt) and [Pragati Narrow](https://github.com/google/fonts/blob/main/ofl/pragatinarrow/OFL.txt) are OFL-1.1; do not assume the public site's hosted files grant redistribution rights.
 
 ## Layout
 
-### Foundation
+### Source grid and responsive evidence
 
-Use a 4px base unit with an 8px practical spacing rhythm. Prefer the named spacing tokens over arbitrary values.
+The source CSS uses Bootstrap-era breakpoints plus a wide corporate extension:
 
-- `xs` and `sm`: icon gaps, compact metadata and tightly related controls.
-- `md`: default form and component spacing.
-- `lg`: card padding and section grouping.
-- `xl`: page-level spacing.
-- `2xl` and `3xl`: major section separation on wide screens.
+| Name | Min width | Source container max |
+|---|---:|---:|
+| compact | `370px` | fluid |
+| sm | `576px` | `540px` |
+| md | `768px` | `720px` |
+| lg | `992px` | `960px` |
+| xl | `1200px` | `1140px` |
+| xxl | `1600px` | `1570px` |
+
+The stylesheet contains corresponding max-width queries at `575.98`, `767.98`, `991.98`, `1199.98` and `1599.98px`. The public content uses three/two/one-column card changes and turns data tables into labelled stacked rows on narrow viewports.
+
+### Production spacing
+
+Use a 4px base with the named 4/8/12/16/24/32/40/48/64/80px scale. Source CSS uses many `em` fractions because components scale from local font size; production code must map those relationships to named tokens instead of copying long decimal values.
+
+- 4–8px: icon and compact metadata gaps.
+- 12–16px: control internals and related field spacing.
+- 24px: normal card padding and component groups.
+- 32–48px: page regions and major form sections.
+- 64–80px: major marketing/content separation only.
 
 ### Admin and CMS composition
 
-- Use a stable application shell rather than the public website's hero/navigation composition.
-- Keep page titles, primary action and essential status visible without scrolling.
-- Use a maximum readable width for forms, but allow tables and dashboards to use the available workspace.
-- Keep filters close to the data they affect.
-- Align labels, values and actions consistently across list and detail views.
-- Collapse secondary actions into an overflow menu before reducing label clarity.
-- On narrow screens, stack forms and cards; do not compress desktop tables until content becomes unreadable.
-
-### Density
-
-The visual tone is structured and information-forward. Use moderate density by default:
-
-- 44px minimum interactive height;
-- 48–56px table rows for normal mode;
-- 40–44px rows only for an explicit compact admin mode;
-- 16–24px card padding;
-- visible separation between page regions rather than decorative cards around every item.
+- Use a stable application shell rather than the public hero/mega-menu composition.
+- Keep the page title, primary action and essential status visible without scrolling.
+- Use readable form widths while allowing tables/dashboards to use available workspace.
+- Keep filters adjacent to the data they affect.
+- Use 44px minimum interactive height; use 48–56px rows normally and 40–44px only for an explicit compact mode.
+- Stack forms/cards on narrow screens. Convert tables to labelled rows or horizontal scroll according to information priority; never silently hide critical columns.
+- Preserve English and Traditional Chinese hierarchy when labels expand.
 
 ## Elevation & Depth
 
-The public identity relies more on color blocks, photography and alignment than on floating elevation. Keep shadows restrained.
+The source relies on color blocks, photography, alignment and borders more than floating elevation. The CSS contains many legacy shadows, but they are interaction effects rather than a multi-level elevation system.
 
-- Default cards use a border before a shadow.
-- Use one low elevation level only where separation from the canvas is otherwise unclear.
-- Do not apply glow, glassmorphism or heavy layered shadows.
-- Dark-green overlays may be used on imagery only when contrast is verified.
-- Focus indication must not depend on box shadow alone; retain a visible outline or ring.
+- Default cards use a 1px border before a shadow.
+- Use one restrained low elevation only when border/surface separation is insufficient.
+- A suitable low elevation adaptation is `0 4px 12px rgba(0, 0, 0, 0.10)`; it is a production normalization, not a literal source token.
+- Source interaction examples include card hover shadows around `rgba(0,0,0,0.10–0.20)`, a search overlay shadow at `rgba(0,0,0,0.30)` and mobile navigation at `rgba(0,0,0,0.20)`.
+- Do not use glassmorphism, glow or heavy layered shadows.
+- Focus indication must include a visible outline/ring and must not depend on shadow alone.
+
+Motion evidence: the source's shared transition is `600ms cubic-bezier(0.23, 1, 0.32, 1)`, with 300ms links, 400ms image plates and 900ms banner text. Product controls should normally use 150–200ms feedback and reserve slower brand motion for non-blocking content. Respect `prefers-reduced-motion` and remove non-essential movement.
 
 ## Shapes
 
-The source website is predominantly square (`0px` radius), with small Bootstrap-era radii on generic controls. For modern internal products, preserve the engineered tone using a restrained radius scale:
+The source is predominantly square. Custom buttons and form overrides use `0px`; generic bundled Bootstrap controls use 3.2–4.8px radii; circles appear for dots/icons; one video affordance uses an approximately 4px local radius.
 
 - `none`: navigation rails, structural panels and data-heavy regions.
-- `sm`: compact indicators or embedded elements.
-- `md`: buttons, fields, cards and dialogs.
+- `sm`: compact embedded elements.
+- `md`: fields, buttons, cards and dialogs.
 - `pill`: status badges only.
-
-Avoid oversized 12–24px consumer-style rounding. Avoid mixing multiple corner styles in one screen.
+- Do not introduce 12–24px consumer-style rounding or mix multiple corner languages on one screen.
 
 ## Components
 
-### Application shell
+The full observed inventory, variants, page-template coverage and production disposition are in `docs/design-system/component-inventory.md`. The public site exposes these families:
 
-- White or pale working canvas.
-- Deep-green navigation or a white navigation surface with deep-green active state.
-- Orange appears as a small accent, not as the full application chrome.
-- Product identity, environment and signed-in actor remain visible.
+1. global header, utility links, language switcher, site search, desktop mega-navigation and mobile menu;
+2. breadcrumb, page title, page-level navigation and back-to-top;
+3. key visual/hero carousel with dots and pause/play control;
+4. image-title, image-card, image-overlay, overlay-cover, left-image, top-image and image-plate card families;
+5. section/related headings, rich text, side information, metadata, tags and social sharing;
+6. tag filters, custom selects, pagination/load-more and responsive listing tables;
+7. form controls, checkbox/radio, validation, reCAPTCHA dropdown and subscription/contact forms;
+8. year accordion, development-history timeline and corporate-structure tree;
+9. global-footprint map with selectable locations;
+10. report/download, news, press release, e-news, career, people/director and project detail patterns;
+11. footer link groups, social links, contact information and copyright.
+
+### State contract for new components
+
+Every interactive component must define default, hover, focus-visible, active/pressed, disabled and pending states where applicable. Data surfaces also need loading, empty, error, success and unauthorized states. Destructive actions require a consequence-aware confirmation.
 
 ### Buttons
 
-- Primary action: green surface, white text.
-- Secondary action: white surface, green text and visible green border in implementation.
-- Accent action: dark accessible orange only when a second high-emphasis action is genuinely required.
-- Destructive action: semantic red, separated from the primary action.
-- Every button must expose hover, focus, active, pending and disabled states.
-- Use sentence-case action labels. Do not use vague labels such as “Submit” when “Create project” is clearer.
+- Primary: green surface/white label; dark green hover; near-black green active.
+- Secondary: white surface, green text and visible green border.
+- Accent: use `accent-accessible`, never raw `accent`, behind normal white text.
+- Destructive: semantic red, visually separated from the primary action.
+- Use sentence-case, action-specific labels.
 
 ### Forms
 
-- Labels remain visible above or beside inputs; placeholders are examples, not labels.
-- Required, optional, error and help states are explicit in text.
-- Inputs use white surfaces, dark text, restrained borders and a visible green focus treatment.
-- Group related fields with spacing and headings rather than excessive boxes.
-- Validation errors identify both the problem and corrective action.
+- Keep labels visible; placeholders are examples, not labels.
+- Source controls are square, pale `#F7F7F7`, borderless and approximately 35.6px high; production controls deliberately increase to 44px and restore a visible boundary.
+- Replace the source Bootstrap blue focus ring with the green focus token.
+- State required/optional/help/error information in text and connect it with accessible descriptions.
 
 ### Tables and lists
 
-- Use green sparingly for selected or actionable states.
-- Use orange only for non-semantic emphasis; warning states require text and an accessible semantic treatment.
-- Provide loading, empty, error and success states.
-- Keep row actions consistent and keyboard accessible.
-- Preserve identifiers and request IDs where operational support needs them.
+- Source tables use white/`#F7F7F7` alternating rows and `#FFF2EA` headers; orange hover is documentary evidence but must not be the only row-action cue.
+- Preserve column meaning on mobile with labelled stacked rows or controlled horizontal scrolling.
+- Keep selection, sorting, filtering, pagination, loading, empty and error behavior explicit.
 
-### Cards
+### Cards and media
 
-- Use cards for meaningful grouping, not as decoration around every section.
-- Default to white on pale grey with a restrained border.
-- Project or asset photography may be used when it communicates real context.
-- Avoid generic AI-generated corporate imagery and decorative gradients.
+- Use cards for meaningful grouping, not decoration around every section.
+- Photography must communicate a real project, person or asset. Use responsive images with explicit dimensions and alternative text.
+- Image overlays must prove text contrast in every image state; do not rely on an uncontrolled photograph.
+- Do not copy the source's placeholder grey as a final asset.
 
-### Status and feedback
+### Navigation and feedback
 
-- Status badges use shape, label and color together.
-- Toasts do not replace inline error messages for failed forms.
-- Confirm destructive actions and explain the consequence.
-- Show progress for operations that are not immediate.
-
-### Navigation
-
-- Keep labels direct and stable.
-- Show the current section clearly through position, text and color.
-- Maintain keyboard order and visible focus.
-- For internal products, prefer a predictable sidebar or top navigation over the source site's large dropdown menu.
+- Current location must be explicit through position, label and color.
+- Keep keyboard order logical and focus visible.
+- Status badges combine label, shape and color.
+- Toasts do not replace inline form errors.
+- Preserve request/support IDs in recoverable operational errors.
 
 ## Do's and Don'ts
 
 ### Do
 
-- Apply deep green as the structural anchor and orange as a restrained accent.
-- Use real infrastructure, people or project imagery when imagery improves understanding.
-- Keep internal applications practical, clear and moderately dense.
-- Support English and Traditional Chinese without changing hierarchy.
-- Validate every text/background pairing to WCAG AA.
-- Derive implementation tokens from this file rather than hardcoding page-level colors.
-- Preserve loading, empty, error, success, unauthorized and destructive states.
+- Use deep green as the structural anchor and orange as a restrained accent.
+- Build from the normative tokens and component contracts rather than hardcoded page colors.
+- Use real infrastructure/project imagery when it improves understanding.
+- Keep operational products clear, moderately dense and predictable.
+- Validate every text/background pairing to WCAG AA and test focus/non-text contrast.
+- Support English and Traditional Chinese without changing information hierarchy.
+- Preserve loading, empty, error, success, unauthorized, pending and destructive states.
+- Re-run the evidence audit when the source stylesheet hash changes.
 
 ### Don't
 
-- Do not copy the public homepage layout into admin or CMS applications.
-- Do not use `#E6762D` behind normal-sized white text.
-- Do not use logo olive as a general status or interaction color.
+- Do not claim this extraction is the official corporate brand manual.
+- Do not copy the public homepage, carousel or mega-menu into an admin shell.
+- Do not place normal-sized white text on `#E6762D`.
+- Do not use logo orange/olive as generic product status colors.
 - Do not introduce pink, neon, glassmorphism or unrelated gradients.
 - Do not use giant rounded cards or consumer-app softness.
-- Do not use project photography as a background behind essential operational text unless an accessible overlay is proven.
-- Do not claim this extracted baseline is the official corporate brand manual.
-- Do not add new colors without documenting their semantic role and contrast behavior.
+- Do not use project photography behind essential text without a tested overlay.
+- Do not import the public site's CSS, logo files, icon font or content into this repository; the audit records factual tokens and patterns only.
 
-## Source and review
+## Source and verification
 
-- Public source inspected: <https://www.asiaalliedgroup.com/>
-- Public stylesheet inspected: `assets/css/projectbase.css`
-- Public assets sampled: `main-logo-1x.png`, `sub-logo-1x.png`
-- Extraction date: 2026-08-13
-- Review this baseline against any internal official brand guideline before treating it as corporate policy.
+- Public site: <https://www.asiaalliedgroup.com/en>
+- Robots policy: <https://www.asiaalliedgroup.com/robots.txt>
+- English sitemap: <https://www.asiaalliedgroup.com/sitemap.xml>
+- Traditional Chinese sitemap: <https://www.asiaalliedgroup.com/sitemap-tc.xml>
+- Simplified Chinese sitemap: <https://www.asiaalliedgroup.com/sitemap-sc.xml>
+- Public stylesheets: `assets/css/projectbase.css`, `assets/css/print.css`
+- Current project stylesheet SHA-256: `ff62bae815e73cb956e935b15bb4df7bec36e6c8013c38bd69a8bc7ab3f5dc94`
+- Current print stylesheet SHA-256: `b99d6336f7da208f0d859a30cdbd0fb3e2cb1cff138732013a208751d9ae2e98`
+- Current main logo SHA-256: `3d416329cccb7610860b26eb8d39d7dc9d5eab34677a654f81e51840c67a3566`
+- Audit date: 2026-08-14
+- Reproducible audit: `python3 scripts/audit_aai_design_system.py --audit-date YYYY-MM-DD`
+- Evidence: `docs/design-system/evidence/`
+
+The three sitemaps contained 10,669 entries (10,666 unique) at audit time. The audit parsed all entries, classified every route signature and fetched 100 deterministic representative pages spanning every locale/category/depth combination plus explicit high-value templates. All 100 returned without audit errors; across the sample set, only the two expected local stylesheets were discovered. This is exhaustive sitemap analysis with template-based page fetching; it is not a claim that every content URL was individually downloaded.

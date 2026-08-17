@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "normative_source": "DESIGN.md",
+  "reference_syntax": "DESIGN.md curly-brace token reference",
+  "components": {
+    "button-primary": {
+      "backgroundColor": "{colors.primary}",
+      "textColor": "{colors.surface}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.md}",
+      "padding": "12px",
+      "height": "44px"
+    },
+    "button-primary-hover": {
+      "backgroundColor": "{colors.primary-dark}",
+      "textColor": "{colors.surface}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.md}",
+      "padding": "12px",
+      "height": "44px"
+    },
+    "button-primary-active": {
+      "backgroundColor": "{colors.primary-active}",
+      "textColor": "{colors.surface}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.md}",
+      "padding": "12px",
+      "height": "44px"
+    },
+    "button-secondary": {
+      "backgroundColor": "{colors.surface}",
+      "textColor": "{colors.primary}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.md}",
+      "padding": "12px",
+      "height": "44px"
+    },
+    "button-accent": {
+      "backgroundColor": "{colors.accent-accessible}",
+      "textColor": "{colors.surface}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.md}",
+      "padding": "12px",
+      "height": "44px"
+    },
+    "navigation-active": {
+      "backgroundColor": "{colors.primary-dark}",
+      "textColor": "{colors.surface}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.none}",
+      "padding": "12px"
+    },
+    "input-default": {
+      "backgroundColor": "{colors.surface}",
+      "textColor": "{colors.text}",
+      "typography": "{typography.body-md}",
+      "rounded": "{rounded.md}",
+      "padding": "12px",
+      "height": "44px"
+    },
+    "input-disabled": {
+      "backgroundColor": "{colors.surface-disabled}",
+      "textColor": "{colors.text}",
+      "typography": "{typography.body-md}",
+      "rounded": "{rounded.md}",
+      "padding": "12px",
+      "height": "44px"
+    },
+    "card-default": {
+      "backgroundColor": "{colors.surface}",
+      "textColor": "{colors.text}",
+      "rounded": "{rounded.md}",
+      "padding": "24px"
+    },
+    "page-canvas": {
+      "backgroundColor": "{colors.surface-subtle}",
+      "textColor": "{colors.text}"
+    },
+    "panel-muted": {
+      "backgroundColor": "{colors.surface-muted}",
+      "textColor": "{colors.text}",
+      "rounded": "{rounded.none}",
+      "padding": "16px"
+    },
+    "table-header": {
+      "backgroundColor": "{colors.table-header}",
+      "textColor": "{colors.text}",
+      "typography": "{typography.label}",
+      "padding": "12px"
+    },
+    "metadata": {
+      "backgroundColor": "{colors.surface}",
+      "textColor": "{colors.text-muted}",
+      "typography": "{typography.body-sm}"
+    },
+    "status-success": {
+      "backgroundColor": "{colors.surface}",
+      "textColor": "{colors.success}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.pill}",
+      "padding": "8px"
+    },
+    "status-danger": {
+      "backgroundColor": "{colors.surface}",
+      "textColor": "{colors.danger}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.pill}",
+      "padding": "8px"
+    },
+    "status-warning": {
+      "backgroundColor": "{colors.accent-selected}",
+      "textColor": "{colors.surface}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.pill}",
+      "padding": "8px"
+    },
+    "section-accent-rule": {
+      "backgroundColor": "{colors.accent}",
+      "height": "2px"
+    },
+    "divider": {
+      "backgroundColor": "{colors.border}",
+      "height": "1px"
+    },
+    "focus-indicator": {
+      "backgroundColor": "{colors.focus}",
+      "textColor": "{colors.surface}",
+      "rounded": "{rounded.md}"
+    },
+    "logo-orange-swatch": {
+      "backgroundColor": "{colors.logo-orange}",
+      "size": "24px"
+    },
+    "logo-olive-swatch": {
+      "backgroundColor": "{colors.logo-olive}",
+      "size": "24px"
+    }
+  }
+}
