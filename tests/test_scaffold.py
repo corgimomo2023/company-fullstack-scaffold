@@ -4,6 +4,9 @@ from pathlib import Path
 import pytest
 
 SCRIPT = Path(__file__).parents[1] / "scripts" / "create_project.py"
+TEMPLATE_SMOKE_WORKFLOW = (
+    Path(__file__).parents[1] / ".github" / "workflows" / "template-smoke-test.yml"
+)
 
 
 def load_generator():
@@ -61,3 +64,12 @@ def test_generator_rejects_unsafe_slug(tmp_path: Path) -> None:
             display_name="Bad",
             codeowner="@acme/platform-team",
         )
+
+
+def test_generated_project_smoke_installs_playwright_before_check() -> None:
+    workflow = TEMPLATE_SMOKE_WORKFLOW.read_text()
+    setup = workflow.index("run: make setup")
+    install = workflow.index("npx playwright install --with-deps chromium")
+    check = workflow.index("run: make check")
+
+    assert setup < install < check
