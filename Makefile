@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup dev check backend-check frontend-check design-check db-upgrade compose-check
+.PHONY: setup dev check backend-check frontend-check design-generate design-audit design-check db-upgrade compose-check
 setup:
 	python3 -m venv backend/.venv
 	cd backend && .venv/bin/pip install -r requirements-dev.lock
@@ -21,12 +21,26 @@ backend-check:
 frontend-check:
 	cd frontend && npm run lint && npm run typecheck && npm test && npm run build
 
+design-generate:
+	backend/.venv/bin/python scripts/export_design_system.py
+	backend/.venv/bin/python scripts/export_pen_design_system.py
+	backend/.venv/bin/python scripts/render_design_evidence.py
+
+design-audit:
+	backend/.venv/bin/python scripts/audit_aai_design_system.py --audit-date 2026-08-19 --output-dir docs/design-system/evidence
+	node scripts/audit_aai_computed_styles.mjs docs/design-system/evidence/computed-style-walkthrough.json
+	backend/.venv/bin/python scripts/render_design_evidence.py
+
 design-check:
-	backend/.venv/bin/ruff format --check scripts/audit_aai_design_system.py scripts/export_design_system.py tests/test_design_system.py tests/test_common_look_and_feel.py
-	backend/.venv/bin/ruff check scripts/audit_aai_design_system.py scripts/export_design_system.py tests/test_design_system.py tests/test_common_look_and_feel.py
+	node scripts/test_aai_browser_network_policy.mjs
+	node scripts/test_button_accessibility.mjs
+	backend/.venv/bin/ruff format --check scripts/audit_aai_design_system.py scripts/rebuild_aai_evidence.py scripts/render_design_evidence.py scripts/export_design_system.py scripts/export_pen_design_system.py tests/test_design_system.py tests/test_common_look_and_feel.py
+	backend/.venv/bin/ruff check scripts/audit_aai_design_system.py scripts/rebuild_aai_evidence.py scripts/render_design_evidence.py scripts/export_design_system.py scripts/export_pen_design_system.py tests/test_design_system.py tests/test_common_look_and_feel.py
 	npx -y @google/design.md@0.4.0 lint DESIGN.md
 	npx -y html-validate@10.4.0 .agents/skills/common-look-and-feel/templates/admin-cms.html
 	backend/.venv/bin/python scripts/export_design_system.py --check
+	backend/.venv/bin/python scripts/export_pen_design_system.py --check
+	backend/.venv/bin/python scripts/render_design_evidence.py --check
 	backend/.venv/bin/pytest tests/test_design_system.py tests/test_common_look_and_feel.py -q
 
 check: backend-check frontend-check design-check

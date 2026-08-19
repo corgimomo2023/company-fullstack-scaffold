@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "normative_source": "DESIGN.md",
   "reference_syntax": "DESIGN.md curly-brace token reference",
   "components": {
@@ -27,9 +27,33 @@
       "padding": "12px",
       "height": "44px"
     },
+    "button-primary-disabled": {
+      "backgroundColor": "{colors.surface-disabled}",
+      "textColor": "{colors.text}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.md}",
+      "padding": "12px",
+      "height": "44px"
+    },
     "button-secondary": {
       "backgroundColor": "{colors.surface}",
       "textColor": "{colors.primary}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.md}",
+      "padding": "12px",
+      "height": "44px"
+    },
+    "button-secondary-hover": {
+      "backgroundColor": "{colors.surface-subtle}",
+      "textColor": "{colors.primary-dark}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.md}",
+      "padding": "12px",
+      "height": "44px"
+    },
+    "button-secondary-disabled": {
+      "backgroundColor": "{colors.surface-disabled}",
+      "textColor": "{colors.text}",
       "typography": "{typography.label}",
       "rounded": "{rounded.md}",
       "padding": "12px",
@@ -58,6 +82,14 @@
       "padding": "12px",
       "height": "44px"
     },
+    "input-focus": {
+      "backgroundColor": "{colors.surface}",
+      "textColor": "{colors.text}",
+      "typography": "{typography.body-md}",
+      "rounded": "{rounded.md}",
+      "padding": "12px",
+      "height": "44px"
+    },
     "input-disabled": {
       "backgroundColor": "{colors.surface-disabled}",
       "textColor": "{colors.text}",
@@ -71,6 +103,26 @@
       "textColor": "{colors.text}",
       "rounded": "{rounded.md}",
       "padding": "24px"
+    },
+    "card-selected": {
+      "backgroundColor": "{colors.surface-muted}",
+      "textColor": "{colors.text}",
+      "rounded": "{rounded.md}",
+      "padding": "24px"
+    },
+    "tag-default": {
+      "backgroundColor": "{colors.accent}",
+      "textColor": "{colors.text-on-accent}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.pill}",
+      "padding": "8px"
+    },
+    "tag-selected": {
+      "backgroundColor": "{colors.accent-selected}",
+      "textColor": "{colors.surface}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.pill}",
+      "padding": "8px"
     },
     "page-canvas": {
       "backgroundColor": "{colors.surface-subtle}",
@@ -86,6 +138,11 @@
       "backgroundColor": "{colors.table-header}",
       "textColor": "{colors.text}",
       "typography": "{typography.label}",
+      "padding": "12px"
+    },
+    "table-row-selected": {
+      "backgroundColor": "{colors.surface-muted}",
+      "textColor": "{colors.text}",
       "padding": "12px"
     },
     "metadata": {
@@ -114,9 +171,22 @@
       "rounded": "{rounded.pill}",
       "padding": "8px"
     },
+    "status-neutral": {
+      "backgroundColor": "{colors.surface-muted}",
+      "textColor": "{colors.text}",
+      "typography": "{typography.label}",
+      "rounded": "{rounded.pill}",
+      "padding": "8px"
+    },
     "section-accent-rule": {
       "backgroundColor": "{colors.accent}",
       "height": "2px"
+    },
+    "accent-surface-large": {
+      "backgroundColor": "{colors.accent}",
+      "textColor": "{colors.text-on-accent}",
+      "rounded": "{rounded.none}",
+      "padding": "24px"
     },
     "divider": {
       "backgroundColor": "{colors.border}",
@@ -134,6 +204,2983 @@
     "logo-olive-swatch": {
       "backgroundColor": "{colors.logo-olive}",
       "size": "24px"
+    }
+  },
+  "behavior_contracts": {
+    "button": {
+      "variants": [
+        "primary",
+        "secondary",
+        "accent",
+        "destructive",
+        "ghost"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus-visible",
+        "active",
+        "disabled",
+        "pending"
+      ],
+      "requirements": [
+        "action-specific-label",
+        "44px-min-height",
+        "pending-name-stable"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "button"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/contact-us"
+        ],
+        "pageLocations": [
+          "contact-us :: button"
+        ]
+      }
+    },
+    "icon-button": {
+      "variants": [
+        "standard",
+        "quiet",
+        "destructive"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus-visible",
+        "active",
+        "disabled",
+        "pending"
+      ],
+      "requirements": [
+        "accessible-name",
+        "44px-target",
+        "svg-icon"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "site-search",
+          "back-to-top"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com"
+        ],
+        "pageLocations": [
+          "home :: site-search"
+        ]
+      }
+    },
+    "link": {
+      "variants": [
+        "inline",
+        "standalone",
+        "navigation",
+        "external",
+        "download"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus-visible",
+        "visited"
+      ],
+      "requirements": [
+        "non-color-affordance",
+        "destination-purpose"
+      ],
+      "evidence": {
+        "classification": "observed-css-adaptation",
+        "sourceComponents": [
+          "desktop-navigation",
+          "page-menu",
+          "document-download"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+        ],
+        "pageLocations": [
+          "not observed"
+        ]
+      }
+    },
+    "tag-filter": {
+      "variants": [
+        "default",
+        "selected"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus-visible",
+        "active",
+        "disabled"
+      ],
+      "requirements": [
+        "button-semantics",
+        "aria-pressed",
+        "result-count-announcement"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "tag-filter"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/blog"
+        ],
+        "pageLocations": [
+          "blog :: tag-filter"
+        ]
+      }
+    },
+    "status-badge": {
+      "variants": [
+        "neutral",
+        "success",
+        "warning",
+        "danger",
+        "information"
+      ],
+      "states": [
+        "static"
+      ],
+      "requirements": [
+        "text-label",
+        "non-color-cue",
+        "no-interaction-by-default"
+      ],
+      "evidence": {
+        "classification": "normalized-product",
+        "sourceComponents": [
+          "tag-filter"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/blog"
+        ],
+        "pageLocations": [
+          "blog :: tag-filter"
+        ]
+      }
+    },
+    "text-input": {
+      "variants": [
+        "default",
+        "compact"
+      ],
+      "states": [
+        "empty",
+        "populated",
+        "hover",
+        "focus-visible",
+        "disabled",
+        "readonly",
+        "invalid"
+      ],
+      "requirements": [
+        "persistent-label",
+        "described-error",
+        "44px-default-height"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "text-input",
+          "validation"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/contact-us"
+        ],
+        "pageLocations": [
+          "contact-us :: text-input"
+        ]
+      }
+    },
+    "textarea": {
+      "variants": [
+        "default"
+      ],
+      "states": [
+        "empty",
+        "populated",
+        "hover",
+        "focus-visible",
+        "disabled",
+        "readonly",
+        "invalid"
+      ],
+      "requirements": [
+        "persistent-label",
+        "resize-policy",
+        "described-error"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "text-input",
+          "validation"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/contact-us"
+        ],
+        "pageLocations": [
+          "contact-us :: text-input"
+        ]
+      }
+    },
+    "select": {
+      "variants": [
+        "native",
+        "accessible-listbox"
+      ],
+      "states": [
+        "default",
+        "open",
+        "focus-visible",
+        "disabled",
+        "invalid"
+      ],
+      "requirements": [
+        "visible-label",
+        "keyboard-operation",
+        "no-icon-font"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "custom-select"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/blog"
+        ],
+        "pageLocations": [
+          "blog :: custom-select"
+        ]
+      }
+    },
+    "checkbox": {
+      "variants": [
+        "default"
+      ],
+      "states": [
+        "unchecked",
+        "checked",
+        "indeterminate",
+        "focus-visible",
+        "disabled",
+        "invalid"
+      ],
+      "requirements": [
+        "native-input",
+        "44px-target",
+        "text-label"
+      ],
+      "evidence": {
+        "classification": "observed-css-adaptation",
+        "sourceComponents": [
+          "checkbox-radio"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+        ],
+        "pageLocations": [
+          "not observed"
+        ]
+      }
+    },
+    "radio": {
+      "variants": [
+        "default"
+      ],
+      "states": [
+        "unchecked",
+        "checked",
+        "focus-visible",
+        "disabled",
+        "invalid"
+      ],
+      "requirements": [
+        "native-input",
+        "group-label",
+        "44px-target"
+      ],
+      "evidence": {
+        "classification": "observed-css-adaptation",
+        "sourceComponents": [
+          "checkbox-radio"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+        ],
+        "pageLocations": [
+          "not observed"
+        ]
+      }
+    },
+    "field": {
+      "variants": [
+        "stacked",
+        "split"
+      ],
+      "states": [
+        "pristine",
+        "dirty",
+        "validating",
+        "invalid",
+        "disabled"
+      ],
+      "requirements": [
+        "label",
+        "help-text",
+        "error-slot",
+        "required-optional-text"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "form-group",
+          "validation"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/contact-us"
+        ],
+        "pageLocations": [
+          "contact-us :: form-group"
+        ]
+      }
+    },
+    "search": {
+      "variants": [
+        "inline",
+        "global-dialog"
+      ],
+      "states": [
+        "idle",
+        "typing",
+        "loading",
+        "results",
+        "empty",
+        "error"
+      ],
+      "requirements": [
+        "search-role",
+        "clear-action",
+        "result-announcement"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "site-search"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com"
+        ],
+        "pageLocations": [
+          "home :: site-search"
+        ]
+      }
+    },
+    "card": {
+      "variants": [
+        "default",
+        "interactive",
+        "selected",
+        "muted"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus-within",
+        "selected",
+        "disabled"
+      ],
+      "requirements": [
+        "meaningful-grouping",
+        "border-first",
+        "no-nested-interactive-targets"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "image-card",
+          "top-image-card"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com",
+          "https://www.asiaalliedgroup.com/media-coverage/2017"
+        ],
+        "pageLocations": [
+          "home :: image-card",
+          "media-coverage/{year} :: top-image-card"
+        ]
+      }
+    },
+    "media-card": {
+      "variants": [
+        "image-title",
+        "overlay",
+        "horizontal",
+        "vertical"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus-within",
+        "loading",
+        "error"
+      ],
+      "requirements": [
+        "responsive-image",
+        "dimensions",
+        "alt-policy",
+        "tested-overlay-contrast"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "image-title-card",
+          "image-overlay-card",
+          "blog-card-list"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/blog"
+        ],
+        "pageLocations": [
+          "blog :: blog-card-list"
+        ]
+      }
+    },
+    "metric-card": {
+      "variants": [
+        "standard",
+        "exception"
+      ],
+      "states": [
+        "loading",
+        "value",
+        "no-data",
+        "stale",
+        "error"
+      ],
+      "requirements": [
+        "metric-label",
+        "unit",
+        "period",
+        "freshness"
+      ],
+      "evidence": {
+        "classification": "normalized-product",
+        "sourceComponents": [
+          "information-tile-card"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/career"
+        ],
+        "pageLocations": [
+          "career :: information-tile-card"
+        ]
+      }
+    },
+    "table": {
+      "variants": [
+        "standard",
+        "striped",
+        "compact"
+      ],
+      "states": [
+        "loading",
+        "data",
+        "empty",
+        "error",
+        "partial",
+        "unauthorized"
+      ],
+      "requirements": [
+        "caption-or-name",
+        "scoped-headers",
+        "sort-state",
+        "responsive-strategy"
+      ],
+      "evidence": {
+        "classification": "observed-css-adaptation",
+        "sourceComponents": [
+          "listing-table"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+        ],
+        "pageLocations": [
+          "not observed"
+        ]
+      }
+    },
+    "pagination": {
+      "variants": [
+        "pages",
+        "previous-next"
+      ],
+      "states": [
+        "default",
+        "current",
+        "hover",
+        "focus-visible",
+        "disabled",
+        "loading"
+      ],
+      "requirements": [
+        "current-page",
+        "disabled-unavailable",
+        "url-state"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "pagination",
+          "load-more"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/blog"
+        ],
+        "pageLocations": [
+          "blog :: pagination"
+        ]
+      }
+    },
+    "tabs": {
+      "variants": [
+        "line",
+        "contained"
+      ],
+      "states": [
+        "default",
+        "selected",
+        "hover",
+        "focus-visible",
+        "disabled"
+      ],
+      "requirements": [
+        "tablist-semantics",
+        "keyboard-navigation",
+        "labelled-panel"
+      ],
+      "evidence": {
+        "classification": "normalized-product",
+        "sourceComponents": [
+          "page-menu",
+          "tag-filter"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/blog"
+        ],
+        "pageLocations": [
+          "blog :: tag-filter"
+        ]
+      }
+    },
+    "accordion": {
+      "variants": [
+        "standard",
+        "year"
+      ],
+      "states": [
+        "collapsed",
+        "expanded",
+        "hover",
+        "focus-visible",
+        "disabled"
+      ],
+      "requirements": [
+        "button-trigger",
+        "aria-expanded",
+        "labelled-region"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "year-accordion"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/development-history"
+        ],
+        "pageLocations": [
+          "development-history :: year-accordion"
+        ]
+      }
+    },
+    "dialog": {
+      "variants": [
+        "standard",
+        "destructive-confirmation"
+      ],
+      "states": [
+        "opening",
+        "open",
+        "pending",
+        "error",
+        "closing"
+      ],
+      "requirements": [
+        "label",
+        "focus-trap",
+        "escape",
+        "focus-return",
+        "consequence-text"
+      ],
+      "evidence": {
+        "classification": "normalized-product",
+        "sourceComponents": [
+          "mobile-navigation",
+          "site-search"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com"
+        ],
+        "pageLocations": [
+          "home :: mobile-navigation"
+        ]
+      }
+    },
+    "alert": {
+      "variants": [
+        "information",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "states": [
+        "static",
+        "dismissible"
+      ],
+      "requirements": [
+        "semantic-role",
+        "heading-or-label",
+        "non-color-cue"
+      ],
+      "evidence": {
+        "classification": "normalized-product",
+        "sourceComponents": [
+          "validation"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+        ],
+        "pageLocations": [
+          "not observed"
+        ]
+      }
+    },
+    "toast": {
+      "variants": [
+        "success",
+        "information",
+        "warning",
+        "danger"
+      ],
+      "states": [
+        "entering",
+        "visible",
+        "dismissing"
+      ],
+      "requirements": [
+        "live-region-policy",
+        "dismiss-action",
+        "not-form-error-replacement"
+      ],
+      "evidence": {
+        "classification": "normalized-product",
+        "sourceComponents": [
+          "validation"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+        ],
+        "pageLocations": [
+          "not observed"
+        ]
+      }
+    },
+    "navigation": {
+      "variants": [
+        "top",
+        "side",
+        "mobile-disclosure",
+        "local-page-menu"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus-visible",
+        "current",
+        "expanded",
+        "collapsed"
+      ],
+      "requirements": [
+        "current-location",
+        "landmark-label",
+        "keyboard-order"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "desktop-navigation",
+          "mobile-navigation",
+          "page-menu"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com"
+        ],
+        "pageLocations": [
+          "home :: desktop-navigation"
+        ]
+      }
+    },
+    "breadcrumb": {
+      "variants": [
+        "standard"
+      ],
+      "states": [
+        "default",
+        "current"
+      ],
+      "requirements": [
+        "navigation-label",
+        "ordered-list",
+        "current-page"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "breadcrumbs"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/blog"
+        ],
+        "pageLocations": [
+          "blog :: breadcrumbs"
+        ]
+      }
+    },
+    "dropdown-menu": {
+      "variants": [
+        "actions",
+        "navigation"
+      ],
+      "states": [
+        "closed",
+        "open",
+        "focus-visible",
+        "disabled"
+      ],
+      "requirements": [
+        "button-trigger",
+        "keyboard-navigation",
+        "escape",
+        "focus-return"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "desktop-navigation",
+          "mobile-navigation"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com"
+        ],
+        "pageLocations": [
+          "home :: desktop-navigation"
+        ]
+      }
+    },
+    "carousel": {
+      "variants": [
+        "hero",
+        "content"
+      ],
+      "states": [
+        "playing",
+        "paused",
+        "previous",
+        "next"
+      ],
+      "requirements": [
+        "pause-control",
+        "keyboard-operation",
+        "reduced-motion",
+        "slide-status"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "hero-carousel",
+          "feature-slider"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com"
+        ],
+        "pageLocations": [
+          "home :: hero-carousel"
+        ]
+      }
+    },
+    "timeline": {
+      "variants": [
+        "chronological"
+      ],
+      "states": [
+        "default"
+      ],
+      "requirements": [
+        "ordered-data",
+        "non-positional-meaning",
+        "mobile-reading-order"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "development-timeline"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/development-history"
+        ],
+        "pageLocations": [
+          "development-history :: development-timeline"
+        ]
+      }
+    },
+    "map": {
+      "variants": [
+        "interactive-footprint",
+        "static"
+      ],
+      "states": [
+        "loading",
+        "ready",
+        "selected",
+        "error"
+      ],
+      "requirements": [
+        "equivalent-location-list",
+        "keyboard-selection",
+        "selected-label"
+      ],
+      "evidence": {
+        "classification": "observed-adaptation",
+        "sourceComponents": [
+          "global-footprint-map"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/global-footprint"
+        ],
+        "pageLocations": [
+          "global-footprint :: global-footprint-map"
+        ]
+      }
+    },
+    "file-download": {
+      "variants": [
+        "report",
+        "attachment"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus-visible",
+        "unavailable"
+      ],
+      "requirements": [
+        "file-type",
+        "file-size-when-known",
+        "language",
+        "destination-behavior"
+      ],
+      "evidence": {
+        "classification": "observed-css-adaptation",
+        "sourceComponents": [
+          "document-download"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+        ],
+        "pageLocations": [
+          "not observed"
+        ]
+      }
+    },
+    "empty-state": {
+      "variants": [
+        "first-use",
+        "no-results",
+        "unavailable"
+      ],
+      "states": [
+        "static"
+      ],
+      "requirements": [
+        "cause",
+        "recovery-action-when-available",
+        "no-fake-success"
+      ],
+      "evidence": {
+        "classification": "normalized-product",
+        "sourceComponents": [
+          "load-more",
+          "listing-table"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+        ],
+        "pageLocations": [
+          "not observed"
+        ]
+      }
+    },
+    "loading-skeleton": {
+      "variants": [
+        "text",
+        "card",
+        "table"
+      ],
+      "states": [
+        "loading",
+        "reduced-motion"
+      ],
+      "requirements": [
+        "aria-busy-owner",
+        "no-content-announcement",
+        "reduced-motion"
+      ],
+      "evidence": {
+        "classification": "normalized-product",
+        "sourceComponents": [
+          "image-card",
+          "listing-table",
+          "hero-carousel"
+        ],
+        "sourceUrls": [
+          "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+        ],
+        "pageLocations": [
+          "not observed"
+        ]
+      }
+    }
+  },
+  "implementation_coverage": {
+    "button": {
+      "coverage": "partial",
+      "mappedCount": 8,
+      "behaviorOnlyCount": 22,
+      "stateMappings": {
+        "primary.default": {
+          "status": "mapped",
+          "styleRef": "button-primary"
+        },
+        "primary.hover": {
+          "status": "mapped",
+          "styleRef": "button-primary-hover"
+        },
+        "primary.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "primary.active": {
+          "status": "mapped",
+          "styleRef": "button-primary-active"
+        },
+        "primary.disabled": {
+          "status": "mapped",
+          "styleRef": "button-primary-disabled"
+        },
+        "primary.pending": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "secondary.default": {
+          "status": "mapped",
+          "styleRef": "button-secondary"
+        },
+        "secondary.hover": {
+          "status": "mapped",
+          "styleRef": "button-secondary-hover"
+        },
+        "secondary.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "secondary.active": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "secondary.disabled": {
+          "status": "mapped",
+          "styleRef": "button-secondary-disabled"
+        },
+        "secondary.pending": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "accent.default": {
+          "status": "mapped",
+          "styleRef": "button-accent"
+        },
+        "accent.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "accent.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "accent.active": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "accent.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "accent.pending": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive.active": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive.pending": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "ghost.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "ghost.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "ghost.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "ghost.active": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "ghost.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "ghost.pending": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "icon-button": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 18,
+      "stateMappings": {
+        "standard.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.active": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.pending": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "quiet.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "quiet.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "quiet.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "quiet.active": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "quiet.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "quiet.pending": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive.active": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive.pending": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "link": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 20,
+      "stateMappings": {
+        "inline.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "inline.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "inline.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "inline.visited": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standalone.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standalone.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standalone.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standalone.visited": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "navigation.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "navigation.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "navigation.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "navigation.visited": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "external.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "external.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "external.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "external.visited": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "download.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "download.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "download.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "download.visited": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "tag-filter": {
+      "coverage": "partial",
+      "mappedCount": 4,
+      "behaviorOnlyCount": 6,
+      "stateMappings": {
+        "default.default": {
+          "status": "mapped",
+          "styleRef": "tag-default"
+        },
+        "default.hover": {
+          "status": "mapped",
+          "styleRef": "tag-default"
+        },
+        "default.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.active": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "selected.default": {
+          "status": "mapped",
+          "styleRef": "tag-selected"
+        },
+        "selected.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "selected.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "selected.active": {
+          "status": "mapped",
+          "styleRef": "tag-selected"
+        },
+        "selected.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "status-badge": {
+      "coverage": "complete",
+      "mappedCount": 5,
+      "behaviorOnlyCount": 0,
+      "stateMappings": {
+        "neutral.static": {
+          "status": "mapped",
+          "styleRef": "status-neutral"
+        },
+        "success.static": {
+          "status": "mapped",
+          "styleRef": "status-success"
+        },
+        "warning.static": {
+          "status": "mapped",
+          "styleRef": "status-warning"
+        },
+        "danger.static": {
+          "status": "mapped",
+          "styleRef": "status-danger"
+        },
+        "information.static": {
+          "status": "mapped",
+          "styleRef": "status-neutral"
+        }
+      }
+    },
+    "text-input": {
+      "coverage": "partial",
+      "mappedCount": 12,
+      "behaviorOnlyCount": 2,
+      "stateMappings": {
+        "default.empty": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "default.populated": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "default.hover": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "default.focus-visible": {
+          "status": "mapped",
+          "styleRef": "input-focus"
+        },
+        "default.disabled": {
+          "status": "mapped",
+          "styleRef": "input-disabled"
+        },
+        "default.readonly": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "default.invalid": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "compact.empty": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "compact.populated": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "compact.hover": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "compact.focus-visible": {
+          "status": "mapped",
+          "styleRef": "input-focus"
+        },
+        "compact.disabled": {
+          "status": "mapped",
+          "styleRef": "input-disabled"
+        },
+        "compact.readonly": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "compact.invalid": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "textarea": {
+      "coverage": "partial",
+      "mappedCount": 6,
+      "behaviorOnlyCount": 1,
+      "stateMappings": {
+        "default.empty": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "default.populated": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "default.hover": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "default.focus-visible": {
+          "status": "mapped",
+          "styleRef": "input-focus"
+        },
+        "default.disabled": {
+          "status": "mapped",
+          "styleRef": "input-disabled"
+        },
+        "default.readonly": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "default.invalid": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "select": {
+      "coverage": "partial",
+      "mappedCount": 6,
+      "behaviorOnlyCount": 4,
+      "stateMappings": {
+        "native.default": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "native.open": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "native.focus-visible": {
+          "status": "mapped",
+          "styleRef": "input-focus"
+        },
+        "native.disabled": {
+          "status": "mapped",
+          "styleRef": "input-disabled"
+        },
+        "native.invalid": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "accessible-listbox.default": {
+          "status": "mapped",
+          "styleRef": "input-default"
+        },
+        "accessible-listbox.open": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "accessible-listbox.focus-visible": {
+          "status": "mapped",
+          "styleRef": "input-focus"
+        },
+        "accessible-listbox.disabled": {
+          "status": "mapped",
+          "styleRef": "input-disabled"
+        },
+        "accessible-listbox.invalid": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "checkbox": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 6,
+      "stateMappings": {
+        "default.unchecked": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.checked": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.indeterminate": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.invalid": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "radio": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 5,
+      "stateMappings": {
+        "default.unchecked": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.checked": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.invalid": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "field": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 10,
+      "stateMappings": {
+        "stacked.pristine": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "stacked.dirty": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "stacked.validating": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "stacked.invalid": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "stacked.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "split.pristine": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "split.dirty": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "split.validating": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "split.invalid": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "split.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "search": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 12,
+      "stateMappings": {
+        "inline.idle": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "inline.typing": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "inline.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "inline.results": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "inline.empty": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "inline.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "global-dialog.idle": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "global-dialog.typing": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "global-dialog.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "global-dialog.results": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "global-dialog.empty": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "global-dialog.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "card": {
+      "coverage": "partial",
+      "mappedCount": 3,
+      "behaviorOnlyCount": 17,
+      "stateMappings": {
+        "default.default": {
+          "status": "mapped",
+          "styleRef": "card-default"
+        },
+        "default.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.focus-within": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.selected": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "default.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "interactive.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "interactive.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "interactive.focus-within": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "interactive.selected": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "interactive.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "selected.default": {
+          "status": "mapped",
+          "styleRef": "card-selected"
+        },
+        "selected.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "selected.focus-within": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "selected.selected": {
+          "status": "mapped",
+          "styleRef": "card-selected"
+        },
+        "selected.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "muted.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "muted.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "muted.focus-within": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "muted.selected": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "muted.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "media-card": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 20,
+      "stateMappings": {
+        "image-title.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "image-title.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "image-title.focus-within": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "image-title.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "image-title.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "overlay.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "overlay.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "overlay.focus-within": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "overlay.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "overlay.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "horizontal.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "horizontal.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "horizontal.focus-within": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "horizontal.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "horizontal.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "vertical.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "vertical.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "vertical.focus-within": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "vertical.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "vertical.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "metric-card": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 10,
+      "stateMappings": {
+        "standard.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.value": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.no-data": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.stale": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "exception.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "exception.value": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "exception.no-data": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "exception.stale": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "exception.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "table": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 18,
+      "stateMappings": {
+        "standard.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.data": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.empty": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.partial": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.unauthorized": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "striped.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "striped.data": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "striped.empty": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "striped.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "striped.partial": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "striped.unauthorized": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "compact.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "compact.data": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "compact.empty": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "compact.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "compact.partial": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "compact.unauthorized": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "pagination": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 12,
+      "stateMappings": {
+        "pages.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "pages.current": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "pages.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "pages.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "pages.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "pages.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "previous-next.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "previous-next.current": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "previous-next.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "previous-next.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "previous-next.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "previous-next.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "tabs": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 10,
+      "stateMappings": {
+        "line.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "line.selected": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "line.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "line.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "line.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "contained.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "contained.selected": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "contained.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "contained.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "contained.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "accordion": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 10,
+      "stateMappings": {
+        "standard.collapsed": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.expanded": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "year.collapsed": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "year.expanded": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "year.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "year.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "year.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "dialog": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 10,
+      "stateMappings": {
+        "standard.opening": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.open": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.pending": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.closing": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive-confirmation.opening": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive-confirmation.open": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive-confirmation.pending": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive-confirmation.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "destructive-confirmation.closing": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "alert": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 8,
+      "stateMappings": {
+        "information.static": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "information.dismissible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "success.static": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "success.dismissible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "warning.static": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "warning.dismissible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "danger.static": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "danger.dismissible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "toast": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 12,
+      "stateMappings": {
+        "success.entering": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "success.visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "success.dismissing": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "information.entering": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "information.visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "information.dismissing": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "warning.entering": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "warning.visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "warning.dismissing": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "danger.entering": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "danger.visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "danger.dismissing": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "navigation": {
+      "coverage": "partial",
+      "mappedCount": 4,
+      "behaviorOnlyCount": 20,
+      "stateMappings": {
+        "top.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "top.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "top.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "top.current": {
+          "status": "mapped",
+          "styleRef": "navigation-active"
+        },
+        "top.expanded": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "top.collapsed": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "side.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "side.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "side.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "side.current": {
+          "status": "mapped",
+          "styleRef": "navigation-active"
+        },
+        "side.expanded": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "side.collapsed": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "mobile-disclosure.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "mobile-disclosure.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "mobile-disclosure.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "mobile-disclosure.current": {
+          "status": "mapped",
+          "styleRef": "navigation-active"
+        },
+        "mobile-disclosure.expanded": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "mobile-disclosure.collapsed": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "local-page-menu.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "local-page-menu.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "local-page-menu.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "local-page-menu.current": {
+          "status": "mapped",
+          "styleRef": "navigation-active"
+        },
+        "local-page-menu.expanded": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "local-page-menu.collapsed": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "breadcrumb": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 2,
+      "stateMappings": {
+        "standard.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "standard.current": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "dropdown-menu": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 8,
+      "stateMappings": {
+        "actions.closed": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "actions.open": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "actions.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "actions.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "navigation.closed": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "navigation.open": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "navigation.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "navigation.disabled": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "carousel": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 8,
+      "stateMappings": {
+        "hero.playing": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "hero.paused": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "hero.previous": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "hero.next": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "content.playing": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "content.paused": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "content.previous": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "content.next": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "timeline": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 1,
+      "stateMappings": {
+        "chronological.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "map": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 8,
+      "stateMappings": {
+        "interactive-footprint.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "interactive-footprint.ready": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "interactive-footprint.selected": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "interactive-footprint.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "static.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "static.ready": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "static.selected": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "static.error": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "file-download": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 8,
+      "stateMappings": {
+        "report.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "report.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "report.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "report.unavailable": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "attachment.default": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "attachment.hover": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "attachment.focus-visible": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "attachment.unavailable": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "empty-state": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 3,
+      "stateMappings": {
+        "first-use.static": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "no-results.static": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "unavailable.static": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    },
+    "loading-skeleton": {
+      "coverage": "partial",
+      "mappedCount": 0,
+      "behaviorOnlyCount": 6,
+      "stateMappings": {
+        "text.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "text.reduced-motion": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "card.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "card.reduced-motion": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "table.loading": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        },
+        "table.reduced-motion": {
+          "status": "behavior-only",
+          "note": "Consumer must implement and verify this state; no resolved visual record is claimed."
+        }
+      }
+    }
+  },
+  "visual_component_evidence": {
+    "button-primary": {
+      "sourceBehavior": "button",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "button"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/contact-us"
+      ],
+      "pageLocations": [
+        "contact-us :: button"
+      ]
+    },
+    "button-primary-hover": {
+      "sourceBehavior": "button",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "button"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/contact-us"
+      ],
+      "pageLocations": [
+        "contact-us :: button"
+      ]
+    },
+    "button-primary-active": {
+      "sourceBehavior": "button",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "button"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/contact-us"
+      ],
+      "pageLocations": [
+        "contact-us :: button"
+      ]
+    },
+    "button-primary-disabled": {
+      "sourceBehavior": "button",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "button"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/contact-us"
+      ],
+      "pageLocations": [
+        "contact-us :: button"
+      ]
+    },
+    "button-secondary": {
+      "sourceBehavior": "button",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "button"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/contact-us"
+      ],
+      "pageLocations": [
+        "contact-us :: button"
+      ]
+    },
+    "button-secondary-hover": {
+      "sourceBehavior": "button",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "button"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/contact-us"
+      ],
+      "pageLocations": [
+        "contact-us :: button"
+      ]
+    },
+    "button-secondary-disabled": {
+      "sourceBehavior": "button",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "button"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/contact-us"
+      ],
+      "pageLocations": [
+        "contact-us :: button"
+      ]
+    },
+    "button-accent": {
+      "sourceBehavior": "button",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "button"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/contact-us"
+      ],
+      "pageLocations": [
+        "contact-us :: button"
+      ]
+    },
+    "navigation-active": {
+      "sourceBehavior": "navigation",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "desktop-navigation",
+        "mobile-navigation",
+        "page-menu"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com"
+      ],
+      "pageLocations": [
+        "home :: desktop-navigation"
+      ]
+    },
+    "input-default": {
+      "sourceBehavior": "text-input",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "text-input",
+        "validation"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/contact-us"
+      ],
+      "pageLocations": [
+        "contact-us :: text-input"
+      ]
+    },
+    "input-focus": {
+      "sourceBehavior": "text-input",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "text-input",
+        "validation"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/contact-us"
+      ],
+      "pageLocations": [
+        "contact-us :: text-input"
+      ]
+    },
+    "input-disabled": {
+      "sourceBehavior": "text-input",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "text-input",
+        "validation"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/contact-us"
+      ],
+      "pageLocations": [
+        "contact-us :: text-input"
+      ]
+    },
+    "card-default": {
+      "sourceBehavior": "card",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "image-card",
+        "top-image-card"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com",
+        "https://www.asiaalliedgroup.com/media-coverage/2017"
+      ],
+      "pageLocations": [
+        "home :: image-card",
+        "media-coverage/{year} :: top-image-card"
+      ]
+    },
+    "card-selected": {
+      "sourceBehavior": "card",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "image-card",
+        "top-image-card"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com",
+        "https://www.asiaalliedgroup.com/media-coverage/2017"
+      ],
+      "pageLocations": [
+        "home :: image-card",
+        "media-coverage/{year} :: top-image-card"
+      ]
+    },
+    "tag-default": {
+      "sourceBehavior": "tag-filter",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "tag-filter"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/blog"
+      ],
+      "pageLocations": [
+        "blog :: tag-filter"
+      ]
+    },
+    "tag-selected": {
+      "sourceBehavior": "tag-filter",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "tag-filter"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/blog"
+      ],
+      "pageLocations": [
+        "blog :: tag-filter"
+      ]
+    },
+    "page-canvas": {
+      "classification": "normalized-product",
+      "sourceComponents": [
+        "rich-text",
+        "image-card"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+      ],
+      "pageLocations": [
+        "not observed"
+      ]
+    },
+    "panel-muted": {
+      "classification": "observed-css-adaptation",
+      "sourceComponents": [
+        "image-overlay-card",
+        "spaced-image-plate"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+      ],
+      "pageLocations": [
+        "not observed"
+      ]
+    },
+    "table-header": {
+      "sourceBehavior": "table",
+      "classification": "observed-css-adaptation",
+      "sourceComponents": [
+        "listing-table"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+      ],
+      "pageLocations": [
+        "not observed"
+      ]
+    },
+    "table-row-selected": {
+      "sourceBehavior": "table",
+      "classification": "observed-css-adaptation",
+      "sourceComponents": [
+        "listing-table"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+      ],
+      "pageLocations": [
+        "not observed"
+      ]
+    },
+    "metadata": {
+      "sourceBehavior": "media-card",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "image-title-card",
+        "image-overlay-card",
+        "blog-card-list"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/blog"
+      ],
+      "pageLocations": [
+        "blog :: blog-card-list"
+      ]
+    },
+    "status-success": {
+      "sourceBehavior": "status-badge",
+      "classification": "normalized-product",
+      "sourceComponents": [
+        "tag-filter"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/blog"
+      ],
+      "pageLocations": [
+        "blog :: tag-filter"
+      ]
+    },
+    "status-danger": {
+      "sourceBehavior": "status-badge",
+      "classification": "normalized-product",
+      "sourceComponents": [
+        "tag-filter"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/blog"
+      ],
+      "pageLocations": [
+        "blog :: tag-filter"
+      ]
+    },
+    "status-warning": {
+      "sourceBehavior": "status-badge",
+      "classification": "normalized-product",
+      "sourceComponents": [
+        "tag-filter"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/blog"
+      ],
+      "pageLocations": [
+        "blog :: tag-filter"
+      ]
+    },
+    "status-neutral": {
+      "sourceBehavior": "status-badge",
+      "classification": "normalized-product",
+      "sourceComponents": [
+        "tag-filter"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/blog"
+      ],
+      "pageLocations": [
+        "blog :: tag-filter"
+      ]
+    },
+    "section-accent-rule": {
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "page-title"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/blog"
+      ],
+      "pageLocations": [
+        "blog :: page-title"
+      ]
+    },
+    "accent-surface-large": {
+      "classification": "accessibility-correction",
+      "sourceComponents": [
+        "tag-filter",
+        "page-title"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/blog"
+      ],
+      "pageLocations": [
+        "blog :: tag-filter"
+      ]
+    },
+    "divider": {
+      "classification": "observed-css-adaptation",
+      "sourceComponents": [
+        "listing-table",
+        "image-card"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
+      ],
+      "pageLocations": [
+        "not observed"
+      ]
+    },
+    "focus-indicator": {
+      "sourceBehavior": "text-input",
+      "classification": "observed-adaptation",
+      "sourceComponents": [
+        "text-input",
+        "validation"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com/contact-us"
+      ],
+      "pageLocations": [
+        "contact-us :: text-input"
+      ]
+    },
+    "logo-orange-swatch": {
+      "classification": "official-artwork-sample",
+      "sourceComponents": [
+        "site-header"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com"
+      ],
+      "pageLocations": [
+        "home :: site-header"
+      ]
+    },
+    "logo-olive-swatch": {
+      "classification": "official-artwork-sample",
+      "sourceComponents": [
+        "site-header"
+      ],
+      "sourceUrls": [
+        "https://www.asiaalliedgroup.com"
+      ],
+      "pageLocations": [
+        "home :: site-header"
+      ]
     }
   }
 }

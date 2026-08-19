@@ -1,6 +1,6 @@
 # Asia Allied component and page-pattern inventory
 
-This inventory records components observed across the 2026-08-14 public-site audit and states how they should inform company products. Selectors are evidence labels, not code to copy. The public site's CSS, assets, content and custom icon font are not imported into this repository.
+This inventory records components observed across the 2026-08-19 public-site audit and states how they should inform company products. Selectors are evidence labels, not code to copy. The public site's CSS, assets, content and custom icon font are not imported into this repository. Per-component live URLs, page locations, states and methods are in [`source-evidence.md`](source-evidence.md).
 
 ## Global component families
 
@@ -11,10 +11,10 @@ This inventory records components observed across the 2026-08-14 public-site aud
 | Site search | `.sitesearch__wrap` | Hidden/open overlay, green surface, close/submit controls | All HTML templates | Implement an accessible dialog/combobox only where global search exists |
 | Desktop navigation | `.mn__nav`, `.mn__list--1..4`, `.mn__link--2` | Multi-level hover/focus panels | Desktop shell | Internal products should use stable top/side navigation, not copy the mega-menu |
 | Mobile menu | `.mb-mn__wrap`, `.mTrigger__open` | Closed/open, nested disclosure | Mobile shell | Use disclosure buttons with `aria-expanded`, focus containment and Escape |
-| Breadcrumb | `.breadcrumb` | Green text, separators; hidden on sampled 375px page | Interior pages | Keep only when hierarchy is deep; do not hide essential current-location context |
+| Breadcrumb | `.breadcrumb` | Green text, separators; hidden at the sampled mobile state | Interior pages | Keep only when hierarchy is deep; do not hide essential current-location context |
 | Page title | `.page-title-wrap`, `.page-title` | 50px desktop / 25px mobile, green Pragati Narrow | Interior pages | Use normative heading tokens and one semantic H1 |
 | Page menu | `.page-menu__link` | White-on-green local navigation | Group/IR sections | Use tabs/subnavigation only when sibling destinations are stable |
-| Back to top | `.bk2Top__btn` | Hidden/shown by scroll, hover shadow | 97 of 100 sampled pages | Optional for long content; provide accessible name and avoid icon-font glyphs |
+| Back to top | `.bk2Top__btn` | Hidden/shown by scroll, hover shadow | Widespread across HTML content routes | Optional for long content; provide accessible name and avoid icon-font glyphs |
 | Footer | footer, `.ft-link-list`, `.soc-list` | Legal links, social links, contact/copyright; grey surface | All HTML templates | Keep legal/support essentials; internal apps should not reproduce the large public footer |
 
 ## Content and media families
@@ -70,9 +70,9 @@ This inventory records components observed across the 2026-08-14 public-site aud
 
 ## Public page-template taxonomy
 
-This taxonomy is a consolidation aid, not a claim that all 579 locale-specific normalized signature records were individually rendered. **DOM-confirmed families** include the global shell, home/static content, publication list/detail, project, career, contact and direct-PDF samples. **Sitemap/CSS-inferred subfamilies** include unrendered investor-relations destinations, organization-chart/map variants and some report/year/tag routes; their existence is confirmed by sitemap entries and shared selectors, while their exact DOM remains to be checked before literal implementation.
+This taxonomy is a consolidation aid, not a claim that all 10,666 unique content URLs were individually rendered. The audit makes three separate claims: exhaustive sitemap inventory; one real HTTP request for every locale-specific normalized content-route signature, with functionally distinct static siblings protected from `{slug}` collapsing; and responsive browser rendering of 43 route/content profiles at desktop, tablet and mobile widths. The rendered profiles include 31 detailed English profiles covering investor-relations destinations, project-sector landing pages and major list/detail/form/static route families, plus six high-value Traditional Chinese and six Simplified Chinese profiles covering home shell, group static, investor reports, publication list, project list and contact/form routes. A successful profile proves route rendering and only its non-null recorded samples; it does not prove every named function or component exists on that route. Content instances within normalized blog/job/publication families were not each visually inspected.
 
-The sitemap, shared stylesheet and representative DOM audit reduce the site's 10,669 entries to these reusable families:
+The sitemap, shared stylesheet, route-signature DOM audit and responsive profile walkthrough reduce the site's 10,669 entries to these reusable families:
 
 1. **Home:** hero/key visual, announcements, project/business cards, report/download promotion and footer.
 2. **Group static:** about, vision/mission/core values, corporate structure, development history, directors.
@@ -97,7 +97,7 @@ New company primitives must cover more states than the public marketing site vis
 - forms: pristine, dirty, validating, invalid, submitting, submit failure and submit success;
 - destructive: confirmation, pending, failure, completed and undo where safe;
 - localization: English, Traditional Chinese and long-label stress cases;
-- responsive: 320/375px narrow, tablet, standard desktop and wide workspace;
+- responsive: 390px mobile, 768px tablet, 1440px desktop and wide workspace where required;
 - motion: normal and `prefers-reduced-motion`.
 
 ## Accessibility corrections versus literal source reuse

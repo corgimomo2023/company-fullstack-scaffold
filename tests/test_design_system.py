@@ -3,12 +3,20 @@ from __future__ import annotations
 import json
 import re
 import runpy
+import urllib.error
+import urllib.request
 from pathlib import Path
+from typing import Any
+
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-is_allowed_source_url = runpy.run_path(
-    str(ROOT / "scripts" / "audit_aai_design_system.py")
-)["is_allowed_source_url"]
+AUDIT_HELPERS = runpy.run_path(str(ROOT / "scripts" / "audit_aai_design_system.py"))
+is_allowed_source_url = AUDIT_HELPERS["is_allowed_source_url"]
+normalized_route_signature = AUDIT_HELPERS["normalized_route_signature"]
+fetch = AUDIT_HELPERS["fetch"]
+select_representative_pages = AUDIT_HELPERS["select_representative_pages"]
+SameOriginRedirectHandler = AUDIT_HELPERS["SameOriginRedirectHandler"]
 EVIDENCE = ROOT / "docs" / "design-system" / "evidence"
 EXPECTED_COLORS = {
     "primary": "#006a63",
@@ -17,6 +25,7 @@ EXPECTED_COLORS = {
     "accent": "#e6762d",
     "accent-accessible": "#b15315",
     "accent-selected": "#733208",
+    "text-on-accent": "#001c19",
     "text": "#333333",
     "text-muted": "#6c757d",
     "surface": "#ffffff",
@@ -84,13 +93,106 @@ def test_public_audit_url_scope_uses_exact_origin_matching() -> None:
     )
 
 
+def test_public_audit_fetch_and_redirect_paths_fail_closed_outside_origin() -> None:
+    with pytest.raises(ValueError, match="outside the audited HTTPS origin"):
+        fetch("http://169.254.169.254/latest/meta-data", retries=1)
+
+    handler = SameOriginRedirectHandler()
+    request = urllib.request.Request("https://www.asiaalliedgroup.com/en")
+    with pytest.raises(urllib.error.HTTPError, match="cross-origin redirect blocked"):
+        handler.redirect_request(
+            request,
+            None,
+            302,
+            "Found",
+            {},
+            "http://169.254.169.254/latest/meta-data",
+        )
+
+    with pytest.raises(ValueError, match="out-of-scope URLs"):
+        select_representative_pages(
+            {
+                "en": [
+                    "https://www.asiaalliedgroup.com/en",
+                    "https://evil.example/injected",
+                ]
+            }
+        )
+
+
+def test_route_normalization_only_collapses_content_detail_dimensions() -> None:
+    assert (
+        normalized_route_signature(
+            "https://www.asiaalliedgroup.com/en/blog/01/tag/infrastructure"
+        )
+        == "blog/{month}/tag/{slug}"
+    )
+    assert (
+        normalized_route_signature(
+            "https://www.asiaalliedgroup.com/en/blog/2026/example-article"
+        )
+        == "blog/{year}/{slug}"
+    )
+    assert (
+        normalized_route_signature("https://www.asiaalliedgroup.com/en/blog/2026/01")
+        == "blog/{year}/{month}"
+    )
+    assert (
+        normalized_route_signature("https://www.asiaalliedgroup.com/en/blog/csr/12")
+        == "blog/csr/{month}"
+    )
+    assert (
+        normalized_route_signature(
+            "https://www.asiaalliedgroup.com/en/blog/csr/tag/csr"
+        )
+        == "blog/csr/tag/{slug}"
+    )
+    assert (
+        normalized_route_signature(
+            "https://www.asiaalliedgroup.com/en/investor-relations/financial-reports"
+        )
+        == "investor-relations/financial-reports"
+    )
+    assert (
+        normalized_route_signature(
+            "https://www.asiaalliedgroup.com/en/investor-relations/stock-chart"
+        )
+        == "investor-relations/stock-chart"
+    )
+    assert (
+        normalized_route_signature(
+            "https://www.asiaalliedgroup.com/en/projects/construction"
+        )
+        == "projects/construction"
+    )
+    assert (
+        normalized_route_signature(
+            "https://www.asiaalliedgroup.com/en/services/engineering"
+        )
+        == "services/engineering"
+    )
+    assert (
+        normalized_route_signature(
+            "https://www.asiaalliedgroup.com/en/services/property-management"
+        )
+        == "services/property-management"
+    )
+    assert (
+        normalized_route_signature(
+            "https://www.asiaalliedgroup.com/en/career/project-manager-j2026081901"
+        )
+        == "career/{slug}"
+    )
+
+
 def test_sitemap_and_template_audit_is_complete_and_error_free() -> None:
     audit = load_json(EVIDENCE / "site-map-and-template-audit.json")
     scope = audit["scope"]
 
     assert scope["total_sitemap_entries"] == 10_669
     assert scope["total_unique_sitemap_urls"] == 10_666
-    assert scope["representative_page_count"] == 100
+    assert scope["normalized_route_signature_count"] == 559
+    assert scope["representative_page_count"] == 559
     assert audit["validation"] == {
         "page_error_count": 0,
         "page_errors": [],
@@ -111,16 +213,216 @@ def test_sitemap_and_template_audit_is_complete_and_error_free() -> None:
         assert not sitemap["invalid_scope_urls"]
 
     pages = audit["representative_pages"]
-    assert len(pages) == 100
-    assert all(page["status"] != "error" for page in pages)
+    assert len(pages) == 559
+    assert {
+        locale: sum(page["locale"] == locale for page in pages)
+        for locale in ("en", "tc", "sc")
+    } == {"en": 188, "tc": 175, "sc": 196}
+    assert all(page["status"] == 200 for page in pages)
     assert {page["locale"] for page in pages} == {"en", "tc", "sc"}
-    assert sum(page["url"] != page["final_url"] for page in pages) == 15
-    assert sum("pdf" in (page.get("content_type") or "").lower() for page in pages) == 3
+    expected_signatures = {
+        (locale, signature)
+        for locale, sitemap in scope["sitemaps"].items()
+        for signature in sitemap["normalized_route_signatures"]
+    }
+    observed_signatures = {(page["locale"], page["route_signature"]) for page in pages}
+    assert observed_signatures == expected_signatures
+    assert ("en", "blog/{slug}/tag/{slug}") not in observed_signatures
+    assert ("en", "blog/csr/tag/{slug}") in observed_signatures
+    protected = {
+        "investor-relations/corporate-governance",
+        "investor-relations/financial-reports",
+        "investor-relations/stock-chart",
+        "projects/construction",
+        "projects/professional-services",
+        "the-group/about-the-group",
+        "the-group/vision-mission-and-core-values",
+    }
+    assert protected <= {
+        signature for locale, signature in observed_signatures if locale == "en"
+    }
+
+
+def test_source_evidence_index_covers_every_token_and_component() -> None:
+    evidence = load_json(EVIDENCE / "source-evidence-index.json")
+    assert len(evidence["token_evidence"]) == 62
+    assert len(evidence["public_component_evidence"]) == 52
+    assert evidence["token_evidence"]["colors.text-on-accent"]["classification"] == (
+        "accessibility-correction"
+    )
+    assert (
+        evidence["token_evidence"]["colors.accent-accessible"]["classification"]
+        == "accessibility-correction"
+    )
+    assert not any(
+        record["classification"] == "observed-exact"
+        for record in evidence["token_evidence"].values()
+    )
+
+    for token, record in evidence["token_evidence"].items():
+        assert token
+        assert record["classification"]
+        assert record["source_stylesheets"]
+        assert record["live_page_locations"] == []
+        assert record["computed_style_evidence_ref"] is None
+        assert record["evidence_methods"]
+        exact_urls = {
+            item["source_url"]
+            for item in (
+                *record.get("css_declarations", []),
+                *record.get("media_queries", []),
+            )
+        }
+        has_css_evidence = bool(exact_urls)
+        if has_css_evidence:
+            assert record["primary_evidence_url"] in exact_urls
+            assert set(record["cross_check_urls"]) <= exact_urls
+            if record.get("media_queries"):
+                assert record["viewport_scope"] == ["source-css-media-query"]
+                assert record["state_scope"] == ["source-css-media-query"]
+                assert record["evidence_methods"] == [
+                    "public-css-media-query-extraction"
+                ]
+            else:
+                assert record["viewport_scope"] == []
+                assert record["state_scope"] == ["source-css-declaration"]
+                assert record["evidence_methods"] == [
+                    "public-css-declaration-extraction"
+                ]
+        else:
+            assert record["primary_evidence_url"] is None
+            assert record["viewport_scope"] == []
+            assert record["state_scope"] == ["not-observed"]
+            assert "exact source value not observed" in record["evidence_methods"][0]
+
+    for component, record in evidence["public_component_evidence"].items():
+        assert component
+        assert record["classification"]
+        assert record["markers"]
+        assert record["viewport_scope"] == []
+        assert isinstance(record["state_evidence"], dict)
+        assert record["computed_style_evidence_ref"] is None
+        assert record["evidence_methods"] or record["classification"] == "not-observed"
+        assert (
+            record["live_page_locations"]
+            or record["css_selector_evidence"]
+            or record["classification"] == "not-observed"
+        )
+        for location in record["live_page_locations"]:
+            assert is_allowed_source_url(location["url"])
+            assert location["page_location"]
+            assert location["page_title"] is not None
+
+
+def test_human_evidence_register_does_not_overclaim_normalized_live_states() -> None:
+    renderer = (ROOT / "scripts" / "render_design_evidence.py").read_text(
+        encoding="utf-8"
+    )
+    assert "strict=False" not in renderer
+    assert renderer.count("strict=True") >= 2
+    register = (ROOT / "docs" / "design-system" / "source-evidence.md").read_text(
+        encoding="utf-8"
+    )
+    for variant in ("page-canvas", "status-success", "accent-surface-large"):
+        line = next(
+            line
+            for line in register.splitlines()
+            if line.startswith(f"| `{variant}` |")
+        )
+        assert "normalized variant not observed live" in line
+        assert "rendered default observed" not in line
+    assert "| `button-primary-disabled` |" in register
+    assert "`not observed as live state`" in register
+    assert "Rendered profile/viewport records: `129`" in register
+    assert "Successful visible state samples: `255`" in register
+    assert "Rendered responsive states" not in register
+
+
+def test_computed_style_collector_is_same_origin_and_visible_only() -> None:
+    collector = (ROOT / "scripts" / "audit_aai_computed_styles.mjs").read_text(
+        encoding="utf-8"
+    )
+    policy = (ROOT / "scripts" / "aai_browser_network_policy.mjs").read_text(
+        encoding="utf-8"
+    )
+    assert "applyBrowserNetworkPolicy(context" in collector
+    assert "browserContextOptions({ viewport, locale })" in collector
+    assert "serviceWorkers: 'block'" in policy
+    assert "context.routeWebSocket('**/*'" in policy
+    assert "webSocketRoute.connectToServer()" in policy
+    assert "webSocketRoute.close({ code: 1008" in policy
+    assert "route.abort('blockedbyclient')" in policy
+    assert "Cross-origin final URL blocked" in collector
+    assert "Cross-origin retry URL blocked" in collector
+    assert "candidates.evaluateAll" in collector
+    assert "Execution context was destroyed" in collector
+    assert "const selectedProfiles = profileFilter" in collector
+    assert ".first()" not in collector
+
+
+def test_computed_style_walkthrough_covers_all_profiles_and_viewports() -> None:
+    evidence = load_json(EVIDENCE / "computed-style-walkthrough.json")
+    assert evidence["schemaVersion"] == 2
+    assert "visible elements" in evidence["methodology"]
+    assert "exact https://www.asiaalliedgroup.com origin" in evidence["networkScope"]
+    required_profiles = {
+        "investor-governance",
+        "investor-reports",
+        "investor-stock-chart",
+        "project-construction",
+        "project-professional-services",
+        "group-about",
+        "group-vision",
+        "tc-home",
+        "tc-group-about",
+        "tc-investor-reports",
+        "tc-publication-list",
+        "tc-projects-list",
+        "tc-contact-form",
+        "sc-home",
+        "sc-group-about",
+        "sc-investor-reports",
+        "sc-publication-list",
+        "sc-projects-list",
+        "sc-contact-form",
+    }
+    assert required_profiles <= {item["name"] for item in evidence["profiles"]}
+    assert {item["name"] for item in evidence["viewports"]} == {
+        "desktop",
+        "tablet",
+        "mobile",
+    }
+    assert evidence["resultCount"] == len(evidence["profiles"]) * 3
+    assert evidence["failureCount"] == 0
+    assert not evidence["failures"]
+    assert all(item["status"] == 200 for item in evidence["results"])
+    assert not any(item["horizontalOverflow"] for item in evidence["results"])
+    sampled_elements = [
+        sample
+        for result in evidence["results"]
+        for sample in (*result["styles"].values(), *result["states"].values())
+        if sample is not None
+    ]
+    assert sampled_elements
+    assert all(sample["visible"] for sample in sampled_elements)
+    assert all(not sample["hidden"] for sample in sampled_elements)
+    assert all(sample["values"]["display"] != "none" for sample in sampled_elements)
+    assert all(
+        sample["values"]["visibility"] != "hidden" for sample in sampled_elements
+    )
+    state_hits = {
+        state: sum(state in result["states"] for result in evidence["results"])
+        for state in {
+            state for result in evidence["results"] for state in result["states"]
+        }
+    }
+    for state in ("buttonHover", "buttonFocus", "buttonActive"):
+        assert state_hits.get(state, 0) > 0
 
 
 def test_stylesheet_evidence_has_expected_hashes_and_brand_values() -> None:
     evidence = load_json(EVIDENCE / "css-token-evidence.json")
-    assert "at most 3" in evidence["provenance"]["excerpt_policy"]
+    assert "bounded" in evidence["provenance"]["excerpt_policy"]
     stylesheets = {
         item["source_url"].rsplit("/", 1)[-1]: item for item in evidence["stylesheets"]
     }
@@ -137,6 +439,8 @@ def test_stylesheet_evidence_has_expected_hashes_and_brand_values() -> None:
     assert project["colors"]["#003531"]["count"] == 10
     assert project["media_queries"]["max-width: 767.98px"] == 112
     assert project["media_queries"]["max-width: 991.98px"] == 103
+    assert any("338px" in query for query in project["media_queries"])
+    assert any("1679px" in query for query in project["media_queries"])
     assert all("src" not in face for face in project["font_faces"])
     assert all(len(item["evidence"]) <= 3 for item in project["colors"].values())
     assert all(
@@ -149,6 +453,70 @@ def test_stylesheet_evidence_has_expected_hashes_and_brand_values() -> None:
         == "b99d6336f7da208f0d859a30cdbd0fb3e2cb1cff138732013a208751d9ae2e98"
     )
     assert print_css["bytes"] == 256_301
+
+
+def test_component_contract_evidence_resolves_to_direct_source_records() -> None:
+    contracts = load_json(ROOT / "design-system" / "components.json")
+    source_index = load_json(EVIDENCE / "source-evidence-index.json")
+    public_components = source_index["public_component_evidence"]
+    failures: list[str] = []
+
+    evidence_blocks: list[tuple[str, dict[str, Any]]] = []
+    for name, contract in contracts["behavior_contracts"].items():
+        evidence_blocks.append((f"behavior_contracts.{name}", contract["evidence"]))
+    for name, evidence in contracts["visual_component_evidence"].items():
+        evidence_blocks.append((f"visual_component_evidence.{name}", evidence))
+
+    for path, evidence in evidence_blocks:
+        refs = evidence["sourceComponents"]
+        urls = evidence["sourceUrls"]
+        locations = evidence["pageLocations"]
+        missing_refs = sorted(set(refs) - set(public_components))
+        if missing_refs:
+            failures.append(f"{path}: unknown sourceComponents {missing_refs}")
+            continue
+        allowed_urls: set[str] = set()
+        for ref in refs:
+            record = public_components[ref]
+            allowed_urls.update(
+                location["url"] for location in record["live_page_locations"]
+            )
+            allowed_urls.update(
+                item["source_url"] for item in record["css_selector_evidence"]
+            )
+        invalid_urls = sorted(set(urls) - allowed_urls)
+        if invalid_urls:
+            failures.append(
+                f"{path}: URLs without direct referenced evidence {invalid_urls}"
+            )
+        if len(urls) != len(locations):
+            failures.append(
+                f"{path}: sourceUrls/pageLocations length mismatch "
+                f"{len(urls)} != {len(locations)}"
+            )
+            continue
+        direct_pairs: set[tuple[str, str]] = set()
+        css_urls: set[str] = set()
+        for ref in refs:
+            record = public_components[ref]
+            direct_pairs.update(
+                (location["url"], location["page_location"])
+                for location in record["live_page_locations"]
+            )
+            css_urls.update(
+                item["source_url"] for item in record["css_selector_evidence"]
+            )
+        for url, location in zip(urls, locations, strict=True):
+            if (url, location) in direct_pairs:
+                continue
+            if location == "not observed" and url in css_urls:
+                continue
+            failures.append(
+                f"{path}: URL/location pair is not a direct record "
+                f"({url!r}, {location!r})"
+            )
+
+    assert failures == []
 
 
 def test_generated_formats_share_the_normative_contract() -> None:
@@ -174,17 +542,127 @@ def test_generated_formats_share_the_normative_contract() -> None:
 
     components = load_json(ROOT / "design-system" / "components.json")
     extension_components = dtcg["$extensions"][EXTENSION_KEY]["componentContract"]
-    assert len(extension_components) == 21
+    assert len(extension_components) == 31
     assert components["components"] == extension_components
+    assert len(components["behavior_contracts"]) >= 28
+    assert (
+        components["behavior_contracts"]
+        == dtcg["$extensions"][EXTENSION_KEY]["componentBehavior"]
+    )
+    assert (
+        components["implementation_coverage"]
+        == dtcg["$extensions"][EXTENSION_KEY]["componentImplementation"]
+    )
+    assert set(components["implementation_coverage"]) == set(
+        components["behavior_contracts"]
+    )
+    for family, contract in components["behavior_contracts"].items():
+        mappings = components["implementation_coverage"][family]["stateMappings"]
+        assert len(mappings) == len(contract["variants"]) * len(contract["states"])
+        for mapping in mappings.values():
+            assert mapping["status"] in {"mapped", "behavior-only"}
+            if mapping["status"] == "mapped":
+                assert mapping["styleRef"] in components["components"]
+            else:
+                assert mapping["note"]
+    assert set(components["visual_component_evidence"]) == set(components["components"])
+    for evidence in components["visual_component_evidence"].values():
+        assert evidence["classification"]
+        assert evidence["sourceComponents"]
+        assert evidence["sourceUrls"]
+        assert evidence["pageLocations"]
+    for contract in components["behavior_contracts"].values():
+        evidence = contract["evidence"]
+        assert evidence["classification"]
+        assert evidence["sourceComponents"]
+        assert evidence["sourceUrls"]
+        assert evidence["pageLocations"]
+
+    assert tailwind["theme"]["extend"]["screens"] == {
+        "compact": "370px",
+        "sm": "576px",
+        "md": "768px",
+        "lg": "992px",
+        "xl": "1200px",
+        "2xl": "1600px",
+    }
+    assert tailwind["theme"]["extend"]["maxWidth"]["container-2xl"] == "1570px"
+    assert tailwind["theme"]["extend"]["boxShadow"]["low"] == (
+        "0 4px 12px rgba(0, 0, 0, 0.10)"
+    )
 
     theme_css = (ROOT / "design-system" / "theme.css").read_text(encoding="utf-8")
     css_colors = dict(re.findall(r"--color-([a-z0-9-]+):\s*(#[0-9a-f]{6});", theme_css))
     assert css_colors == EXPECTED_COLORS
-    assert '--font-display-lg: "Pragati Narrow";' in theme_css
-    assert '--font-body-md: "Roboto";' in theme_css
+    assert '--font-display-lg: "Pragati Narrow", "Noto Sans TC"' in theme_css
+    assert '--font-body-md: "Roboto", "Noto Sans TC"' in theme_css
     assert '"Pragati Narrow, Roboto' not in theme_css
     for name, line_height in EXPECTED_LINE_HEIGHTS.items():
         assert f"--leading-{name}: {line_height};" in theme_css
+
+    foundation = (ROOT / "design-system" / "foundation.css").read_text(encoding="utf-8")
+    assert foundation.startswith(":root {")
+    assert "--color-primary: #006a63;" in foundation
+    assert (
+        '--font-body: "Roboto", "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;'
+        in foundation
+    )
+    assert "--breakpoint-2xl: 1600px;" in foundation
+    assert ".type-body-md {" in foundation
+    assert "font-weight: var(--weight-body-md);" in foundation
+    assert tailwind["theme"]["extend"]["fontFamily"]["body-md"][:2] == [
+        "Roboto",
+        "Noto Sans TC",
+    ]
+
+    preset = (ROOT / "design-system" / "tailwind.preset.cjs").read_text(
+        encoding="utf-8"
+    )
+    assert preset.startswith(
+        "// Generated from DESIGN.md. Do not edit.\nmodule.exports = "
+    )
+
+
+def test_pen_visual_board_is_derived_from_normative_artifacts() -> None:
+    pen = load_json(ROOT / "design-system" / "asia-allied-design-system.pen")
+
+    assert pen["version"] == "2.17"
+    assert pen["children"][0]["metadata"] == {
+        "type": "design-system-visualization",
+        "normativeSource": "DESIGN.md",
+        "generatedFrom": [
+            "design-system/tokens.json",
+            "design-system/components.json",
+        ],
+    }
+    assert pen["variables"]["color-primary"]["value"] == "#006a63"
+    assert pen["variables"]["color-accent"]["value"] == "#e6762d"
+    assert {child["name"] for child in pen["children"]} >= {
+        "Cover",
+        "Color tokens",
+        "Typography",
+        "Spacing and radius",
+        "Components and states",
+        "Evidence boundary",
+    }
+
+
+def test_runtime_frontend_consumes_the_normative_foundation() -> None:
+    styles = (ROOT / "frontend" / "src" / "styles.css").read_text(encoding="utf-8")
+    compose = (ROOT / "compose.yaml").read_text(encoding="utf-8")
+    dockerfile = (ROOT / "frontend" / "Dockerfile").read_text(encoding="utf-8")
+    assert '@import "../../design-system/foundation.css";' in styles
+    assert "context: ." in compose
+    assert "dockerfile: frontend/Dockerfile" in compose
+    assert (
+        "COPY design-system/foundation.css ../design-system/foundation.css"
+        in dockerfile
+    )
+    assert "COPY --from=builder /workspace/frontend/dist" in dockerfile
+    assert "Inter" not in styles
+    assert "#174ea6" not in styles.lower()
+    assert "border-radius:14px" not in styles.replace(" ", "")
+    assert "var(--color-primary)" in styles
 
 
 def test_normative_color_pairs_meet_wcag_aa() -> None:
