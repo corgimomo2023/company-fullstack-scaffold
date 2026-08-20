@@ -10,10 +10,69 @@ ROOT = Path(__file__).resolve().parents[1]
 DESIGN_PATH = ROOT / "DESIGN.md"
 TOKENS_PATH = ROOT / "design-system" / "tokens.json"
 COMPONENTS_PATH = ROOT / "design-system" / "components.json"
+SOURCE_SPECIMENS_PATH = ROOT / "design-system" / "source-component-specimens.json"
+SOURCE_EVIDENCE_INDEX_PATH = (
+    ROOT / "docs" / "design-system" / "evidence" / "source-evidence-index.json"
+)
 OUTPUT_PATH = ROOT / "design-system" / "asia-allied-design-system.pen"
 
 CANVAS_WIDTH = 1200
 CANVAS_HEIGHT = 1240
+
+PUBLIC_SPECIMEN_KINDS = {
+    "site-header": "navigation",
+    "utility-navigation": "navigation",
+    "site-search": "search",
+    "desktop-navigation": "navigation",
+    "mobile-navigation": "dropdown",
+    "breadcrumbs": "breadcrumb",
+    "page-title": "rich-text",
+    "page-menu": "navigation",
+    "page-tabs": "tabs",
+    "filter-bar": "select",
+    "hero-carousel": "carousel",
+    "image-title-card": "card",
+    "image-card": "card",
+    "image-overlay-card": "media-card",
+    "overlay-cover-card": "media-card",
+    "image-plate": "card",
+    "spaced-image-plate": "card",
+    "left-image-card": "media-card",
+    "top-image-card": "media-card",
+    "blog-card-list": "media-card",
+    "thumbnail-list": "media-card",
+    "information-tile-card": "card",
+    "image-slider": "carousel",
+    "milestone-card": "timeline",
+    "share-dropdown": "dropdown",
+    "feature-slider": "carousel",
+    "video-link": "media-card",
+    "rich-text": "rich-text",
+    "tag-filter": "tag",
+    "custom-select": "select",
+    "listing-table": "table",
+    "pagination": "pagination",
+    "load-more": "load-more",
+    "button": "button-states",
+    "text-input": "input",
+    "checkbox-radio": "checkbox",
+    "validation": "field",
+    "form-group": "field",
+    "subscription-form": "form",
+    "contact-form": "form",
+    "year-accordion": "accordion",
+    "development-timeline": "timeline",
+    "corporate-structure": "timeline",
+    "global-footprint-map": "map",
+    "document-download": "download",
+    "director-person": "not-observed",
+    "job-listing": "card",
+    "publication": "not-observed",
+    "project-list-detail": "not-observed",
+    "social-links": "social-links",
+    "back-to-top": "back-to-top",
+    "footer": "navigation",
+}
 GUTTER = 40
 BOARD_COLUMNS = 5
 
@@ -95,40 +154,6 @@ VISUAL_GROUPS = {
         "logo-orange-swatch",
         "logo-olive-swatch",
     ],
-}
-
-PREVIEW_COPY = {
-    "button": "Save changes",
-    "icon-button": "＋  ⋯  ×",
-    "link": "View project →",
-    "tag-filter": "All   ESG   Projects",
-    "pagination": "‹ Prev   1  [2]  3   Next ›",
-    "tabs": "Overview   [Details]   Files",
-    "navigation": "Dashboard   Projects   Reports",
-    "breadcrumb": "Home / Projects / Detail",
-    "dropdown-menu": "Actions  ▾   Edit · Export",
-    "text-input": "Project name",
-    "textarea": "Add operational notes…",
-    "select": "Status: Active  ▾",
-    "checkbox": "☑ Email updates   ☐ SMS",
-    "radio": "● Internal   ○ External",
-    "field": "Label · Control · Help text",
-    "search": "⌕  Search projects",
-    "card": "Project card · status · action",
-    "media-card": "▧  Image · title · metadata",
-    "metric-card": "Active projects   128  +12%",
-    "table": "NAME        STATUS      OWNER",
-    "accordion": "2025 development history  ＋",
-    "carousel": "‹   Feature 02 / 04   ›   ‖",
-    "timeline": "● 2001 ── ● 2012 ── ● 2025",
-    "map": "HK ●     SG ●       AU ●",
-    "file-download": "Annual report · PDF · 4.2 MB ↓",
-    "status-badge": "Success   Warning   Error",
-    "dialog": "Confirm action   Cancel | Continue",
-    "alert": "Important operational message",
-    "toast": "Changes saved successfully",
-    "empty-state": "No projects yet · Create project",
-    "loading-skeleton": "██████   █████████   ████",
 }
 
 COLOR_ROLES = {
@@ -483,6 +508,1101 @@ def compact_list(values: list[str], limit: int = 3) -> str:
     if len(values) <= limit:
         return ", ".join(values)
     return f"{', '.join(values[:limit])} +{len(values) - limit}"
+
+
+def source_control(
+    node_id: str,
+    label: str,
+    *,
+    fill: str = "#FFFFFF",
+    color: str = "#333333",
+    width: int | str = "fill_container",
+    height: int = 40,
+    border: str = "#C7C7C7",
+    radius: int = 0,
+) -> dict[str, Any]:
+    return frame(
+        node_id,
+        label,
+        [text(f"{node_id}-label", label, size=14, weight=700, color=color)],
+        layout="horizontal",
+        padding=[10, 14],
+        width=width,
+        height=height,
+        fill=fill,
+        corner_radius=radius,
+        stroke=border,
+        strokeWidth=1,
+        alignItems="center",
+    )
+
+
+def source_specimen_visual(name: str, kind: str) -> list[dict[str, Any]]:
+    """Build editable topology from audited source DOM/CSS, never a screenshot."""
+    if kind == "button-states":
+        return [
+            row(
+                f"source-{name}-primary-row",
+                "Contact submit states",
+                [
+                    source_control(
+                        f"source-{name}-default",
+                        "SUBMIT · DEFAULT",
+                        fill="#E6762D",
+                        color="#FFFFFF",
+                        height=54,
+                        border="#E6762D",
+                    ),
+                    source_control(
+                        f"source-{name}-hover",
+                        "SUBMIT · HOVER",
+                        fill="#DF681B",
+                        color="#FFFFFF",
+                        height=54,
+                        border="#E6762D",
+                    ),
+                    source_control(
+                        f"source-{name}-focus",
+                        "FOCUS",
+                        fill="#DF681B",
+                        color="#FFFFFF",
+                        height=54,
+                        border="#E6762D",
+                    ),
+                    source_control(
+                        f"source-{name}-active",
+                        "ACTIVE = HOVER¹",
+                        fill="#DF681B",
+                        color="#FFFFFF",
+                        height=54,
+                        border="#E6762D",
+                    ),
+                ],
+                gap=8,
+            ),
+            row(
+                f"source-{name}-reset-row",
+                "Contact reset states",
+                [
+                    source_control(
+                        f"source-{name}-reset-default",
+                        "RESET · DEFAULT",
+                        color="#E6762D",
+                        height=46,
+                        border="#FFFFFF",
+                    ),
+                    source_control(
+                        f"source-{name}-reset-hover",
+                        "RESET · HOVER / FOCUS",
+                        fill="#EFEFEF",
+                        color="#E6762D",
+                        height=46,
+                        border="#FFFFFF",
+                    ),
+                ],
+                gap=8,
+            ),
+        ]
+    if kind == "pagination":
+        return [
+            row(
+                f"source-{name}-row",
+                "Actual pagination anatomy",
+                [
+                    text(
+                        f"source-{name}-previous",
+                        "‹",
+                        size=22,
+                        color="#E6762D",
+                        width=24,
+                    ),
+                    text(
+                        f"source-{name}-page-1",
+                        "1",
+                        size=18,
+                        color="#707070",
+                        width=24,
+                    ),
+                    text(
+                        f"source-{name}-page-2-current",
+                        "2",
+                        size=18,
+                        weight=700,
+                        color="#E6762D",
+                        width=24,
+                    ),
+                    source_control(
+                        f"source-{name}-page-input",
+                        "3",
+                        width=38,
+                        height=30,
+                        color="#707070",
+                        border="#E6762D",
+                    ),
+                    text(
+                        f"source-{name}-total",
+                        "/ 12",
+                        size=18,
+                        color="#707070",
+                        width=46,
+                    ),
+                    text(
+                        f"source-{name}-next",
+                        "›",
+                        size=22,
+                        color="#E6762D",
+                        width=24,
+                    ),
+                ],
+                gap=10,
+            )
+        ]
+    if kind in {"back-to-top", "icon-button"}:
+        return [
+            row(
+                f"source-{name}-states",
+                "Back-to-top",
+                [
+                    source_control(
+                        f"source-{name}-default", "↑  TOP", width=86, fill="#CECECE"
+                    ),
+                    source_control(
+                        f"source-{name}-hover", "↑  TOP", width=86, fill="#CECECE"
+                    ),
+                ],
+            )
+        ]
+    if kind == "link":
+        return [
+            source_control(
+                f"source-{name}-default",
+                "Investor Relations",
+                fill="#003531",
+                color="#FFFFFF",
+                border="#003531",
+            ),
+            source_control(
+                f"source-{name}-hover",
+                "Investor Relations · hover",
+                fill="#DFDEDE",
+                color="#006A63",
+                border="#DFDEDE",
+            ),
+        ]
+    if kind == "tag":
+        return [
+            row(
+                f"source-{name}-states",
+                "Tags",
+                [
+                    source_control(
+                        f"source-{name}-default",
+                        "ALL · LIVE SELECTED",
+                        width=170,
+                        fill="#E6762D",
+                        color="#FFFFFF",
+                        border="#E6762D",
+                    ),
+                    source_control(
+                        f"source-{name}-hover",
+                        "ESG · HOVER",
+                        width=125,
+                        fill="#733208",
+                        color="#FFFFFF",
+                        border="#733208",
+                    ),
+                ],
+            )
+        ]
+    if kind == "select":
+        return [
+            row(
+                f"source-{name}-layout",
+                "Custom select open state",
+                [
+                    source_control(
+                        f"source-{name}-trigger",
+                        "2026    ▾",
+                        fill="#FFFFFF",
+                        border="#FFFFFF",
+                    ),
+                    frame(
+                        f"source-{name}-menu",
+                        "Open options",
+                        [
+                            text(
+                                f"source-{name}-option-a",
+                                "2026",
+                                size=14,
+                                color="#FFFFFF",
+                            ),
+                            frame(
+                                f"source-{name}-option-hover",
+                                "Hovered option",
+                                [
+                                    text(
+                                        f"source-{name}-option-b",
+                                        "2025",
+                                        size=14,
+                                        color="#FFFFFF",
+                                    )
+                                ],
+                                padding=8,
+                                fill="#E6762D",
+                                corner_radius=0,
+                            ),
+                            text(
+                                f"source-{name}-option-c",
+                                "2024",
+                                size=14,
+                                color="#FFFFFF",
+                            ),
+                        ],
+                        gap=5,
+                        padding=8,
+                        fill="#006A63",
+                        corner_radius=0,
+                    ),
+                ],
+            )
+        ]
+    if kind in {"input", "textarea"}:
+        height = 82 if kind == "textarea" else 42
+        label = {"input": "First Name", "textarea": "Message"}[kind]
+        return [
+            row(
+                f"source-{name}-states",
+                "Default and focus",
+                [
+                    source_control(
+                        f"source-{name}-default", label, fill="#F7F7F7", height=height
+                    ),
+                    source_control(
+                        f"source-{name}-state",
+                        f"{label} · FOCUS",
+                        fill="#FFFFFF",
+                        height=height,
+                        border="#80BDFF",
+                    ),
+                ],
+            )
+        ]
+    if kind in {"checkbox", "radio"}:
+        off = "□" if kind == "checkbox" else "○"
+        on = "■" if kind == "checkbox" else "●"
+        return [
+            text(f"source-{name}-unchecked", f"{off}  Option unchecked", size=16),
+            text(
+                f"source-{name}-checked",
+                f"{on}  Option checked",
+                size=16,
+                color="#006A63",
+            ),
+            text(
+                f"source-{name}-css-only",
+                "CSS reference fixture · live DOM not observed",
+                size=11,
+                color="#B15315",
+            ),
+        ]
+    if kind == "field":
+        return [
+            row(
+                f"source-{name}-row",
+                "Contact field",
+                [
+                    text(f"source-{name}-label", "First Name *", size=16, width=155),
+                    source_control(f"source-{name}-control", "", fill="#F7F7F7"),
+                ],
+            )
+        ]
+    if kind == "search":
+        return [
+            frame(
+                f"source-{name}-open",
+                "Open site search",
+                [
+                    row(
+                        f"source-{name}-form",
+                        "Search form",
+                        [
+                            source_control(
+                                f"source-{name}-input",
+                                "Search",
+                                fill="#006A63",
+                                color="#FFFFFF",
+                                border="#FFFFFF",
+                            ),
+                            source_control(
+                                f"source-{name}-submit",
+                                "⌕",
+                                width=44,
+                                fill="#006A63",
+                                color="#FFFFFF",
+                                border="#FFFFFF",
+                            ),
+                        ],
+                    )
+                ],
+                padding=16,
+                fill="#006A63",
+                corner_radius=0,
+            )
+        ]
+    if kind in {"card", "media-card"}:
+        return [
+            row(
+                f"source-{name}-layout",
+                "Source card",
+                [
+                    rectangle(
+                        f"source-{name}-image",
+                        "Source image ratio",
+                        width=150,
+                        height=112,
+                        fill="#AAAAAA",
+                    ),
+                    frame(
+                        f"source-{name}-copy",
+                        "Card copy",
+                        [
+                            text(
+                                f"source-{name}-title",
+                                "Building a sustainable future",
+                                size=18,
+                                weight=700,
+                            ),
+                            text(
+                                f"source-{name}-meta",
+                                "18 Aug 2026 · AAI",
+                                size=12,
+                                color="#707070",
+                            ),
+                            text(
+                                f"source-{name}-link",
+                                "READ MORE →",
+                                size=13,
+                                weight=700,
+                                color="#006A63",
+                            ),
+                        ],
+                        padding=14,
+                        fill="#FFFFFF",
+                        corner_radius=0,
+                    ),
+                ],
+            )
+        ]
+    if kind == "table":
+        return [
+            frame(
+                f"source-{name}-table",
+                "CSS table fixture",
+                [
+                    row(
+                        f"source-{name}-head",
+                        "Table header",
+                        [
+                            text(f"source-{name}-h1", "POSITION", size=12, weight=700),
+                            text(f"source-{name}-h2", "LOCATION", size=12, weight=700),
+                        ],
+                    ),
+                    row(
+                        f"source-{name}-r1",
+                        "Table row",
+                        [
+                            text(f"source-{name}-c1", "Project Manager", size=13),
+                            text(f"source-{name}-c2", "Hong Kong", size=13),
+                        ],
+                    ),
+                ],
+                padding=12,
+                fill="#FFF2EA",
+                corner_radius=0,
+            )
+        ]
+    if kind == "tabs":
+        return [
+            row(
+                f"source-{name}-desktop",
+                "Projects tabs",
+                [
+                    text(
+                        f"source-{name}-all",
+                        "ALL",
+                        size=17,
+                        weight=700,
+                        color="#E6762D",
+                    ),
+                    text(
+                        f"source-{name}-building",
+                        "BUILDING",
+                        size=17,
+                        weight=700,
+                        color="#707070",
+                    ),
+                    text(
+                        f"source-{name}-civil",
+                        "CIVIL ENGINEERING",
+                        size=17,
+                        weight=700,
+                        color="#707070",
+                    ),
+                ],
+                gap=24,
+            ),
+            rectangle(
+                f"source-{name}-rule",
+                "Orange bottom rule",
+                width="fill_container",
+                height=1,
+                fill="#E6762D",
+            ),
+            source_control(
+                f"source-{name}-mobile",
+                "ALL PROJECTS       ▾",
+                height=37,
+                color="#707070",
+                border="#E6762D",
+            ),
+        ]
+    if kind == "accordion":
+        return [
+            source_control(
+                f"source-{name}-collapsed",
+                "2020s   A Step Further                         ＋",
+                height=54,
+                fill="#FFFFFF",
+            ),
+            frame(
+                f"source-{name}-expanded",
+                "Expanded year",
+                [
+                    text(
+                        f"source-{name}-expanded-title",
+                        "2010s   Stand High Look Far                  −",
+                        size=17,
+                        weight=700,
+                    ),
+                    text(
+                        f"source-{name}-expanded-copy",
+                        "2016  Major development milestone",
+                        size=13,
+                    ),
+                ],
+                padding=14,
+                fill="#F7F7F7",
+                corner_radius=0,
+            ),
+        ]
+    if kind == "navigation":
+        return [
+            frame(
+                f"source-{name}-desktop",
+                "Desktop primary navigation",
+                [
+                    row(
+                        f"source-{name}-items",
+                        "Navigation items",
+                        [
+                            text(
+                                f"source-{name}-group",
+                                "THE GROUP",
+                                size=14,
+                                color="#FFFFFF",
+                            ),
+                            text(
+                                f"source-{name}-business",
+                                "GROUP BUSINESS",
+                                size=14,
+                                color="#FFFFFF",
+                            ),
+                            text(
+                                f"source-{name}-ir",
+                                "INVESTOR RELATIONS",
+                                size=14,
+                                color="#FFFFFF",
+                            ),
+                        ],
+                    )
+                ],
+                padding=16,
+                fill="#003531",
+                corner_radius=0,
+            )
+        ]
+    if kind == "breadcrumb":
+        return [
+            text(
+                f"source-{name}-trail",
+                "AAI  /  The Group  /  Development History",
+                size=14,
+                color="#006A63",
+            )
+        ]
+    if kind == "dropdown":
+        return [
+            frame(
+                f"source-{name}-open",
+                "Open level-2 navigation",
+                [
+                    text(
+                        f"source-{name}-a", "About the Group", size=16, color="#FFFFFF"
+                    ),
+                    text(
+                        f"source-{name}-b",
+                        "Corporate Structure",
+                        size=16,
+                        color="#FFFFFF",
+                    ),
+                    text(f"source-{name}-c", "Directors", size=16, color="#FFFFFF"),
+                ],
+                gap=10,
+                padding=14,
+                fill="#003531",
+                corner_radius=0,
+                stroke="#E6762D",
+                strokeWidth=4,
+            )
+        ]
+    if kind == "carousel":
+        return [
+            frame(
+                f"source-{name}-slide",
+                "Hero carousel slide",
+                [
+                    text(
+                        f"source-{name}-headline",
+                        "A STEP FURTHER",
+                        size=26,
+                        weight=700,
+                        color="#FFFFFF",
+                    ),
+                    text(
+                        f"source-{name}-sub",
+                        "Building a better future",
+                        size=15,
+                        color="#FFFFFF",
+                    ),
+                    row(
+                        f"source-{name}-controls",
+                        "Carousel controls",
+                        [
+                            text(
+                                f"source-{name}-prev",
+                                "‹",
+                                size=24,
+                                color="#FFFFFF",
+                                width=30,
+                            ),
+                            text(
+                                f"source-{name}-dots",
+                                "●  ○  ○",
+                                size=14,
+                                color="#FFFFFF",
+                                width=80,
+                            ),
+                            text(
+                                f"source-{name}-pause",
+                                "Ⅱ",
+                                size=18,
+                                color="#FFFFFF",
+                                width=30,
+                            ),
+                            text(
+                                f"source-{name}-next",
+                                "›",
+                                size=24,
+                                color="#FFFFFF",
+                                width=30,
+                            ),
+                        ],
+                    ),
+                ],
+                padding=18,
+                fill="#006A63",
+                corner_radius=0,
+            )
+        ]
+    if kind == "timeline":
+        return [
+            row(
+                f"source-{name}-years",
+                "Development timeline",
+                [
+                    text(
+                        f"source-{name}-y1",
+                        "●\n1968",
+                        size=16,
+                        weight=700,
+                        color="#E6762D",
+                        width=70,
+                    ),
+                    rectangle(
+                        f"source-{name}-line",
+                        "Timeline line",
+                        width="fill_container",
+                        height=1,
+                        fill="#DBDBDB",
+                    ),
+                    text(
+                        f"source-{name}-y2",
+                        "●\n2020",
+                        size=16,
+                        weight=700,
+                        color="#E6762D",
+                        width=70,
+                    ),
+                ],
+            )
+        ]
+    if kind == "map":
+        return [
+            frame(
+                f"source-{name}-surface",
+                "Global footprint map",
+                [
+                    text(
+                        f"source-{name}-hk",
+                        "● Hong Kong",
+                        size=13,
+                        weight=700,
+                        color="#E6762D",
+                    ),
+                    text(
+                        f"source-{name}-cn",
+                        "             ● Mainland China",
+                        size=13,
+                        weight=700,
+                        color="#733208",
+                    ),
+                    text(
+                        f"source-{name}-au",
+                        "                          ● Australia",
+                        size=13,
+                        weight=700,
+                        color="#E6762D",
+                    ),
+                ],
+                padding=18,
+                fill="#F7F7F7",
+                corner_radius=0,
+            )
+        ]
+    if kind == "rich-text":
+        return [
+            text(
+                f"source-{name}-heading",
+                "Building a sustainable future",
+                size=20,
+                weight=700,
+                color="#006A63",
+            ),
+            text(
+                f"source-{name}-body",
+                "Structured article copy with links, lists and media.",
+                size=13,
+                color="#333333",
+            ),
+            text(
+                f"source-{name}-link",
+                "Read the full story →",
+                size=13,
+                weight=700,
+                color="#E6762D",
+            ),
+        ]
+    if kind == "form":
+        return [
+            row(
+                f"source-{name}-fields",
+                "Form fields",
+                [
+                    source_control(
+                        f"source-{name}-email", "Email address", fill="#F7F7F7"
+                    ),
+                    source_control(
+                        f"source-{name}-submit",
+                        "SUBMIT",
+                        width=110,
+                        fill="#E6762D",
+                        color="#FFFFFF",
+                        border="#E6762D",
+                    ),
+                ],
+            ),
+            text(
+                f"source-{name}-note",
+                "Required fields · validation · anti-abuse area",
+                size=11,
+                color="#707070",
+            ),
+        ]
+    if kind == "social-links":
+        return [
+            row(
+                f"source-{name}-icons",
+                "Social actions",
+                [
+                    source_control(
+                        f"source-{name}-facebook",
+                        "f",
+                        width=42,
+                        height=42,
+                        fill="#006A63",
+                        color="#FFFFFF",
+                        border="#006A63",
+                    ),
+                    source_control(
+                        f"source-{name}-linkedin",
+                        "in",
+                        width=42,
+                        height=42,
+                        fill="#006A63",
+                        color="#FFFFFF",
+                        border="#006A63",
+                    ),
+                    source_control(
+                        f"source-{name}-video",
+                        "▶",
+                        width=42,
+                        height=42,
+                        fill="#006A63",
+                        color="#FFFFFF",
+                        border="#006A63",
+                    ),
+                ],
+            )
+        ]
+    if kind == "load-more":
+        return [
+            source_control(
+                f"source-{name}-default",
+                "LOAD MORE",
+                width=150,
+                height=48,
+                fill="#FFFFFF",
+                color="#E6762D",
+                border="#E6762D",
+            )
+        ]
+    if kind == "download":
+        return [
+            source_control(
+                f"source-{name}-item",
+                "↓   Annual Report 2025   PDF",
+                height=52,
+                fill="#FFFFFF",
+                color="#006A63",
+            )
+        ]
+    raise ValueError(f"Unknown source specimen kind: {kind}")
+
+
+def source_specimen_card(
+    name: str,
+    specification: dict[str, Any],
+    contract: dict[str, Any],
+) -> dict[str, Any]:
+    canvas = frame(
+        f"source-specimen-{name}-canvas",
+        f"Editable {name} specimen",
+        source_specimen_visual(name, str(specification["kind"])),
+        gap=8,
+        padding=14,
+        height=174,
+        fill="$color-surface-subtle",
+        corner_radius=0,
+        clip=True,
+    )
+    mode = str(specification.get("sourceMode", "live-observed"))
+    card = frame(
+        f"source-specimen-{name}",
+        name,
+        [
+            text(f"source-specimen-{name}-title", name.upper(), size=18, weight=700),
+            canvas,
+            text(
+                f"source-specimen-{name}-selector",
+                f"Selector · {specification['selector']}",
+                size=10,
+                color="$color-text-muted",
+            ),
+            text(
+                f"source-specimen-{name}-states",
+                f"Observed · {compact_list(list(specification['observedStates']), 4)}",
+                size=10,
+                color="$color-text-muted",
+            ),
+        ],
+        gap=7,
+        padding=14,
+        height=298,
+        fill="$color-surface",
+        corner_radius=0,
+        stroke="$color-border",
+        strokeWidth=1,
+        clip=True,
+    )
+    card["metadata"] = {
+        "contractName": name,
+        "sourceMode": mode,
+        "sourceComponents": contract["evidence"]["sourceComponents"],
+        "sourceUrls": contract["evidence"]["sourceUrls"],
+        "selector": specification["selector"],
+        "defaultStyles": specification["defaultStyles"],
+        "observedStates": specification["observedStates"],
+        "editable": True,
+        "notScreenshot": True,
+    }
+    return card
+
+
+def source_exclusion_card(name: str, contract: dict[str, Any]) -> dict[str, Any]:
+    card = frame(
+        f"source-exclusion-{name}",
+        f"Excluded normalized contract: {name}",
+        [
+            text(f"source-exclusion-{name}-title", name.upper(), size=18, weight=700),
+            text(
+                f"source-exclusion-{name}-copy",
+                "NOT A SOURCE COMPONENT\nNormalized product contract; no exact live-site specimen is claimed.",
+                size=13,
+                color="$color-danger",
+            ),
+            text(
+                f"source-exclusion-{name}-sources",
+                f"Related markers · {compact_list(contract['evidence']['sourceComponents'])}",
+                size=10,
+                color="$color-text-muted",
+            ),
+        ],
+        gap=12,
+        padding=18,
+        height=298,
+        fill="$color-surface-subtle",
+        corner_radius=0,
+        stroke="$color-danger",
+        strokeWidth=1,
+    )
+    card["metadata"] = {
+        "contractName": name,
+        "sourceMode": "normalized-not-source-component",
+        "sourceComponents": contract["evidence"]["sourceComponents"],
+        "sourceUrls": contract["evidence"]["sourceUrls"],
+    }
+    return card
+
+
+def source_component_boards(
+    source_specimens: dict[str, Any],
+    contracts: dict[str, Any],
+    start_index: int,
+) -> list[dict[str, Any]]:
+    cards: list[dict[str, Any]] = []
+    specimens = source_specimens["components"]
+    normalized = {
+        name
+        for name, contract in contracts.items()
+        if contract["evidence"]["classification"] == "normalized-product"
+    }
+    expected = set(contracts) - normalized
+    if set(specimens) != expected:
+        raise ValueError(
+            f"Source specimen coverage drift: {sorted(set(specimens) ^ expected)}"
+        )
+    for name, contract in contracts.items():
+        if name in specimens:
+            cards.append(source_specimen_card(name, specimens[name], contract))
+        else:
+            cards.append(source_exclusion_card(name, contract))
+
+    boards: list[dict[str, Any]] = []
+    board_sizes = [6, 5, 5, 5, 5, 5]
+    if sum(board_sizes) != len(cards):
+        raise ValueError(f"Source library board partition drift: {len(cards)} cards")
+    cursor = 0
+    for board_offset, board_size in enumerate(board_sizes):
+        batch = cards[cursor : cursor + board_size]
+        cursor += board_size
+        rows = [
+            row(
+                f"source-library-{board_offset}-row-{row_index}",
+                "Source specimen row",
+                batch[row_index * 2 : row_index * 2 + 2],
+                gap=16,
+            )
+            for row_index in range((len(batch) + 1) // 2)
+        ]
+        boards.append(
+            section(
+                f"source-library-{board_offset + 1}",
+                f"Source component library · {board_offset + 1}",
+                "Editable exact-source specimens · live, CSS-reference and normalized exclusions are separated",
+                rows,
+                index=start_index + board_offset,
+            )
+        )
+    return boards
+
+
+def public_specimen_card(name: str, record: dict[str, Any]) -> dict[str, Any]:
+    classification = str(record["classification"])
+    mode = {
+        "observed-dom-and-css": "live-observed",
+        "observed-css-only": "css-reference",
+        "not-observed": "not-observed",
+    }[classification]
+    selectors = [
+        selector
+        for item in record["css_selector_evidence"]
+        for selector in item["selectors"]
+    ]
+    selector_copy = compact_list(selectors or record["markers"], 2)
+    states = sorted(record["state_evidence"])
+    visual: list[dict[str, Any]]
+    if mode == "not-observed":
+        visual = [
+            text(
+                f"public-{name}-not-observed",
+                "NOT OBSERVED · no editable source specimen is claimed",
+                size=13,
+                weight=700,
+                color="$color-danger",
+            )
+        ]
+    else:
+        visual = source_specimen_visual(
+            f"public-{name}", str(PUBLIC_SPECIMEN_KINDS[name])
+        )
+        if mode == "css-reference":
+            visual.append(
+                text(
+                    f"public-{name}-css-reference",
+                    "CSS REFERENCE FIXTURE · live DOM not verified",
+                    size=10,
+                    weight=700,
+                    color="#B15315",
+                )
+            )
+    canvas = frame(
+        f"public-specimen-{name}-canvas",
+        f"Editable public-site {name} example",
+        visual,
+        gap=7,
+        padding=12,
+        height=164,
+        fill="$color-surface-subtle",
+        corner_radius=0,
+        clip=True,
+    )
+    card = frame(
+        f"public-specimen-{name}",
+        name,
+        [
+            row(
+                f"public-specimen-{name}-heading",
+                "Component and evidence class",
+                [
+                    text(
+                        f"public-specimen-{name}-title",
+                        name.upper(),
+                        size=17,
+                        weight=700,
+                    ),
+                    text(
+                        f"public-specimen-{name}-mode",
+                        mode.upper(),
+                        size=10,
+                        weight=700,
+                        color=(
+                            "$color-danger" if mode == "not-observed" else "#006A63"
+                        ),
+                        width=150,
+                    ),
+                ],
+            ),
+            canvas,
+            text(
+                f"public-specimen-{name}-anatomy",
+                f"Anatomy · {compact_list(record['markers'], 3)}",
+                size=10,
+                color="$color-text-muted",
+            ),
+            text(
+                f"public-specimen-{name}-selector",
+                f"Selector · {selector_copy}",
+                size=10,
+                color="$color-text-muted",
+            ),
+            text(
+                f"public-specimen-{name}-states",
+                f"Observed states · {compact_list(states, 4) if states else 'not observed'}",
+                size=10,
+                color="$color-text-muted",
+            ),
+        ],
+        gap=7,
+        padding=16,
+        height=330,
+        fill="$color-surface",
+        corner_radius=0,
+        stroke=("$color-danger" if mode == "not-observed" else "$color-border"),
+        strokeWidth=1,
+    )
+    card["metadata"] = {
+        "sourceFamily": name,
+        "sourceMode": mode,
+        "classification": classification,
+        "kind": PUBLIC_SPECIMEN_KINDS[name],
+        "primaryEvidenceUrl": record["primary_evidence_url"],
+        "markers": record["markers"],
+        "selectors": selectors,
+        "stateEvidence": record["state_evidence"],
+        "livePageLocations": record["live_page_locations"],
+        "cssSelectorEvidence": record["css_selector_evidence"],
+    }
+    return card
+
+
+def public_component_catalogue_boards(
+    public_components: dict[str, Any], start_index: int
+) -> list[dict[str, Any]]:
+    if set(public_components) != set(PUBLIC_SPECIMEN_KINDS):
+        raise ValueError(
+            "Public component catalogue drift: "
+            f"{sorted(set(public_components) ^ set(PUBLIC_SPECIMEN_KINDS))}"
+        )
+    cards = [
+        public_specimen_card(name, record) for name, record in public_components.items()
+    ]
+    board_sizes = [6, 6, 6, 6, 6, 6, 6, 6, 4]
+    if sum(board_sizes) != len(cards):
+        raise ValueError(f"Public catalogue board partition drift: {len(cards)} cards")
+    boards: list[dict[str, Any]] = []
+    cursor = 0
+    for board_offset, board_size in enumerate(board_sizes):
+        batch = cards[cursor : cursor + board_size]
+        cursor += board_size
+        rows = [
+            row(
+                f"public-catalogue-{board_offset}-row-{row_index}",
+                "Public source family row",
+                batch[row_index * 2 : row_index * 2 + 2],
+                gap=16,
+            )
+            for row_index in range((len(batch) + 1) // 2)
+        ]
+        boards.append(
+            section(
+                f"public-catalogue-{board_offset + 1}",
+                f"Public component catalogue · {board_offset + 1}",
+                "Material-style examples · anatomy · selectors · observed states · evidence class",
+                rows,
+                index=start_index + board_offset,
+            )
+        )
+    return boards
 
 
 def color_board(tokens: dict[str, Any], index: int) -> dict[str, Any]:
@@ -1182,22 +2302,24 @@ def behavior_card(
             ),
             frame(
                 f"behavior-{name}-preview",
-                f"{name} mini visual",
+                f"{name} contract-only notice",
                 [
                     text(
                         f"behavior-{name}-preview-copy",
-                        PREVIEW_COPY[name],
-                        size=11,
+                        "CONTRACT ONLY · NOT A SOURCE VISUAL\nSee Source component library boards for evidence-derived editable specimens.",
+                        size=9,
                         weight=700,
-                        color="$color-primary",
+                        color="$color-danger",
                     )
                 ],
                 padding=8,
                 width="fill_container",
                 height=40,
-                fill="$color-table-header",
-                corner_radius="$radius-sm",
+                fill="$color-surface",
+                corner_radius="$radius-none",
                 alignItems="center",
+                stroke="$color-danger",
+                strokeWidth=1,
             ),
             text(
                 f"behavior-{name}-variants",
@@ -1919,13 +3041,13 @@ def cover_board(index: int, input_sha256: dict[str, str]) -> dict[str, Any]:
                 [
                     text(
                         "cover-catalogue-title",
-                        "20 governed boards",
+                        "35 governed boards",
                         size=24,
                         weight=700,
                     ),
                     text(
                         "cover-catalogue-copy",
-                        "62 token evidence records · 31 visual contracts · 31 behavior contracts · 345 state cells · 101 requirements · responsive and page-pattern adaptation",
+                        "52 public component families (40 live · 9 CSS-reference · 3 not observed) · 24 detailed interactive specimens · 31 visual contracts · 31 behavior contracts",
                         size=16,
                     ),
                 ],
@@ -1967,8 +3089,10 @@ def cover_board(index: int, input_sha256: dict[str, str]) -> dict[str, Any]:
             "DESIGN.md",
             "design-system/tokens.json",
             "design-system/components.json",
+            "design-system/source-component-specimens.json",
+            "docs/design-system/evidence/source-evidence-index.json",
         ],
-        "exporterVersion": 3,
+        "exporterVersion": 5,
         "auditDate": "2026-08-19",
         "validatedWith": "pen 0.3.3",
         "inputSha256": input_sha256,
@@ -1979,6 +3103,8 @@ def cover_board(index: int, input_sha256: dict[str, str]) -> dict[str, Any]:
 def build_document(
     tokens: dict[str, Any],
     components: dict[str, Any],
+    source_specimens: dict[str, Any],
+    source_evidence_index: dict[str, Any],
     input_sha256: dict[str, str],
 ) -> dict[str, Any]:
     variables: dict[str, Any] = {
@@ -2044,6 +3170,18 @@ def build_document(
             guidance_board(19),
         ]
     )
+    boards.extend(
+        source_component_boards(
+            source_specimens,
+            components["behavior_contracts"],
+            len(boards),
+        )
+    )
+    boards.extend(
+        public_component_catalogue_boards(
+            source_evidence_index["public_component_evidence"], len(boards)
+        )
+    )
 
     expected_visuals = set(components["components"])
     rendered_visuals = {name for names in VISUAL_GROUPS.values() for name in names}
@@ -2057,8 +3195,8 @@ def build_document(
         raise ValueError(
             f"Behavior contract grouping drift: {sorted(expected_behaviors ^ rendered_behaviors)}"
         )
-    if len(boards) != 20:
-        raise ValueError(f"Expected 20 boards, got {len(boards)}")
+    if len(boards) != 35:
+        raise ValueError(f"Expected 35 boards, got {len(boards)}")
 
     return {"version": "2.17", "variables": variables, "children": boards}
 
@@ -2066,6 +3204,10 @@ def build_document(
 def render() -> str:
     tokens = json.loads(TOKENS_PATH.read_text(encoding="utf-8"))
     components = json.loads(COMPONENTS_PATH.read_text(encoding="utf-8"))
+    source_specimens = json.loads(SOURCE_SPECIMENS_PATH.read_text(encoding="utf-8"))
+    source_evidence_index = json.loads(
+        SOURCE_EVIDENCE_INDEX_PATH.read_text(encoding="utf-8")
+    )
     input_sha256 = {
         "DESIGN.md": hashlib.sha256(DESIGN_PATH.read_bytes()).hexdigest(),
         "design-system/tokens.json": hashlib.sha256(
@@ -2074,10 +3216,22 @@ def render() -> str:
         "design-system/components.json": hashlib.sha256(
             COMPONENTS_PATH.read_bytes()
         ).hexdigest(),
+        "design-system/source-component-specimens.json": hashlib.sha256(
+            SOURCE_SPECIMENS_PATH.read_bytes()
+        ).hexdigest(),
+        "docs/design-system/evidence/source-evidence-index.json": hashlib.sha256(
+            SOURCE_EVIDENCE_INDEX_PATH.read_bytes()
+        ).hexdigest(),
     }
     return (
         json.dumps(
-            build_document(tokens, components, input_sha256),
+            build_document(
+                tokens,
+                components,
+                source_specimens,
+                source_evidence_index,
+                input_sha256,
+            ),
             ensure_ascii=False,
             indent=2,
         )

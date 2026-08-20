@@ -59,6 +59,13 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def walk_pen_nodes(node: dict[str, Any]) -> list[dict[str, Any]]:
+    descendants = [node]
+    for child in node.get("children", []):
+        descendants.extend(walk_pen_nodes(child))
+    return descendants
+
+
 def contrast_ratio(foreground: str, background: str) -> float:
     def luminance(value: str) -> float:
         channels = [int(value[index : index + 2], 16) / 255 for index in (1, 3, 5)]
@@ -648,8 +655,10 @@ def test_pen_visual_board_is_derived_from_normative_artifacts() -> None:
             "DESIGN.md",
             "design-system/tokens.json",
             "design-system/components.json",
+            "design-system/source-component-specimens.json",
+            "docs/design-system/evidence/source-evidence-index.json",
         ],
-        "exporterVersion": 3,
+        "exporterVersion": 5,
         "auditDate": "2026-08-19",
         "validatedWith": "pen 0.3.3",
         "inputSha256": {
@@ -659,6 +668,20 @@ def test_pen_visual_board_is_derived_from_normative_artifacts() -> None:
             ).hexdigest(),
             "design-system/components.json": hashlib.sha256(
                 (ROOT / "design-system" / "components.json").read_bytes()
+            ).hexdigest(),
+            "design-system/source-component-specimens.json": hashlib.sha256(
+                (
+                    ROOT / "design-system" / "source-component-specimens.json"
+                ).read_bytes()
+            ).hexdigest(),
+            "docs/design-system/evidence/source-evidence-index.json": hashlib.sha256(
+                (
+                    ROOT
+                    / "docs"
+                    / "design-system"
+                    / "evidence"
+                    / "source-evidence-index.json"
+                ).read_bytes()
             ).hexdigest(),
         },
     }
@@ -685,7 +708,23 @@ def test_pen_visual_board_is_derived_from_normative_artifacts() -> None:
         "Evidence and provenance",
         "Coverage and limitations",
         "Do and don't",
+        "Source component library · 1",
+        "Source component library · 2",
+        "Source component library · 3",
+        "Source component library · 4",
+        "Source component library · 5",
+        "Source component library · 6",
+        "Public component catalogue · 1",
+        "Public component catalogue · 2",
+        "Public component catalogue · 3",
+        "Public component catalogue · 4",
+        "Public component catalogue · 5",
+        "Public component catalogue · 6",
+        "Public component catalogue · 7",
+        "Public component catalogue · 8",
+        "Public component catalogue · 9",
     }
+    assert len(pen["children"]) == 35
 
     for name in (name for name in tokens["color"] if not name.startswith("$")):
         node = nodes_by_id[f"color-card-{name}"]
@@ -831,8 +870,177 @@ def test_pen_visual_board_is_derived_from_normative_artifacts() -> None:
     }
 
     readme = (ROOT / "design-system" / "README.md").read_text(encoding="utf-8")
-    assert "Complete 20-board visual derivative" in readme
-    assert "20 separated boards" in readme
+    assert "Complete 35-board visual derivative" in readme
+    assert "35 separated boards" in readme
+    assert "24 editable source-derived specimens" in readme
+    assert "7 normalized exclusions" in readme
+
+
+def test_pen_contains_source_derived_editable_component_specimens() -> None:
+    """Observed source families must render as specimens, not contract copy."""
+    components = load_json(ROOT / "design-system" / "components.json")
+    document = load_json(ROOT / "design-system" / "asia-allied-design-system.pen")
+    nodes_by_id = {
+        node["id"]: node
+        for node in walk_pen_nodes(document)
+        if isinstance(node.get("id"), str)
+    }
+
+    normalized = {
+        name
+        for name, contract in components["behavior_contracts"].items()
+        if contract["evidence"]["classification"] == "normalized-product"
+    }
+    source_derived = set(components["behavior_contracts"]) - normalized
+
+    assert source_derived
+    for name in source_derived:
+        node = nodes_by_id[f"source-specimen-{name}"]
+        metadata = node["metadata"]
+        assert metadata["contractName"] == name
+        assert metadata["sourceMode"] in {"live-observed", "css-reference"}
+        assert (
+            metadata["sourceComponents"]
+            == components["behavior_contracts"][name]["evidence"]["sourceComponents"]
+        )
+        assert (
+            metadata["sourceUrls"]
+            == components["behavior_contracts"][name]["evidence"]["sourceUrls"]
+        )
+        assert metadata["selector"]
+        assert metadata["defaultStyles"]
+        assert metadata["observedStates"]
+        assert nodes_by_id[f"source-specimen-{name}-canvas"]["children"]
+        assert f"source-specimen-{name}-summary" not in nodes_by_id
+
+    for name in normalized:
+        exclusion = nodes_by_id[f"source-exclusion-{name}"]
+        assert exclusion["metadata"]["sourceMode"] == "normalized-not-source-component"
+        assert f"source-specimen-{name}" not in nodes_by_id
+
+    for name in ("checkbox", "radio", "table", "file-download"):
+        assert nodes_by_id[f"source-specimen-{name}"]["metadata"]["sourceMode"] == (
+            "css-reference"
+        )
+
+    tag = nodes_by_id["source-specimen-tag-filter"]["metadata"]["observedStates"]
+    assert tag["liveSelected"]["backgroundColor"] == "#E6762D"
+    assert tag["unmatchedCssRule"] == {
+        "selector": ".tag.selected",
+        "backgroundColor": "#733208",
+        "liveMatched": False,
+    }
+    assert "source-tag-filter-hover" in nodes_by_id
+    assert "source-tag-filter-selected" not in nodes_by_id
+    assert nodes_by_id["source-specimen-tabs"]["metadata"]["sourceComponents"] == [
+        "page-tabs"
+    ]
+    assert "source-tabs-desktop" in nodes_by_id
+    assert "source-tabs-mobile" in nodes_by_id
+
+
+def test_source_button_and_pagination_show_exact_observed_examples() -> None:
+    document = load_json(ROOT / "design-system" / "asia-allied-design-system.pen")
+    nodes_by_id = {
+        node["id"]: node
+        for node in walk_pen_nodes(document)
+        if isinstance(node.get("id"), str)
+    }
+
+    button = nodes_by_id["source-specimen-button"]["metadata"]
+    assert button["selector"] == ".form-btn.btn.btn--orange"
+    assert button["defaultStyles"] == {
+        "backgroundColor": "#E6762D",
+        "borderColor": "#E6762D",
+        "borderRadius": "0px",
+        "color": "#FFFFFF",
+        "fontFamily": "Pragati Narrow",
+        "fontSize": "24.024px",
+        "fontWeight": "700",
+        "height": "54.4219px",
+    }
+    assert button["observedStates"]["hover"]["backgroundColor"] == "#DF681B"
+    assert button["observedStates"]["focus"]["backgroundColor"] == "#DF681B"
+    assert button["observedStates"]["active"]["distinctSourceRule"] is False
+    assert button["observedStates"]["resetDefault"] == {
+        "selector": ".btn--orange.btn--wbg",
+        "backgroundColor": "#FFFFFF",
+        "color": "#E6762D",
+    }
+    for state in ("default", "hover", "focus", "active"):
+        assert f"source-button-{state}" in nodes_by_id
+
+    pagination = nodes_by_id["source-specimen-pagination"]["metadata"]
+    assert pagination["selector"] == ".pagination"
+    assert pagination["defaultStyles"]["fontSize"] == "18px"
+    assert pagination["observedStates"]["current"]["color"] == "#E6762D"
+    assert pagination["observedStates"]["hover"]["transform"] == "scale(1.25)"
+    for item in ("previous", "page-1", "page-2-current", "page-input", "total"):
+        assert f"source-pagination-{item}" in nodes_by_id
+
+
+def test_pen_contains_all_public_component_families_with_honest_examples() -> None:
+    source_index = load_json(EVIDENCE / "source-evidence-index.json")
+    public_components = source_index["public_component_evidence"]
+    document = load_json(ROOT / "design-system" / "asia-allied-design-system.pen")
+    nodes_by_id = {
+        node["id"]: node
+        for node in walk_pen_nodes(document)
+        if isinstance(node.get("id"), str)
+    }
+
+    rendered = {
+        node["metadata"]["sourceFamily"]
+        for node in nodes_by_id.values()
+        if node.get("id", "").startswith("public-specimen-")
+        and not node["id"].endswith(("-canvas", "-heading"))
+        and "metadata" in node
+    }
+    assert rendered == set(public_components)
+    assert len(rendered) == 52
+
+    expected_modes = {
+        "observed-dom-and-css": "live-observed",
+        "observed-css-only": "css-reference",
+        "not-observed": "not-observed",
+    }
+    mode_counts: dict[str, int] = {}
+    for name, evidence in public_components.items():
+        card = nodes_by_id[f"public-specimen-{name}"]
+        metadata = card["metadata"]
+        expected_mode = expected_modes[evidence["classification"]]
+        assert metadata["sourceMode"] == expected_mode
+        assert metadata["primaryEvidenceUrl"] == evidence["primary_evidence_url"]
+        assert metadata["markers"] == evidence["markers"]
+        assert metadata["stateEvidence"] == evidence["state_evidence"]
+        mode_counts[expected_mode] = mode_counts.get(expected_mode, 0) + 1
+        canvas = nodes_by_id[f"public-specimen-{name}-canvas"]
+        assert canvas["children"]
+        if expected_mode == "not-observed":
+            assert f"public-{name}-not-observed" in nodes_by_id
+        else:
+            assert f"public-{name}-not-observed" not in nodes_by_id
+
+    assert mode_counts == {
+        "live-observed": 40,
+        "css-reference": 9,
+        "not-observed": 3,
+    }
+    for node_id in (
+        "source-public-button-default",
+        "source-public-button-hover",
+        "source-public-pagination-page-2-current",
+        "source-public-custom-select-menu",
+        "source-public-year-accordion-collapsed",
+        "source-public-year-accordion-expanded",
+        "source-public-page-tabs-desktop",
+        "source-public-page-tabs-mobile",
+        "source-public-load-more-default",
+        "source-public-social-links-facebook",
+        "source-public-social-links-linkedin",
+        "source-public-back-to-top-default",
+    ):
+        assert node_id in nodes_by_id
 
 
 def test_runtime_frontend_consumes_the_normative_foundation() -> None:

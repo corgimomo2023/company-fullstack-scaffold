@@ -118,6 +118,20 @@ def generate(
         "COMPONENTS_PATH",
         destination / "design-system" / "components.json",
     )
+    setattr(
+        pen_exporter,
+        "SOURCE_SPECIMENS_PATH",
+        destination / "design-system" / "source-component-specimens.json",
+    )
+    setattr(
+        pen_exporter,
+        "SOURCE_EVIDENCE_INDEX_PATH",
+        destination
+        / "docs"
+        / "design-system"
+        / "evidence"
+        / "source-evidence-index.json",
+    )
     pen_output_path = destination / "design-system" / "asia-allied-design-system.pen"
     setattr(pen_exporter, "OUTPUT_PATH", pen_output_path)
     pen_output_path.write_text(getattr(pen_exporter, "render")(), encoding="utf-8")

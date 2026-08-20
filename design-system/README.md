@@ -10,7 +10,8 @@
 | [`tailwind.preset.cjs`](tailwind.preset.cjs) | Tailwind CSS v3 preset consumers | Generated CommonJS wrapper around the Tailwind contract |
 | [`tokens.json`](tokens.json) | DTCG Format Module 2025.10 consumers | Foundations and typography; component/evidence contracts in a namespaced `$extensions` record |
 | [`components.json`](components.json) | Framework-neutral component tooling | 31 visual records, behavior contracts, evidence and per-variant/state implementation coverage |
-| [`asia-allied-design-system.pen`](asia-allied-design-system.pen) | pen.dev canvas | Complete 20-board visual derivative: foundations, every visual/behavior contract, responsive examples, evidence, coverage and guidance; not a normative source |
+| [`source-component-specimens.json`](source-component-specimens.json) | pen.dev source-library exporter | 24 source-derived editable specimen recipes, selectors, exact style facts and observed states; live and CSS-reference modes remain distinct |
+| [`asia-allied-design-system.pen`](asia-allied-design-system.pen) | pen.dev canvas | Complete 35-board visual derivative: foundations, contracts, responsive examples, evidence, coverage, guidance, 24 detailed interactive specimens and all 52 public source families; not a normative source |
 
 ## Why a wrapper is required
 
@@ -41,11 +42,11 @@ CI runs the same drift and official-schema checks.
 
 ## pen.dev visual board
 
-The `.pen` file is generated from `DESIGN.md`, `tokens.json` and `components.json`; the JSON artifacts are themselves generated from `DESIGN.md`. This one-way flow prevents the canvas from becoming a second, drifting source of truth. The committed preview is [`../docs/design-system/asia-allied-design-system.png`](../docs/design-system/asia-allied-design-system.png).
+The `.pen` file is generated from `DESIGN.md`, `tokens.json`, `components.json`, the audited `source-component-specimens.json` and `docs/design-system/evidence/source-evidence-index.json`. The specimen files are evidence derivatives rather than normative product contracts. This one-way flow prevents the canvas from becoming a second, drifting source of truth. The committed preview is [`../docs/design-system/asia-allied-design-system.png`](../docs/design-system/asia-allied-design-system.png).
 
-The cover metadata records exporter version `3`, the audit date, validated pen.dev CLI version and deterministic SHA-256 hashes of all three inputs. This provides reproducible provenance without embedding timestamps or commit IDs that would make every regeneration drift.
+The cover metadata records exporter version `5`, the audit date, validated pen.dev CLI version and deterministic SHA-256 hashes of all five inputs. This provides reproducible provenance without embedding timestamps or commit IDs that would make every regeneration drift.
 
-The catalogue contains **20 separated boards** arranged by category:
+The catalogue contains **35 separated boards** arranged by category:
 
 1. cover, manifest and governance;
 2. all 20 color tokens with semantic role, evidence classification and usage boundary;
@@ -62,7 +63,13 @@ The catalogue contains **20 separated boards** arranged by category:
 13. 11 summarized page-pattern/adaptation families, explicitly not an authored-template count;
 14. five evidence/provenance classifications;
 15. sitemap, HTTP, browser and implementation coverage limitations; and
-16. all normative do/don't guidance.
+16. all normative do/don't guidance; and
+17. six detailed source-library boards with **24 editable source-derived specimens** and **7 normalized exclusions**; and
+18. nine Material-style public component catalogue boards covering all **52 source families**: **40 live DOM + CSS**, **9 CSS-reference fixtures** and **3 explicitly not observed**.
+
+The source-library boards are the component examples. They use editable Pen frames, shapes and text rather than screenshots or prose-only behavior summaries. Every specimen carries its representative selector, source URLs, exact style facts and observed states. `live-observed` means matching DOM and CSS were observed on the public site; `css-reference` means the source stylesheet exists but no live exact-origin DOM specimen was found. Normalized product-only families are shown as exclusions and are never presented as extracted website components.
+
+The nine public catalogue boards are generated directly from `docs/design-system/evidence/source-evidence-index.json`. Every family has an editable topology example or an explicit `not observed` panel, plus anatomy markers, selectors, observed state names, evidence class and exact source metadata. This is the broad component-library layer analogous to a Material Design catalogue; the six detailed boards provide the deeper button, dropdown/select, accordion, pagination, tabs, forms, navigation, card, table, carousel, timeline, map and download examples.
 
 The implementation coverage board deliberately distinguishes the 48 mapped variant-state records from 297 `behavior-only` records. A behavior contract shown in the catalogue is not presented as an already implemented production component.
 

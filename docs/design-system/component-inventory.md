@@ -14,6 +14,7 @@ This inventory records components observed across the 2026-08-19 public-site aud
 | Breadcrumb | `.breadcrumb` | Green text, separators; hidden at the sampled mobile state | Interior pages | Keep only when hierarchy is deep; do not hide essential current-location context |
 | Page title | `.page-title-wrap`, `.page-title` | 50px desktop / 25px mobile, green Pragati Narrow | Interior pages | Use normative heading tokens and one semantic H1 |
 | Page menu | `.page-menu__link` | White-on-green local navigation | Group/IR sections | Use tabs/subnavigation only when sibling destinations are stable |
+| Page tabs | `.blk-tab__wrap.js-tab-nav`, `.blk-tab__list`, `.blk-tab__btn.active`, `.tab__select` | Desktop six-item tab list with orange active text and bottom rule; mobile custom select replaces the list | Project routes | Preserve the observed text-only active treatment and responsive select; hover, focus and disabled visuals were not observed |
 | Back to top | `.bk2Top__btn` | Hidden/shown by scroll, hover shadow | Widespread across HTML content routes | Optional for long content; provide accessible name and avoid icon-font glyphs |
 | Footer | footer, `.ft-link-list`, `.soc-list` | Legal links, social links, contact/copyright; grey surface | All HTML templates | Keep legal/support essentials; internal apps should not reproduce the large public footer |
 
@@ -40,7 +41,7 @@ This inventory records components observed across the 2026-08-19 public-site aud
 
 | Family | Source selectors | Observed behavior | Production contract |
 |---|---|---|---|
-| Tag filter | `.tag-list`, `.tag`, `.tag.selected` | Green variant; dark-orange selected/hover; compact variants | Use buttons, selected state and count/result announcement; do not encode state by color only |
+| Tag filter | `.tag-list`, `.tag`, `.tag.selected` | Live `li.selected > a.tag` remains orange because `.tag.selected` does not match; hover is dark orange; compact variants exist | Use buttons, selected state and count/result announcement; do not claim the unmatched `.tag.selected` CSS as the rendered selected style |
 | Custom select | `.js-selectBox`, `.multiselect-container` | Green menu, orange hover, generated arrow glyph | Prefer native select or an accessible listbox; no icon font |
 | Listing table | `.listing-table` | Warm header `#FFF2EA`, striped white/`#F7F7F7`, orange hover | Define headers/scope, sorting, loading/empty/error and row actions |
 | Responsive table | `.listing-table` mobile rules | Rows become labelled blocks below the desktop breakpoint | Preserve labels through actual markup/data attributes; never drop critical values |

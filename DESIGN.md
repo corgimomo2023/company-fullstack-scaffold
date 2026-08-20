@@ -220,7 +220,7 @@ x-component-behavior:
     variants: [line, contained]
     states: [default, selected, hover, focus-visible, disabled]
     requirements: [tablist-semantics, keyboard-navigation, labelled-panel]
-    evidence: {classification: normalized-product, sourceComponents: ["page-menu", "tag-filter"], sourceUrls: ["https://www.asiaalliedgroup.com/blog"], pageLocations: ["blog :: tag-filter"]}
+    evidence: {classification: observed-adaptation, sourceComponents: ["page-tabs"], sourceUrls: ["https://www.asiaalliedgroup.com/projects"], pageLocations: ["projects :: page-tabs"]}
   accordion:
     variants: [standard, year]
     states: [collapsed, expanded, hover, focus-visible, disabled]
