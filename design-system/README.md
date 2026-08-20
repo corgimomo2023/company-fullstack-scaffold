@@ -10,7 +10,7 @@
 | [`tailwind.preset.cjs`](tailwind.preset.cjs) | Tailwind CSS v3 preset consumers | Generated CommonJS wrapper around the Tailwind contract |
 | [`tokens.json`](tokens.json) | DTCG Format Module 2025.10 consumers | Foundations and typography; component/evidence contracts in a namespaced `$extensions` record |
 | [`components.json`](components.json) | Framework-neutral component tooling | 31 visual records, behavior contracts, evidence and per-variant/state implementation coverage |
-| [`asia-allied-design-system.pen`](asia-allied-design-system.pen) | pen.dev canvas | Six-board visual derivative of the generated token/component contracts; not a normative source |
+| [`asia-allied-design-system.pen`](asia-allied-design-system.pen) | pen.dev canvas | Complete 20-board visual derivative: foundations, every visual/behavior contract, responsive examples, evidence, coverage and guidance; not a normative source |
 
 ## Why a wrapper is required
 
@@ -41,7 +41,30 @@ CI runs the same drift and official-schema checks.
 
 ## pen.dev visual board
 
-The `.pen` file is generated from `tokens.json` and `components.json`, which are themselves generated from `DESIGN.md`. This one-way flow prevents the canvas from becoming a second, drifting source of truth. The committed preview is [`../docs/design-system/asia-allied-design-system.png`](../docs/design-system/asia-allied-design-system.png).
+The `.pen` file is generated from `DESIGN.md`, `tokens.json` and `components.json`; the JSON artifacts are themselves generated from `DESIGN.md`. This one-way flow prevents the canvas from becoming a second, drifting source of truth. The committed preview is [`../docs/design-system/asia-allied-design-system.png`](../docs/design-system/asia-allied-design-system.png).
+
+The cover metadata records exporter version `3`, the audit date, validated pen.dev CLI version and deterministic SHA-256 hashes of all three inputs. This provides reproducible provenance without embedding timestamps or commit IDs that would make every regeneration drift.
+
+The catalogue contains **20 separated boards** arranged by category:
+
+1. cover, manifest and governance;
+2. all 20 color tokens with semantic role, evidence classification and usage boundary;
+3. eight normative contrast pairs and color-accessibility rules;
+4. all 10 typography roles including size, weight, line height and tracking;
+5. English/CJK/long-copy localization specimens and font governance;
+6. all 10 spacing tokens, four radii, six breakpoints, five containers and layout rules;
+7. two elevations, five motion tokens and shape rules;
+8. two visual-contract boards covering all 31 generated visual records;
+9. four behavior-contract boards covering all 31 components without truncating variants, states or requirements;
+10. the complete 345-cell variant/state implementation matrix;
+11. the complete 101-item requirement register plus icons, imagery and licensing boundaries;
+12. desktop, tablet and mobile compositions;
+13. 11 summarized page-pattern/adaptation families, explicitly not an authored-template count;
+14. five evidence/provenance classifications;
+15. sitemap, HTTP, browser and implementation coverage limitations; and
+16. all normative do/don't guidance.
+
+The implementation coverage board deliberately distinguishes the 48 mapped variant-state records from 297 `behavior-only` records. A behavior contract shown in the catalogue is not presented as an already implemented production component.
 
 With the official pen.dev CLI installed, validate the file through the actual editor engine and refresh the preview:
 

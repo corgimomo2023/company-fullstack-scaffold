@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import importlib.util
 import json
 import re
 import shutil
@@ -40,13 +41,17 @@ TEXT_SUFFIXES = {
 }
 
 
-def generate(destination: Path, *, slug: str, display_name: str, codeowner: str) -> None:
+def generate(
+    destination: Path, *, slug: str, display_name: str, codeowner: str
+) -> None:
     if not re.fullmatch(r"[a-z][a-z0-9]*(?:-[a-z0-9]+)*", slug):
         raise ValueError("slug must be lowercase kebab-case")
     if not display_name.strip():
         raise ValueError("display name is required")
     if not re.fullmatch(r"@[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)?", codeowner):
-        raise ValueError("codeowner must be a GitHub user or team such as @org/platform-team")
+        raise ValueError(
+            "codeowner must be a GitHub user or team such as @org/platform-team"
+        )
 
     destination = destination.resolve()
     if destination.exists():
@@ -93,6 +98,29 @@ def generate(destination: Path, *, slug: str, display_name: str, codeowner: str)
         for old, new in replacements.items():
             text = text.replace(old, new)
         path.write_text(text)
+
+    pen_exporter_path = SOURCE / "scripts" / "export_pen_design_system.py"
+    spec = importlib.util.spec_from_file_location(
+        "scaffold_pen_exporter", pen_exporter_path
+    )
+    if not spec or not spec.loader:
+        raise RuntimeError(f"cannot load Pen exporter: {pen_exporter_path}")
+    pen_exporter = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(pen_exporter)
+    setattr(pen_exporter, "DESIGN_PATH", destination / "DESIGN.md")
+    setattr(
+        pen_exporter,
+        "TOKENS_PATH",
+        destination / "design-system" / "tokens.json",
+    )
+    setattr(
+        pen_exporter,
+        "COMPONENTS_PATH",
+        destination / "design-system" / "components.json",
+    )
+    pen_output_path = destination / "design-system" / "asia-allied-design-system.pen"
+    setattr(pen_exporter, "OUTPUT_PATH", pen_output_path)
+    pen_output_path.write_text(getattr(pen_exporter, "render")(), encoding="utf-8")
 
     version = (SOURCE / "TEMPLATE_VERSION").read_text().strip()
     generated_only_files = [

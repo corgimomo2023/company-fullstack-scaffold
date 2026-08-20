@@ -624,27 +624,215 @@ def test_generated_formats_share_the_normative_contract() -> None:
 
 
 def test_pen_visual_board_is_derived_from_normative_artifacts() -> None:
-    pen = load_json(ROOT / "design-system" / "asia-allied-design-system.pen")
+    import hashlib
 
+    pen = load_json(ROOT / "design-system" / "asia-allied-design-system.pen")
+    tokens = load_json(ROOT / "design-system" / "tokens.json")
+    contracts = load_json(ROOT / "design-system" / "components.json")
+
+    def walk(node: dict[str, Any]) -> list[dict[str, Any]]:
+        descendants = [node]
+        for child in node.get("children", []):
+            descendants.extend(walk(child))
+        return descendants
+
+    nodes = [node for board in pen["children"] for node in walk(board)]
+    nodes_by_id = {node["id"]: node for node in nodes}
+
+    assert len(nodes_by_id) == len(nodes)
     assert pen["version"] == "2.17"
     assert pen["children"][0]["metadata"] == {
         "type": "design-system-visualization",
         "normativeSource": "DESIGN.md",
         "generatedFrom": [
+            "DESIGN.md",
             "design-system/tokens.json",
             "design-system/components.json",
         ],
+        "exporterVersion": 3,
+        "auditDate": "2026-08-19",
+        "validatedWith": "pen 0.3.3",
+        "inputSha256": {
+            "DESIGN.md": hashlib.sha256((ROOT / "DESIGN.md").read_bytes()).hexdigest(),
+            "design-system/tokens.json": hashlib.sha256(
+                (ROOT / "design-system" / "tokens.json").read_bytes()
+            ).hexdigest(),
+            "design-system/components.json": hashlib.sha256(
+                (ROOT / "design-system" / "components.json").read_bytes()
+            ).hexdigest(),
+        },
     }
     assert pen["variables"]["color-primary"]["value"] == "#006a63"
     assert pen["variables"]["color-accent"]["value"] == "#e6762d"
-    assert {child["name"] for child in pen["children"]} >= {
+    assert {child["name"] for child in pen["children"]} == {
         "Cover",
         "Color tokens",
-        "Typography",
-        "Spacing and radius",
-        "Components and states",
-        "Evidence boundary",
+        "Contrast and color accessibility",
+        "Typography roles",
+        "Localization and type rules",
+        "Layout and spacing",
+        "Elevation, motion and shapes",
+        "Visual contracts · actions and forms",
+        "Visual contracts · surfaces and status",
+        "Behavior · actions and navigation",
+        "Behavior · forms and selection",
+        "Behavior · content and data",
+        "Behavior · feedback and system",
+        "Variant and state implementation",
+        "Accessibility, icons and assets",
+        "Responsive compositions",
+        "Page patterns and adaptation",
+        "Evidence and provenance",
+        "Coverage and limitations",
+        "Do and don't",
     }
+
+    for name in (name for name in tokens["color"] if not name.startswith("$")):
+        node = nodes_by_id[f"color-card-{name}"]
+        child_ids = {child["id"] for child in node["children"]}
+        assert {
+            f"color-card-{name}-role",
+            f"color-card-{name}-classification",
+            f"color-card-{name}-usage",
+        } <= child_ids
+    for name in (name for name in tokens["typography"] if not name.startswith("$")):
+        assert f"type-row-{name}" in nodes_by_id
+        assert f"type-row-{name}-metrics" in nodes_by_id
+    for name in (name for name in tokens["spacing"] if not name.startswith("$")):
+        assert f"space-row-{name}" in nodes_by_id
+    for name in (name for name in tokens["rounded"] if not name.startswith("$")):
+        assert f"radius-{name}" in nodes_by_id
+    assert {
+        f"breakpoint-{name}" for name in ("compact", "sm", "md", "lg", "xl", "2xl")
+    } <= set(nodes_by_id)
+    assert {f"container-{name}" for name in ("sm", "md", "lg", "xl", "2xl")} <= set(
+        nodes_by_id
+    )
+    assert {"elevation-none", "elevation-low"} <= set(nodes_by_id)
+    assert {
+        "motion-duration-fast",
+        "motion-duration-standard",
+        "motion-duration-brand",
+        "motion-easing-standard",
+        "motion-easing-brand",
+    } <= set(nodes_by_id)
+
+    for name in contracts["components"]:
+        node = nodes_by_id[f"visual-{name}"]
+        assert node["metadata"]["contractName"] == name
+        assert node["metadata"]["contractType"] == "visual"
+        assert node["metadata"]["component"] == contracts["components"][name]
+        assert (
+            node["metadata"]["evidence"] == contracts["visual_component_evidence"][name]
+        )
+        assert f"visual-{name}-values" in {child["id"] for child in node["children"]}
+
+    for name in contracts["behavior_contracts"]:
+        node = nodes_by_id[f"behavior-{name}"]
+        assert node["metadata"]["contractName"] == name
+        assert node["metadata"]["contractType"] == "behavior"
+        assert (
+            node["metadata"]["variants"]
+            == contracts["behavior_contracts"][name]["variants"]
+        )
+        assert (
+            node["metadata"]["states"]
+            == contracts["behavior_contracts"][name]["states"]
+        )
+        assert (
+            node["metadata"]["requirements"]
+            == contracts["behavior_contracts"][name]["requirements"]
+        )
+        assert (
+            node["metadata"]["implementationCoverage"]
+            == contracts["implementation_coverage"][name]
+        )
+        child_ids = {child["id"] for child in node["children"]}
+        assert {
+            f"behavior-{name}-preview",
+            f"behavior-{name}-variants",
+            f"behavior-{name}-states",
+            f"behavior-{name}-requirements",
+            f"behavior-{name}-evidence",
+            f"behavior-{name}-coverage",
+        } <= child_ids
+
+        for requirement in contracts["behavior_contracts"][name]["requirements"]:
+            assert f"requirement-{name}-{requirement}" in nodes_by_id
+
+        for pair, mapping in contracts["implementation_coverage"][name][
+            "stateMappings"
+        ].items():
+            variant, state = pair.split(".", 1)
+            cell = nodes_by_id[f"coverage-cell-{name}-{variant}-{state}"]
+            assert cell["metadata"] == mapping
+
+    assert {"responsive-desktop", "responsive-tablet", "responsive-mobile"} <= set(
+        nodes_by_id
+    )
+    assert {
+        "contrast-white-primary",
+        "contrast-white-primary-dark",
+        "contrast-white-accent",
+        "contrast-white-accent-accessible",
+        "contrast-white-accent-selected",
+        "contrast-text-white",
+        "contrast-text-muted-white",
+        "contrast-danger-white",
+        "type-sample-en",
+        "type-sample-tc",
+        "type-sample-long",
+        "assets-svg-icons",
+        "assets-icon-font",
+        "assets-licensing",
+        "assets-imagery",
+        "evidence-observed",
+        "evidence-cross-page",
+        "evidence-normalized",
+        "evidence-accessibility",
+        "evidence-not-observed",
+        "coverage-sitemap",
+        "coverage-http",
+        "coverage-browser",
+        "guidance-do",
+        "guidance-dont",
+    } <= set(nodes_by_id)
+    assert {f"guidance-do-{index}" for index in range(8)} <= set(nodes_by_id)
+    assert {f"guidance-dont-{index}" for index in range(8)} <= set(nodes_by_id)
+    assert {
+        f"page-pattern-{name}"
+        for name in (
+            "home",
+            "group",
+            "investor-static",
+            "publication-list",
+            "publication-detail",
+            "project-sector",
+            "project-list",
+            "project-detail",
+            "job",
+            "form",
+            "legal",
+        )
+    } <= set(nodes_by_id)
+
+    coverage = contracts["implementation_coverage"]
+    state_statuses = [
+        mapping["status"]
+        for component in coverage.values()
+        for mapping in component["stateMappings"].values()
+    ]
+    assert nodes_by_id["coverage"]["metadata"] == {
+        "behaviorContracts": 31,
+        "visualContracts": 31,
+        "variantStateMappings": len(state_statuses),
+        "mapped": state_statuses.count("mapped"),
+        "behaviorOnly": state_statuses.count("behavior-only"),
+    }
+
+    readme = (ROOT / "design-system" / "README.md").read_text(encoding="utf-8")
+    assert "Complete 20-board visual derivative" in readme
+    assert "20 separated boards" in readme
 
 
 def test_runtime_frontend_consumes_the_normative_foundation() -> None:
