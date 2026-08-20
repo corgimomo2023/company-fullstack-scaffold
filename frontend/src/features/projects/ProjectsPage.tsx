@@ -15,6 +15,6 @@ export function ProjectsPage(){
   {projects.isPending&&<p role="status">Loading projects...</p>}
   {projects.isError&&<div className="error-banner" role="alert">Projects could not be loaded. <button onClick={()=>void projects.refetch()}>Retry</button></div>}
   {projects.data?.items.length===0&&<div className="empty"><h2>No projects yet</h2><p>Create the first project using the form.</p></div>}
-  <ul className="project-list">{projects.data?.items.map(project=><li key={project.id} className="project-card"><div><h2>{project.name}</h2><p>{project.description||'No description'}</p></div><span className={`status status-${project.status}`}>{project.status}</span></li>)}</ul>
+  <ul className="project-list">{projects.data?.items.map(project=><li key={project.id} className="project-card"><div><h2>{project.name}</h2><p>{project.description||'No description'}</p></div><span className={`status status-${project.status}`}><span className="visually-hidden">Status: </span>{project.status}</span></li>)}</ul>
  </section><aside><CreateProjectForm onSubmit={submit} busy={create.isPending} serverError={error}/></aside></div>
 }

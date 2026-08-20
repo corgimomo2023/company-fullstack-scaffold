@@ -16,6 +16,7 @@ EXPECTED_COLORS = {
     "accent": "#e6762d",
     "accent-accessible": "#b15315",
     "accent-selected": "#733208",
+    "text-on-accent": "#001c19",
     "text": "#333333",
     "text-muted": "#6c757d",
     "surface": "#ffffff",
@@ -68,7 +69,9 @@ def test_skill_metadata_and_source_precedence_are_explicit() -> None:
     assert "Traditional Chinese" in skill
     assert skill.index("Product requirements") < skill.index("templates/admin-cms.html")
     for artifact in (
+        "design-system/foundation.css",
         "design-system/theme.css",
+        "design-system/tailwind.preset.cjs",
         "design-system/tailwind.theme.json",
         "design-system/tokens.json",
         "design-system/components.json",
@@ -83,10 +86,11 @@ def test_reference_records_bounded_evidence_and_usage_limits() -> None:
     for phrase in (
         "10,669",
         "10,666",
-        "representative pages fetched: 100",
-        "were not all individually rendered",
+        "559 locale-specific route signatures",
+        "43 profiles rendered",
+        "Neither 559 nor 43 is a count of independently authored website templates",
         "not an official corporate brand manual",
-        "does not claim that every published content URL was fetched",
+        "does not claim that every one of the 10,666 unique content URLs",
         "Accessibility corrections",
         "hotlink production UI",
     ):

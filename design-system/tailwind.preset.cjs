@@ -1,0 +1,229 @@
+// Generated from DESIGN.md. Do not edit.
+module.exports = {
+  "theme": {
+    "extend": {
+      "colors": {
+        "primary": "#006a63",
+        "primary-dark": "#003531",
+        "primary-active": "#001c19",
+        "accent": "#e6762d",
+        "accent-accessible": "#b15315",
+        "accent-selected": "#733208",
+        "text-on-accent": "#001c19",
+        "text": "#333333",
+        "text-muted": "#6c757d",
+        "surface": "#ffffff",
+        "surface-subtle": "#f7f7f7",
+        "surface-muted": "#ececec",
+        "surface-disabled": "#eaeaea",
+        "border": "#cecece",
+        "table-header": "#fff2ea",
+        "focus": "#006a63",
+        "danger": "#dc3545",
+        "success": "#006a63",
+        "logo-orange": "#f7941d",
+        "logo-olive": "#7b7a1b"
+      },
+      "fontFamily": {
+        "display-lg": [
+          "Pragati Narrow",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial Narrow",
+          "sans-serif"
+        ],
+        "heading-xl": [
+          "Pragati Narrow",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial Narrow",
+          "sans-serif"
+        ],
+        "heading-lg": [
+          "Pragati Narrow",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial Narrow",
+          "sans-serif"
+        ],
+        "heading-md": [
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
+        ],
+        "heading-sm": [
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
+        ],
+        "body-lg": [
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
+        ],
+        "body-md": [
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
+        ],
+        "body-sm": [
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
+        ],
+        "label": [
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
+        ],
+        "caption": [
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
+        ]
+      },
+      "fontSize": {
+        "display-lg": [
+          "3.125rem",
+          {
+            "letterSpacing": "0em",
+            "fontWeight": "700",
+            "lineHeight": "1"
+          }
+        ],
+        "heading-xl": [
+          "2.5rem",
+          {
+            "letterSpacing": "0em",
+            "fontWeight": "700",
+            "lineHeight": "1.1"
+          }
+        ],
+        "heading-lg": [
+          "2rem",
+          {
+            "letterSpacing": "0em",
+            "fontWeight": "700",
+            "lineHeight": "1.2"
+          }
+        ],
+        "heading-md": [
+          "1.5rem",
+          {
+            "letterSpacing": "0em",
+            "fontWeight": "700",
+            "lineHeight": "1.25"
+          }
+        ],
+        "heading-sm": [
+          "1.25rem",
+          {
+            "letterSpacing": "0em",
+            "fontWeight": "700",
+            "lineHeight": "1.3"
+          }
+        ],
+        "body-lg": [
+          "1.125rem",
+          {
+            "letterSpacing": "0em",
+            "fontWeight": "400",
+            "lineHeight": "1.55"
+          }
+        ],
+        "body-md": [
+          "1rem",
+          {
+            "letterSpacing": "0em",
+            "fontWeight": "400",
+            "lineHeight": "1.5"
+          }
+        ],
+        "body-sm": [
+          "0.875rem",
+          {
+            "letterSpacing": "0em",
+            "fontWeight": "400",
+            "lineHeight": "1.45"
+          }
+        ],
+        "label": [
+          "0.875rem",
+          {
+            "letterSpacing": "0.01em",
+            "fontWeight": "700",
+            "lineHeight": "1.25"
+          }
+        ],
+        "caption": [
+          "0.75rem",
+          {
+            "letterSpacing": "0.01em",
+            "fontWeight": "400",
+            "lineHeight": "1.35"
+          }
+        ]
+      },
+      "borderRadius": {
+        "none": "0px",
+        "sm": "2px",
+        "md": "4px",
+        "pill": "999px"
+      },
+      "spacing": {
+        "2xs": "4px",
+        "xs": "8px",
+        "sm": "12px",
+        "md": "16px",
+        "lg": "24px",
+        "xl": "32px",
+        "2xl": "40px",
+        "3xl": "48px",
+        "4xl": "64px",
+        "5xl": "80px"
+      },
+      "screens": {
+        "compact": "370px",
+        "sm": "576px",
+        "md": "768px",
+        "lg": "992px",
+        "xl": "1200px",
+        "2xl": "1600px"
+      },
+      "maxWidth": {
+        "container-sm": "540px",
+        "container-md": "720px",
+        "container-lg": "960px",
+        "container-xl": "1140px",
+        "container-2xl": "1570px"
+      },
+      "boxShadow": {
+        "none": "none",
+        "low": "0 4px 12px rgba(0, 0, 0, 0.10)"
+      },
+      "transitionDuration": {
+        "fast": "150ms",
+        "base": "200ms",
+        "brand": "600ms"
+      },
+      "transitionTimingFunction": {
+        "standard": "ease-out",
+        "brand": "cubic-bezier(0.23, 1, 0.32, 1)"
+      }
+    }
+  }
+}

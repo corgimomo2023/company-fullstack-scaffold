@@ -9,6 +9,7 @@ colors:
   accent: "#E6762D"
   accent-accessible: "#B15315"
   accent-selected: "#733208"
+  text-on-accent: "#001C19"
   text: "#333333"
   text-muted: "#6C757D"
   surface: "#FFFFFF"
@@ -99,6 +100,224 @@ spacing:
   3xl: 48px
   4xl: 64px
   5xl: 80px
+x-exporter-config:
+  kind: platform-contract
+  generator: scripts/export_design_system.py
+  groups:
+    - name: breakpoints
+      values:
+        compact: 370px
+        sm: 576px
+        md: 768px
+        lg: 992px
+        xl: 1200px
+        2xl: 1600px
+    - name: containers
+      values:
+        sm: 540px
+        md: 720px
+        lg: 960px
+        xl: 1140px
+        2xl: 1570px
+    - name: elevation
+      values:
+        none: none
+        low: "0 4px 12px rgba(0, 0, 0, 0.10)"
+    - name: motion
+      values:
+        fast: 150ms
+        base: 200ms
+        brand: 600ms
+        easing-standard: ease-out
+        easing-brand: "cubic-bezier(0.23, 1, 0.32, 1)"
+x-component-behavior:
+  button:
+    variants: [primary, secondary, accent, destructive, ghost]
+    states: [default, hover, focus-visible, active, disabled, pending]
+    requirements: [action-specific-label, 44px-min-height, pending-name-stable]
+    evidence: {classification: observed-adaptation, sourceComponents: ["button"], sourceUrls: ["https://www.asiaalliedgroup.com/contact-us"], pageLocations: ["contact-us :: button"]}
+  icon-button:
+    variants: [standard, quiet, destructive]
+    states: [default, hover, focus-visible, active, disabled, pending]
+    requirements: [accessible-name, 44px-target, svg-icon]
+    evidence: {classification: observed-adaptation, sourceComponents: ["site-search", "back-to-top"], sourceUrls: ["https://www.asiaalliedgroup.com"], pageLocations: ["home :: site-search"]}
+  link:
+    variants: [inline, standalone, navigation, external, download]
+    states: [default, hover, focus-visible, visited]
+    requirements: [non-color-affordance, destination-purpose]
+    evidence: {classification: observed-css-adaptation, sourceComponents: ["desktop-navigation", "page-menu", "document-download"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
+  tag-filter:
+    variants: [default, selected]
+    states: [default, hover, focus-visible, active, disabled]
+    requirements: [button-semantics, aria-pressed, result-count-announcement]
+    evidence: {classification: observed-adaptation, sourceComponents: ["tag-filter"], sourceUrls: ["https://www.asiaalliedgroup.com/blog"], pageLocations: ["blog :: tag-filter"]}
+  status-badge:
+    variants: [neutral, success, warning, danger, information]
+    states: [static]
+    requirements: [text-label, non-color-cue, no-interaction-by-default]
+    evidence: {classification: normalized-product, sourceComponents: ["tag-filter"], sourceUrls: ["https://www.asiaalliedgroup.com/blog"], pageLocations: ["blog :: tag-filter"]}
+  text-input:
+    variants: [default, compact]
+    states: [empty, populated, hover, focus-visible, disabled, readonly, invalid]
+    requirements: [persistent-label, described-error, 44px-default-height]
+    evidence: {classification: observed-adaptation, sourceComponents: ["text-input", "validation"], sourceUrls: ["https://www.asiaalliedgroup.com/contact-us"], pageLocations: ["contact-us :: text-input"]}
+  textarea:
+    variants: [default]
+    states: [empty, populated, hover, focus-visible, disabled, readonly, invalid]
+    requirements: [persistent-label, resize-policy, described-error]
+    evidence: {classification: observed-adaptation, sourceComponents: ["text-input", "validation"], sourceUrls: ["https://www.asiaalliedgroup.com/contact-us"], pageLocations: ["contact-us :: text-input"]}
+  select:
+    variants: [native, accessible-listbox]
+    states: [default, open, focus-visible, disabled, invalid]
+    requirements: [visible-label, keyboard-operation, no-icon-font]
+    evidence: {classification: observed-adaptation, sourceComponents: ["custom-select"], sourceUrls: ["https://www.asiaalliedgroup.com/blog"], pageLocations: ["blog :: custom-select"]}
+  checkbox:
+    variants: [default]
+    states: [unchecked, checked, indeterminate, focus-visible, disabled, invalid]
+    requirements: [native-input, 44px-target, text-label]
+    evidence: {classification: observed-css-adaptation, sourceComponents: ["checkbox-radio"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
+  radio:
+    variants: [default]
+    states: [unchecked, checked, focus-visible, disabled, invalid]
+    requirements: [native-input, group-label, 44px-target]
+    evidence: {classification: observed-css-adaptation, sourceComponents: ["checkbox-radio"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
+  field:
+    variants: [stacked, split]
+    states: [pristine, dirty, validating, invalid, disabled]
+    requirements: [label, help-text, error-slot, required-optional-text]
+    evidence: {classification: observed-adaptation, sourceComponents: ["form-group", "validation"], sourceUrls: ["https://www.asiaalliedgroup.com/contact-us"], pageLocations: ["contact-us :: form-group"]}
+  search:
+    variants: [inline, global-dialog]
+    states: [idle, typing, loading, results, empty, error]
+    requirements: [search-role, clear-action, result-announcement]
+    evidence: {classification: observed-adaptation, sourceComponents: ["site-search"], sourceUrls: ["https://www.asiaalliedgroup.com"], pageLocations: ["home :: site-search"]}
+  card:
+    variants: [default, interactive, selected, muted]
+    states: [default, hover, focus-within, selected, disabled]
+    requirements: [meaningful-grouping, border-first, no-nested-interactive-targets]
+    evidence: {classification: observed-adaptation, sourceComponents: ["image-card", "top-image-card"], sourceUrls: ["https://www.asiaalliedgroup.com", "https://www.asiaalliedgroup.com/media-coverage/2017"], pageLocations: ["home :: image-card", "media-coverage/{year} :: top-image-card"]}
+  media-card:
+    variants: [image-title, overlay, horizontal, vertical]
+    states: [default, hover, focus-within, loading, error]
+    requirements: [responsive-image, dimensions, alt-policy, tested-overlay-contrast]
+    evidence: {classification: observed-adaptation, sourceComponents: ["image-title-card", "image-overlay-card", "blog-card-list"], sourceUrls: ["https://www.asiaalliedgroup.com/blog"], pageLocations: ["blog :: blog-card-list"]}
+  metric-card:
+    variants: [standard, exception]
+    states: [loading, value, no-data, stale, error]
+    requirements: [metric-label, unit, period, freshness]
+    evidence: {classification: normalized-product, sourceComponents: ["information-tile-card"], sourceUrls: ["https://www.asiaalliedgroup.com/career"], pageLocations: ["career :: information-tile-card"]}
+  table:
+    variants: [standard, striped, compact]
+    states: [loading, data, empty, error, partial, unauthorized]
+    requirements: [caption-or-name, scoped-headers, sort-state, responsive-strategy]
+    evidence: {classification: observed-css-adaptation, sourceComponents: ["listing-table"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
+  pagination:
+    variants: [pages, previous-next]
+    states: [default, current, hover, focus-visible, disabled, loading]
+    requirements: [current-page, disabled-unavailable, url-state]
+    evidence: {classification: observed-adaptation, sourceComponents: ["pagination", "load-more"], sourceUrls: ["https://www.asiaalliedgroup.com/blog"], pageLocations: ["blog :: pagination"]}
+  tabs:
+    variants: [line, contained]
+    states: [default, selected, hover, focus-visible, disabled]
+    requirements: [tablist-semantics, keyboard-navigation, labelled-panel]
+    evidence: {classification: observed-adaptation, sourceComponents: ["page-tabs"], sourceUrls: ["https://www.asiaalliedgroup.com/projects"], pageLocations: ["projects :: page-tabs"]}
+  accordion:
+    variants: [standard, year]
+    states: [collapsed, expanded, hover, focus-visible, disabled]
+    requirements: [button-trigger, aria-expanded, labelled-region]
+    evidence: {classification: observed-adaptation, sourceComponents: ["year-accordion"], sourceUrls: ["https://www.asiaalliedgroup.com/development-history"], pageLocations: ["development-history :: year-accordion"]}
+  dialog:
+    variants: [standard, destructive-confirmation]
+    states: [opening, open, pending, error, closing]
+    requirements: [label, focus-trap, escape, focus-return, consequence-text]
+    evidence: {classification: normalized-product, sourceComponents: ["mobile-navigation", "site-search"], sourceUrls: ["https://www.asiaalliedgroup.com"], pageLocations: ["home :: mobile-navigation"]}
+  alert:
+    variants: [information, success, warning, danger]
+    states: [static, dismissible]
+    requirements: [semantic-role, heading-or-label, non-color-cue]
+    evidence: {classification: normalized-product, sourceComponents: ["validation"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
+  toast:
+    variants: [success, information, warning, danger]
+    states: [entering, visible, dismissing]
+    requirements: [live-region-policy, dismiss-action, not-form-error-replacement]
+    evidence: {classification: normalized-product, sourceComponents: ["validation"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
+  navigation:
+    variants: [top, side, mobile-disclosure, local-page-menu]
+    states: [default, hover, focus-visible, current, expanded, collapsed]
+    requirements: [current-location, landmark-label, keyboard-order]
+    evidence: {classification: observed-adaptation, sourceComponents: ["desktop-navigation", "mobile-navigation", "page-menu"], sourceUrls: ["https://www.asiaalliedgroup.com"], pageLocations: ["home :: desktop-navigation"]}
+  breadcrumb:
+    variants: [standard]
+    states: [default, current]
+    requirements: [navigation-label, ordered-list, current-page]
+    evidence: {classification: observed-adaptation, sourceComponents: ["breadcrumbs"], sourceUrls: ["https://www.asiaalliedgroup.com/blog"], pageLocations: ["blog :: breadcrumbs"]}
+  dropdown-menu:
+    variants: [actions, navigation]
+    states: [closed, open, focus-visible, disabled]
+    requirements: [button-trigger, keyboard-navigation, escape, focus-return]
+    evidence: {classification: observed-adaptation, sourceComponents: ["desktop-navigation", "mobile-navigation"], sourceUrls: ["https://www.asiaalliedgroup.com"], pageLocations: ["home :: desktop-navigation"]}
+  carousel:
+    variants: [hero, content]
+    states: [playing, paused, previous, next]
+    requirements: [pause-control, keyboard-operation, reduced-motion, slide-status]
+    evidence: {classification: observed-adaptation, sourceComponents: ["hero-carousel", "feature-slider"], sourceUrls: ["https://www.asiaalliedgroup.com"], pageLocations: ["home :: hero-carousel"]}
+  timeline:
+    variants: [chronological]
+    states: [default]
+    requirements: [ordered-data, non-positional-meaning, mobile-reading-order]
+    evidence: {classification: observed-adaptation, sourceComponents: ["development-timeline"], sourceUrls: ["https://www.asiaalliedgroup.com/development-history"], pageLocations: ["development-history :: development-timeline"]}
+  map:
+    variants: [interactive-footprint, static]
+    states: [loading, ready, selected, error]
+    requirements: [equivalent-location-list, keyboard-selection, selected-label]
+    evidence: {classification: observed-adaptation, sourceComponents: ["global-footprint-map"], sourceUrls: ["https://www.asiaalliedgroup.com/global-footprint"], pageLocations: ["global-footprint :: global-footprint-map"]}
+  file-download:
+    variants: [report, attachment]
+    states: [default, hover, focus-visible, unavailable]
+    requirements: [file-type, file-size-when-known, language, destination-behavior]
+    evidence: {classification: observed-css-adaptation, sourceComponents: ["document-download"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
+  empty-state:
+    variants: [first-use, no-results, unavailable]
+    states: [static]
+    requirements: [cause, recovery-action-when-available, no-fake-success]
+    evidence: {classification: normalized-product, sourceComponents: ["load-more", "listing-table"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
+  loading-skeleton:
+    variants: [text, card, table]
+    states: [loading, reduced-motion]
+    requirements: [aria-busy-owner, no-content-announcement, reduced-motion]
+    evidence: {classification: normalized-product, sourceComponents: ["image-card", "listing-table", "hero-carousel"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
+x-visual-component-evidence:
+  button-primary: {sourceBehavior: button}
+  button-primary-hover: {sourceBehavior: button}
+  button-primary-active: {sourceBehavior: button}
+  button-primary-disabled: {sourceBehavior: button}
+  button-secondary: {sourceBehavior: button}
+  button-secondary-hover: {sourceBehavior: button}
+  button-secondary-disabled: {sourceBehavior: button}
+  button-accent: {sourceBehavior: button}
+  navigation-active: {sourceBehavior: navigation}
+  input-default: {sourceBehavior: text-input}
+  input-focus: {sourceBehavior: text-input}
+  input-disabled: {sourceBehavior: text-input}
+  card-default: {sourceBehavior: card}
+  card-selected: {sourceBehavior: card}
+  tag-default: {sourceBehavior: tag-filter}
+  tag-selected: {sourceBehavior: tag-filter}
+  page-canvas: {classification: normalized-product, sourceComponents: ["rich-text", "image-card"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
+  panel-muted: {classification: observed-css-adaptation, sourceComponents: ["image-overlay-card", "spaced-image-plate"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
+  table-header: {sourceBehavior: table}
+  table-row-selected: {sourceBehavior: table}
+  metadata: {sourceBehavior: media-card}
+  status-success: {sourceBehavior: status-badge}
+  status-danger: {sourceBehavior: status-badge}
+  status-warning: {sourceBehavior: status-badge}
+  status-neutral: {sourceBehavior: status-badge}
+  section-accent-rule: {classification: observed-adaptation, sourceComponents: ["page-title"], sourceUrls: ["https://www.asiaalliedgroup.com/blog"], pageLocations: ["blog :: page-title"]}
+  accent-surface-large: {classification: accessibility-correction, sourceComponents: ["tag-filter", "page-title"], sourceUrls: ["https://www.asiaalliedgroup.com/blog"], pageLocations: ["blog :: tag-filter"]}
+  divider: {classification: observed-css-adaptation, sourceComponents: ["listing-table", "image-card"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
+  focus-indicator: {sourceBehavior: text-input}
+  logo-orange-swatch: {classification: official-artwork-sample, sourceComponents: ["site-header"], sourceUrls: ["https://www.asiaalliedgroup.com"], pageLocations: ["home :: site-header"]}
+  logo-olive-swatch: {classification: official-artwork-sample, sourceComponents: ["site-header"], sourceUrls: ["https://www.asiaalliedgroup.com"], pageLocations: ["home :: site-header"]}
 components:
   button-primary:
     backgroundColor: "{colors.primary}"
@@ -121,9 +340,30 @@ components:
     rounded: "{rounded.md}"
     padding: 12px
     height: 44px
+  button-primary-disabled:
+    backgroundColor: "{colors.surface-disabled}"
+    textColor: "{colors.text}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: 12px
+    height: 44px
   button-secondary:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.primary}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: 12px
+    height: 44px
+  button-secondary-hover:
+    backgroundColor: "{colors.surface-subtle}"
+    textColor: "{colors.primary-dark}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: 12px
+    height: 44px
+  button-secondary-disabled:
+    backgroundColor: "{colors.surface-disabled}"
+    textColor: "{colors.text}"
     typography: "{typography.label}"
     rounded: "{rounded.md}"
     padding: 12px
@@ -148,6 +388,13 @@ components:
     rounded: "{rounded.md}"
     padding: 12px
     height: 44px
+  input-focus:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text}"
+    typography: "{typography.body-md}"
+    rounded: "{rounded.md}"
+    padding: 12px
+    height: 44px
   input-disabled:
     backgroundColor: "{colors.surface-disabled}"
     textColor: "{colors.text}"
@@ -160,6 +407,23 @@ components:
     textColor: "{colors.text}"
     rounded: "{rounded.md}"
     padding: 24px
+  card-selected:
+    backgroundColor: "{colors.surface-muted}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.md}"
+    padding: 24px
+  tag-default:
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.text-on-accent}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: 8px
+  tag-selected:
+    backgroundColor: "{colors.accent-selected}"
+    textColor: "{colors.surface}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: 8px
   page-canvas:
     backgroundColor: "{colors.surface-subtle}"
     textColor: "{colors.text}"
@@ -172,6 +436,10 @@ components:
     backgroundColor: "{colors.table-header}"
     textColor: "{colors.text}"
     typography: "{typography.label}"
+    padding: 12px
+  table-row-selected:
+    backgroundColor: "{colors.surface-muted}"
+    textColor: "{colors.text}"
     padding: 12px
   metadata:
     backgroundColor: "{colors.surface}"
@@ -195,9 +463,20 @@ components:
     typography: "{typography.label}"
     rounded: "{rounded.pill}"
     padding: 8px
+  status-neutral:
+    backgroundColor: "{colors.surface-muted}"
+    textColor: "{colors.text}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: 8px
   section-accent-rule:
     backgroundColor: "{colors.accent}"
     height: 2px
+  accent-surface-large:
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.text-on-accent}"
+    rounded: "{rounded.none}"
+    padding: 24px
   divider:
     backgroundColor: "{colors.border}"
     height: 1px
@@ -217,7 +496,7 @@ components:
 
 ## Overview
 
-This is an evidence-based digital baseline derived from the public Asia Allied Infrastructure Holdings website, not an official corporate brand manual. The 2026-08-14 audit exhaustively parsed all three published sitemaps and inspected a deterministic cross-section of page templates, the live DOM, computed desktop/mobile styles, the public CSS and current logo assets.
+This is an evidence-based digital baseline derived from the public Asia Allied Infrastructure Holdings website, not an official corporate brand manual. The 2026-08-19 audit exhaustively parsed all three published sitemaps, requested every normalized content-route signature while protecting functionally distinct static routes, and inspected live DOM, responsive computed styles, public CSS and current logo assets. Route signatures are coverage buckets, not a claim that every content URL is a distinct template.
 
 The source character is practical, established and engineering-led: dark green provides structure and trust; orange supplies restrained momentum and emphasis; layouts are square, image-led and information-dense; typography is narrow and authoritative for English display copy and neutral for operational content.
 
@@ -248,7 +527,7 @@ For internal admin, CMS and operational products, preserve the identity rather t
 
 ### Source evidence and classification
 
-The current `projectbase.css` contains 2,883 parsed rules. Site-specific recurring values include `#E6762D` (60 declarations), `#006A63` (32), `#F7F7F7` (14), `#AAAAAA` (11), `#003531` (10), `#333333` (9), `#ECECEC` (8), `#CECECE` (7), `#733208` (4), `#B15315` (4), `#FFF2EA` (3) and `#EAEAEA` (3). Complete declaration counts/property distributions and a bounded set of selector/value examples—including bundled Bootstrap colors that are not promoted to brand tokens—are stored in `docs/design-system/evidence/css-token-evidence.json`.
+The current `projectbase.css` contains 2,883 parsed rules. Site-specific recurring values include `#E6762D` (60 declarations), `#006A63` (32), `#F7F7F7` (14), `#AAAAAA` (11), `#003531` (10), `#333333` (9), `#ECECEC` (8), `#CECECE` (7), `#733208` (4), `#B15315` (4), `#FFF2EA` (3) and `#EAEAEA` (3). Complete declaration counts/property distributions and bounded selector/value examples are stored in `docs/design-system/evidence/css-token-evidence.json`; the clickable token/component register is `docs/design-system/source-evidence.md`.
 
 Observed values and normative roles are intentionally separate: the public CSS uses `#B15315` in hover shadow/framing declarations, not as its standard orange button fill. Promoting it to `accent-accessible` is an accessibility-led product decision based on its 5.10:1 white-text contrast. Likewise, the spacing scale, 44px controls and normalized typography in this document are production rules, not claims of literal source extraction.
 
@@ -287,11 +566,11 @@ The current site self-hosts:
 - Roboto 300, 400, 500 and 700;
 - a custom `wico` icon font.
 
-The body stack is `Roboto, Arial, Microsoft JhengHei, Helvetica, sans-serif` with a source root size of `100.1%` and base line height `1.3`. English display headings, navigation, buttons, cards and labels use Pragati Narrow first. Traditional/Simplified Chinese year headings explicitly switch to Microsoft JhengHei.
+The body stack is `Roboto, Arial, Microsoft JhengHei, Helvetica, sans-serif` with a source root size of `100.1%` and base line height `1.3`. Typography is mixed by component: buttons, navigation and several image-card titles use Pragati Narrow; overlay/list-card copy, tags, metadata and form labels generally inherit Roboto. Traditional/Simplified Chinese year headings explicitly switch to Microsoft JhengHei.
 
 Computed cross-checks on the current About page:
 
-| Element | Desktop 1440px | Mobile 375px |
+| Element | Desktop 1440px | Mobile 390px |
 |---|---|---|
 | Root/body | `16.016px`; body line height `20.821px` | Same |
 | Page H1 | Pragati Narrow 700, `50.05px/50.05px`, green | `25.025px/25.025px`, green |
@@ -316,16 +595,16 @@ Computed cross-checks on the current About page:
 
 The source CSS uses Bootstrap-era breakpoints plus a wide corporate extension:
 
-| Name | Min width | Source container max |
+| Name | Normalized min width | Source container max |
 |---|---:|---:|
-| compact | `370px` | fluid |
+| compact | `370px` | fluid; source evidence is a `max-width: 370px` logo adjustment, not an observed min-width breakpoint |
 | sm | `576px` | `540px` |
 | md | `768px` | `720px` |
 | lg | `992px` | `960px` |
 | xl | `1200px` | `1140px` |
 | xxl | `1600px` | `1570px` |
 
-The stylesheet contains corresponding max-width queries at `575.98`, `767.98`, `991.98`, `1199.98` and `1599.98px`. The public content uses three/two/one-column card changes and turns data tables into labelled stacked rows on narrow viewports.
+The stylesheet contains corresponding max-width queries at `575.98`, `767.98`, `991.98`, `1199.98` and `1599.98px`, plus component-specific rules including `338px` reCAPTCHA scaling, `370px` logo adjustment and `1679px` mega-menu alignment. The normalized `compact` token is a scaffold decision. Image-title cards use 3/2/1 columns; top-image cards use 4/3/2/1 with additional gutter/type changes. Data tables become labelled stacked rows on narrow viewports.
 
 ### Production spacing
 
@@ -452,7 +731,7 @@ Every interactive component must define default, hover, focus-visible, active/pr
 
 ## Source and verification
 
-- Public site: <https://www.asiaalliedgroup.com/en>
+- Public site: <https://www.asiaalliedgroup.com>
 - Robots policy: <https://www.asiaalliedgroup.com/robots.txt>
 - English sitemap: <https://www.asiaalliedgroup.com/sitemap.xml>
 - Traditional Chinese sitemap: <https://www.asiaalliedgroup.com/sitemap-tc.xml>
@@ -461,8 +740,8 @@ Every interactive component must define default, hover, focus-visible, active/pr
 - Current project stylesheet SHA-256: `ff62bae815e73cb956e935b15bb4df7bec36e6c8013c38bd69a8bc7ab3f5dc94`
 - Current print stylesheet SHA-256: `b99d6336f7da208f0d859a30cdbd0fb3e2cb1cff138732013a208751d9ae2e98`
 - Current main logo SHA-256: `3d416329cccb7610860b26eb8d39d7dc9d5eab34677a654f81e51840c67a3566`
-- Audit date: 2026-08-14
+- Audit date: 2026-08-19
 - Reproducible audit: `python3 scripts/audit_aai_design_system.py --audit-date YYYY-MM-DD`
 - Evidence: `docs/design-system/evidence/`
 
-The three sitemaps contained 10,669 entries (10,666 unique) at audit time. The audit parsed all entries, classified every route signature and fetched 100 deterministic representative pages spanning every locale/category/depth combination plus explicit high-value templates. All 100 returned without audit errors; across the sample set, only the two expected local stylesheets were discovered. This is exhaustive sitemap analysis with template-based page fetching; it is not a claim that every content URL was individually downloaded.
+The three sitemaps contained 10,669 entries (10,666 unique) at audit time. The audit parsed all entries and fetched one deterministic URL for each of 559 locale-specific normalized route signatures. All 559 returned HTTP 200 with no request/parser errors; 552 were HTML and seven were direct PDF, JPEG or XML resources. Route signatures consolidate only an explicit taxonomy of content-detail roots and archive dimensions; functionally distinct static siblings remain separate. This is exhaustive sitemap discovery plus normalized-route HTTP coverage, not a claim that 559 independently authored templates exist or that every content URL was visually inspected in a browser.

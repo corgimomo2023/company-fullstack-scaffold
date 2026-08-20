@@ -8,6 +8,7 @@
         "accent": "#e6762d",
         "accent-accessible": "#b15315",
         "accent-selected": "#733208",
+        "text-on-accent": "#001c19",
         "text": "#333333",
         "text-muted": "#6c757d",
         "surface": "#ffffff",
@@ -24,34 +25,74 @@
       },
       "fontFamily": {
         "display-lg": [
-          "Pragati Narrow"
+          "Pragati Narrow",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial Narrow",
+          "sans-serif"
         ],
         "heading-xl": [
-          "Pragati Narrow"
+          "Pragati Narrow",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial Narrow",
+          "sans-serif"
         ],
         "heading-lg": [
-          "Pragati Narrow"
+          "Pragati Narrow",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial Narrow",
+          "sans-serif"
         ],
         "heading-md": [
-          "Roboto"
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
         ],
         "heading-sm": [
-          "Roboto"
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
         ],
         "body-lg": [
-          "Roboto"
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
         ],
         "body-md": [
-          "Roboto"
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
         ],
         "body-sm": [
-          "Roboto"
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
         ],
         "label": [
-          "Roboto"
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
         ],
         "caption": [
-          "Roboto"
+          "Roboto",
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          "Arial",
+          "sans-serif"
         ]
       },
       "fontSize": {
@@ -153,6 +194,34 @@
         "3xl": "48px",
         "4xl": "64px",
         "5xl": "80px"
+      },
+      "screens": {
+        "compact": "370px",
+        "sm": "576px",
+        "md": "768px",
+        "lg": "992px",
+        "xl": "1200px",
+        "2xl": "1600px"
+      },
+      "maxWidth": {
+        "container-sm": "540px",
+        "container-md": "720px",
+        "container-lg": "960px",
+        "container-xl": "1140px",
+        "container-2xl": "1570px"
+      },
+      "boxShadow": {
+        "none": "none",
+        "low": "0 4px 12px rgba(0, 0, 0, 0.10)"
+      },
+      "transitionDuration": {
+        "fast": "150ms",
+        "base": "200ms",
+        "brand": "600ms"
+      },
+      "transitionTimingFunction": {
+        "standard": "ease-out",
+        "brand": "cubic-bezier(0.23, 1, 0.32, 1)"
       }
     }
   }

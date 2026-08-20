@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
+      - '.github/workflows/template-smoke-test.yml'
       - 'backend/**'
       - 'frontend/**'
       - 'scripts/create_project.py'
@@ -26,6 +27,12 @@ jobs:
           --slug generated-project
           --display-name "Generated Project"
           --codeowner @example/platform-team
-      - name: Bootstrap and verify generated project
+      - name: Bootstrap generated project
         working-directory: /tmp/generated-project
-        run: make setup && make check
+        run: make setup
+      - name: Install generated project browser
+        working-directory: /tmp/generated-project/frontend
+        run: npx playwright install --with-deps chromium
+      - name: Verify generated project
+        working-directory: /tmp/generated-project
+        run: make check
