@@ -1,0 +1,28 @@
+{
+  "theme": {
+    "extend": {
+      "colors": {
+        "primary": "#006a63",
+        "primary-dark": "#003531",
+        "primary-active": "#001c19",
+        "accent": "#e6762d",
+        "accent-accessible": "#b15315",
+        "accent-selected": "#733208",
+        "text-on-accent": "#001c19",
+        "text": "#333333",
+        "text-muted": "#6c757d",
+        "surface": "#ffffff",
+        "surface-subtle": "#f7f7f7",
+        "surface-muted": "#ececec",
+        "surface-disabled": "#eaeaea",
+        "border": "#cecece",
+        "table-header": "#fff2ea",
+        "focus": "#006a63",
+        "danger": "#dc3545",
+        "success": "#006a63",
+        "logo-orange": "#f7941d",
+        "logo-olive": "#7b7a1b"
+      }
+    }
+  }
+}
