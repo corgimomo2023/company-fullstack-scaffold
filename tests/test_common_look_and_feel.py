@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 from html.parser import HTMLParser
 from pathlib import Path
@@ -9,6 +10,10 @@ SKILL = ROOT / ".agents" / "skills" / "common-look-and-feel"
 SKILL_MD = SKILL / "SKILL.md"
 REFERENCE = SKILL / "references" / "asia-allied-baseline.md"
 TEMPLATE = SKILL / "templates" / "admin-cms.html"
+COLOR_SKILL = ROOT / ".agents" / "skills" / "common-look-and-feel-colors"
+COLOR_SKILL_MD = COLOR_SKILL / "SKILL.md"
+TAILWIND_COLORS = COLOR_SKILL / "templates" / "tailwind.colors.json"
+THEME_COLORS = COLOR_SKILL / "templates" / "theme.colors.css"
 EXPECTED_COLORS = {
     "primary": "#006a63",
     "primary-dark": "#003531",
@@ -177,3 +182,91 @@ def test_skill_has_no_broken_local_file_references() -> None:
         "templates/admin-cms.html",
     }
     assert all((SKILL / path).is_file() for path in local_paths)
+
+
+def _css_colors(path: Path) -> dict[str, str]:
+    return dict(
+        re.findall(
+            r"--color-([a-z0-9-]+):\s*(#[0-9a-f]{6});",
+            path.read_text(encoding="utf-8"),
+        )
+    )
+
+
+def test_color_skill_is_narrow_and_preserves_existing_project_style() -> None:
+    skill = COLOR_SKILL_MD.read_text(encoding="utf-8")
+    frontmatter = skill.split("---", 2)[1]
+
+    assert re.search(r"^name: common-look-and-feel-colors$", frontmatter, re.MULTILINE)
+    description = re.search(r"^description: (.+)$", frontmatter, re.MULTILINE)
+    assert description is not None
+    assert description.group(1).startswith("Use when ")
+    assert len(description.group(1)) <= 1024
+
+    for phrase in (
+        "colors only",
+        "Preserve the existing project layout",
+        "Do not change component structure",
+        "Do not change typography, spacing, sizing, border radius, shadows, or motion",
+        "Do not redesign buttons",
+        "Do not replace the application shell",
+        "Do not copy the full generated design-system files wholesale",
+        "templates/tailwind.colors.json",
+        "templates/theme.colors.css",
+        "copy both color-only files into the target project",
+        "merge `theme.extend.colors`",
+        "only `--color-*` declarations",
+    ):
+        assert phrase in skill
+
+
+def test_copyable_tailwind_json_contains_only_normative_colors() -> None:
+    copied = json.loads(TAILWIND_COLORS.read_text(encoding="utf-8"))
+    source = json.loads(
+        (ROOT / "design-system" / "tailwind.theme.json").read_text(encoding="utf-8")
+    )
+
+    assert copied == {
+        "theme": {"extend": {"colors": source["theme"]["extend"]["colors"]}}
+    }
+    assert set(copied["theme"]["extend"]) == {"colors"}
+
+
+def test_copyable_tailwind_v4_theme_contains_only_normative_colors() -> None:
+    copied_text = THEME_COLORS.read_text(encoding="utf-8")
+    source_colors = _css_colors(ROOT / "design-system" / "theme.css")
+    copied_colors = _css_colors(THEME_COLORS)
+
+    assert copied_text.startswith("@theme {\n")
+    assert copied_text.rstrip().endswith("}")
+    assert copied_colors == source_colors
+    declarations = [
+        line.strip()
+        for line in copied_text.splitlines()
+        if line.strip() and line.strip() not in {"@theme {", "}"}
+    ]
+    assert declarations
+    assert all(
+        re.fullmatch(r"--color-[a-z0-9-]+: #[0-9a-f]{6};", line)
+        for line in declarations
+    )
+
+
+def test_color_skill_has_no_broken_local_file_references_or_private_paths() -> None:
+    skill = COLOR_SKILL_MD.read_text(encoding="utf-8")
+    local_paths = set(
+        re.findall(r"`((?:references|templates)/[a-zA-Z0-9._/-]+)`", skill)
+    )
+
+    assert local_paths == {
+        "templates/tailwind.colors.json",
+        "templates/theme.colors.css",
+    }
+    assert all((COLOR_SKILL / path).is_file() for path in local_paths)
+
+    tracked_text = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in (COLOR_SKILL_MD, TAILWIND_COLORS, THEME_COLORS)
+    )
+    assert str(ROOT) not in tracked_text
+    assert "/home/" not in tracked_text
