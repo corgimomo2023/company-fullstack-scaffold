@@ -151,8 +151,6 @@ VISUAL_GROUPS = {
         "section-accent-rule",
         "accent-surface-large",
         "divider",
-        "logo-orange-swatch",
-        "logo-olive-swatch",
     ],
 }
 
@@ -246,16 +244,6 @@ COLOR_ROLES = {
         "Positive state",
         "normalized product role",
         "Pair with explicit success label/icon",
-    ),
-    "logo-orange": (
-        "Approved brand-mark color only",
-        "observed logo sample",
-        "Do not use as product status/control",
-    ),
-    "logo-olive": (
-        "Approved brand-mark color only",
-        "observed logo sample",
-        "Do not use as product status/control",
     ),
 }
 
@@ -1615,7 +1603,6 @@ def color_board(tokens: dict[str, Any], index: int) -> dict[str, Any]:
         "surface-disabled",
         "border",
         "table-header",
-        "logo-orange",
     }
     cards: list[dict[str, Any]] = []
     names = [name for name, _ in token_items(tokens, "color")]

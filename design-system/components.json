@@ -196,14 +196,6 @@
       "backgroundColor": "{colors.focus}",
       "textColor": "{colors.surface}",
       "rounded": "{rounded.md}"
-    },
-    "logo-orange-swatch": {
-      "backgroundColor": "{colors.logo-orange}",
-      "size": "24px"
-    },
-    "logo-olive-swatch": {
-      "backgroundColor": "{colors.logo-olive}",
-      "size": "24px"
     }
   },
   "behavior_contracts": {
@@ -3155,30 +3147,6 @@
       ],
       "pageLocations": [
         "contact-us :: text-input"
-      ]
-    },
-    "logo-orange-swatch": {
-      "classification": "official-artwork-sample",
-      "sourceComponents": [
-        "site-header"
-      ],
-      "sourceUrls": [
-        "https://www.asiaalliedgroup.com"
-      ],
-      "pageLocations": [
-        "home :: site-header"
-      ]
-    },
-    "logo-olive-swatch": {
-      "classification": "official-artwork-sample",
-      "sourceComponents": [
-        "site-header"
-      ],
-      "sourceUrls": [
-        "https://www.asiaalliedgroup.com"
-      ],
-      "pageLocations": [
-        "home :: site-header"
       ]
     }
   }

@@ -48,6 +48,12 @@ Do not use this skill to create a new layout, normalize component geometry, repl
 
 If a requested color cannot meet required contrast without changing geometry, typography or content, stop and report the conflict. Do not silently expand scope.
 
+## Complete 18-token UI palette
+
+The color-only skill exposes all **18 semantic UI tokens** from `DESIGN.md`. Logo artwork colors are intentionally excluded: consume the approved logo asset as an image and never recreate or repurpose sampled logo colors as product tokens.
+
+The stakeholder reference deck is `docs/design-system/vibe-code-common-look-and-feel-colour-foundation.pptx`. It presents all 18 tokens with live website screenshot references and must remain logo-color-free. Treat `DESIGN.md` and the copyable templates as normative; the deck is a communication artifact and must not introduce additional tokens.
+
 ## Palette roles
 
 Use semantic roles rather than selecting colors by visual similarity:
@@ -64,7 +70,6 @@ Use semantic roles rather than selecting colors by visual similarity:
 | `table-header` | Existing table-header backgrounds |
 | `focus` | Existing focus indication color; do not alter focus geometry |
 | `danger`, `success` | Existing semantic states |
-| `logo-orange`, `logo-olive` | Approved logo artwork only, not general component colors |
 
 Never use color alone to communicate status. Preserve labels, icons and accessibility semantics already present in the project.
 
@@ -196,7 +201,7 @@ Completion criterion: tests/build pass, rendered pages use the new palette, cont
 - [ ] Tailwind v3 merged only `theme.extend.colors`, or Tailwind v4 imported only `--color-*` declarations
 - [ ] No full generated theme file was copied wholesale
 - [ ] Every production edit maps to a color value, token or utility
-- [ ] Logo colors are used only for logo artwork
+- [ ] Logo artwork colors are absent from the UI palette; approved logos are consumed as images
 - [ ] Existing interaction states remain intact
 - [ ] WCAG contrast was checked for changed foreground/background pairs
 - [ ] Non-color computed styles match the before-state
@@ -207,7 +212,7 @@ Completion criterion: tests/build pass, rendered pages use the new palette, cont
 
 1. **Replacing the full Tailwind theme.** This imports unrelated fonts, spacing, radii and breakpoints. Copy and merge only the supplied color-only files.
 2. **Treating orange as a universal button fill.** Use the accessible semantic role when normal-size light text requires it.
-3. **Using logo colors as UI tokens.** `logo-orange` and `logo-olive` are artwork references only.
+3. **Sampling logo artwork into UI tokens.** Logo colors are excluded from this skill; consume the approved logo image instead.
 4. **Changing geometry while “cleaning up” colors.** Revert all unrelated cleanup; this skill is intentionally narrow.
 5. **Blind search-and-replace.** The same old hex may represent different semantic roles. Map usage by context.
 6. **Reporting a redesign as a palette refactor.** If layout or component styling beyond color must change, stop and request separate scope.

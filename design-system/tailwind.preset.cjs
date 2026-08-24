@@ -20,9 +20,7 @@ module.exports = {
         "table-header": "#fff2ea",
         "focus": "#006a63",
         "danger": "#dc3545",
-        "success": "#006a63",
-        "logo-orange": "#f7941d",
-        "logo-olive": "#7b7a1b"
+        "success": "#006a63"
       },
       "fontFamily": {
         "display-lg": [

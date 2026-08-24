@@ -4,6 +4,7 @@ import json
 import re
 from html.parser import HTMLParser
 from pathlib import Path
+from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = ROOT / ".agents" / "skills" / "common-look-and-feel"
@@ -33,8 +34,6 @@ EXPECTED_COLORS = {
     "focus": "#006a63",
     "danger": "#dc3545",
     "success": "#006a63",
-    "logo-orange": "#f7941d",
-    "logo-olive": "#7b7a1b",
 }
 EXPECTED_RADII = {
     "none": "0px",
@@ -219,6 +218,8 @@ def test_color_skill_is_narrow_and_preserves_existing_project_style() -> None:
         "existingProjectColors",
         "preserve every existing `theme.extend.colors` entry",
         "shared palette wins only when the same semantic key conflicts",
+        "18 semantic UI tokens",
+        "Logo artwork colors are intentionally excluded",
     ):
         assert phrase in skill
 
@@ -277,3 +278,32 @@ def test_color_skill_has_no_broken_local_file_references_or_private_paths() -> N
     )
     assert str(ROOT) not in tracked_text
     assert "/home/" not in tracked_text
+
+
+def test_palette_powerpoint_is_complete_evidence_referenced_and_logo_free() -> None:
+    deck = (
+        ROOT
+        / "docs"
+        / "design-system"
+        / "vibe-code-common-look-and-feel-colour-foundation.pptx"
+    )
+    with ZipFile(deck) as archive:
+        slides = sorted(
+            name
+            for name in archive.namelist()
+            if re.fullmatch(r"ppt/slides/slide\d+\.xml", name)
+        )
+        text = "\n".join(
+            archive.read(name).decode("utf-8", "replace") for name in slides
+        ).lower()
+        media = [name for name in archive.namelist() if name.startswith("ppt/media/")]
+
+    assert len(slides) == 9
+    assert len(media) >= 5
+    assert "18 semantic tokens" in text
+    for token in EXPECTED_COLORS:
+        assert f">{token}<" in text
+    for forbidden in ("logo-orange", "logo-olive", "#f7941d", "#7b7a1b", "#231f20"):
+        assert forbidden not in text
+    for reference in ("s1", "s2", "s3", "s4", "s5"):
+        assert f">{reference}<" in text or f">{reference}  " in text
