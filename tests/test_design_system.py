@@ -37,8 +37,6 @@ EXPECTED_COLORS = {
     "focus": "#006a63",
     "danger": "#dc3545",
     "success": "#006a63",
-    "logo-orange": "#f7941d",
-    "logo-olive": "#7b7a1b",
 }
 EXPECTED_LINE_HEIGHTS = {
     "display-lg": 1,
@@ -252,7 +250,7 @@ def test_sitemap_and_template_audit_is_complete_and_error_free() -> None:
 
 def test_source_evidence_index_covers_every_token_and_component() -> None:
     evidence = load_json(EVIDENCE / "source-evidence-index.json")
-    assert len(evidence["token_evidence"]) == 62
+    assert len(evidence["token_evidence"]) == 60
     assert len(evidence["public_component_evidence"]) == 52
     assert evidence["token_evidence"]["colors.text-on-accent"]["classification"] == (
         "accessibility-correction"
@@ -549,7 +547,7 @@ def test_generated_formats_share_the_normative_contract() -> None:
 
     components = load_json(ROOT / "design-system" / "components.json")
     extension_components = dtcg["$extensions"][EXTENSION_KEY]["componentContract"]
-    assert len(extension_components) == 31
+    assert len(extension_components) == 29
     assert components["components"] == extension_components
     assert len(components["behavior_contracts"]) >= 28
     assert (
@@ -863,7 +861,7 @@ def test_pen_visual_board_is_derived_from_normative_artifacts() -> None:
     ]
     assert nodes_by_id["coverage"]["metadata"] == {
         "behaviorContracts": 31,
-        "visualContracts": 31,
+        "visualContracts": 29,
         "variantStateMappings": len(state_statuses),
         "mapped": state_statuses.count("mapped"),
         "behaviorOnly": state_statuses.count("behavior-only"),

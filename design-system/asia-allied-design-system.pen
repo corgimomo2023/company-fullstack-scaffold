@@ -73,14 +73,6 @@
       "type": "color",
       "value": "#006a63"
     },
-    "color-logo-orange": {
-      "type": "color",
-      "value": "#f7941d"
-    },
-    "color-logo-olive": {
-      "type": "color",
-      "value": "#7b7a1b"
-    },
     "spacing-2xs": {
       "type": "number",
       "value": 4
@@ -352,11 +344,11 @@
         "auditDate": "2026-08-19",
         "validatedWith": "pen 0.3.3",
         "inputSha256": {
-          "DESIGN.md": "016b561b9d4a140b482041f3e51357978568279d692eef605aff3ceb09469f9d",
-          "design-system/tokens.json": "a787897ae84057126842652a882c2146838a92c7eebd6d806e7c6cb7ceebc5a2",
-          "design-system/components.json": "7910717d2090358e5e964477e6e5e830b1f155ba02bbfb66bf09e564e5274ff1",
+          "DESIGN.md": "ca1d309d0a1e7914b24d7be31b68bc0e5537802828e68f1ccafa0921b21f4d77",
+          "design-system/tokens.json": "1e09e1dbfb71c814819b06ad2df1aafa4069c140a79ed91ea67fe1277aa937ad",
+          "design-system/components.json": "d47f359a5ccdca1874f809a42734b89ad9e1f37e7be556d1589ab938aafc5994",
           "design-system/source-component-specimens.json": "c4464936d54074694b1033e1eb750b39af9ddb740983d41b9945c49f6e6ceb16",
-          "docs/design-system/evidence/source-evidence-index.json": "6c8637e0ce114ba3f9896e96fa6dd61dd64a19c72c9f0195d9ed8ebf69b3e509"
+          "docs/design-system/evidence/source-evidence-index.json": "809087b1c7a83804abf831472768191d69f693f8a5d6b82c9cb2420f7038555a"
         }
       }
     },
@@ -1976,174 +1968,6 @@
                 "role": "Positive state",
                 "classification": "normalized product role",
                 "usage": "Pair with explicit success label/icon"
-              }
-            },
-            {
-              "type": "frame",
-              "id": "color-card-logo-orange",
-              "name": "logo-orange",
-              "layout": "vertical",
-              "gap": 4,
-              "padding": 12,
-              "width": "fill_container",
-              "height": 176,
-              "fill": "$color-logo-orange",
-              "cornerRadius": "$radius-sm",
-              "children": [
-                {
-                  "type": "text",
-                  "id": "color-name-logo-orange",
-                  "content": "logo-orange",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 14,
-                  "fontWeight": "700",
-                  "lineHeight": 1.35,
-                  "fill": "$color-primary-active"
-                },
-                {
-                  "type": "text",
-                  "id": "color-hex-logo-orange",
-                  "content": "#F7941D",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 12,
-                  "fontWeight": "400",
-                  "lineHeight": 1.35,
-                  "fill": "$color-primary-active"
-                },
-                {
-                  "type": "text",
-                  "id": "color-card-logo-orange-role",
-                  "content": "Role · Approved brand-mark color only",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 9,
-                  "fontWeight": "400",
-                  "lineHeight": 1.35,
-                  "fill": "$color-primary-active"
-                },
-                {
-                  "type": "text",
-                  "id": "color-card-logo-orange-classification",
-                  "content": "Class · observed logo sample",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 9,
-                  "fontWeight": "400",
-                  "lineHeight": 1.35,
-                  "fill": "$color-primary-active"
-                },
-                {
-                  "type": "text",
-                  "id": "color-card-logo-orange-usage",
-                  "content": "Use · Do not use as product status/control",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 9,
-                  "fontWeight": "400",
-                  "lineHeight": 1.35,
-                  "fill": "$color-primary-active"
-                }
-              ],
-              "metadata": {
-                "role": "Approved brand-mark color only",
-                "classification": "observed logo sample",
-                "usage": "Do not use as product status/control"
-              }
-            },
-            {
-              "type": "frame",
-              "id": "color-card-logo-olive",
-              "name": "logo-olive",
-              "layout": "vertical",
-              "gap": 4,
-              "padding": 12,
-              "width": "fill_container",
-              "height": 176,
-              "fill": "$color-logo-olive",
-              "cornerRadius": "$radius-sm",
-              "children": [
-                {
-                  "type": "text",
-                  "id": "color-name-logo-olive",
-                  "content": "logo-olive",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 14,
-                  "fontWeight": "700",
-                  "lineHeight": 1.35,
-                  "fill": "$color-surface"
-                },
-                {
-                  "type": "text",
-                  "id": "color-hex-logo-olive",
-                  "content": "#7B7A1B",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 12,
-                  "fontWeight": "400",
-                  "lineHeight": 1.35,
-                  "fill": "$color-surface"
-                },
-                {
-                  "type": "text",
-                  "id": "color-card-logo-olive-role",
-                  "content": "Role · Approved brand-mark color only",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 9,
-                  "fontWeight": "400",
-                  "lineHeight": 1.35,
-                  "fill": "$color-surface"
-                },
-                {
-                  "type": "text",
-                  "id": "color-card-logo-olive-classification",
-                  "content": "Class · observed logo sample",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 9,
-                  "fontWeight": "400",
-                  "lineHeight": 1.35,
-                  "fill": "$color-surface"
-                },
-                {
-                  "type": "text",
-                  "id": "color-card-logo-olive-usage",
-                  "content": "Use · Do not use as product status/control",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 9,
-                  "fontWeight": "400",
-                  "lineHeight": 1.35,
-                  "fill": "$color-surface"
-                }
-              ],
-              "metadata": {
-                "role": "Approved brand-mark color only",
-                "classification": "observed logo sample",
-                "usage": "Do not use as product status/control"
               }
             }
           ]
@@ -6800,7 +6624,7 @@
         {
           "type": "text",
           "id": "visual-board-8-subtitle",
-          "content": "Complete visual records 16 · values remain generated from DESIGN.md",
+          "content": "Complete visual records 14 · values remain generated from DESIGN.md",
           "width": "fill_container",
           "height": "fit_content",
           "textGrowth": "fixed-width",
@@ -8389,218 +8213,6 @@
                   ],
                   "pageLocations": [
                     "not observed"
-                  ]
-                }
-              }
-            },
-            {
-              "type": "frame",
-              "id": "visual-logo-orange-swatch",
-              "name": "logo-orange-swatch",
-              "layout": "vertical",
-              "gap": 8,
-              "padding": 12,
-              "width": 260,
-              "height": 210,
-              "fill": "$color-surface-subtle",
-              "cornerRadius": "$radius-md",
-              "children": [
-                {
-                  "type": "text",
-                  "id": "visual-logo-orange-swatch-title",
-                  "content": "Logo Orange Swatch",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 12,
-                  "fontWeight": "700",
-                  "lineHeight": 1.35,
-                  "fill": "$color-text"
-                },
-                {
-                  "type": "frame",
-                  "id": "visual-logo-orange-swatch-preview",
-                  "name": "logo-orange-swatch preview",
-                  "layout": "vertical",
-                  "gap": 16,
-                  "padding": 10,
-                  "width": "fill_container",
-                  "height": 54,
-                  "fill": "$color-logo-orange",
-                  "cornerRadius": "$radius-none",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "visual-logo-orange-swatch-sample",
-                      "content": "Aa",
-                      "width": "fill_container",
-                      "height": "fit_content",
-                      "textGrowth": "fixed-width",
-                      "fontFamily": "Roboto",
-                      "fontSize": 12,
-                      "fontWeight": "700",
-                      "lineHeight": 1.35,
-                      "fill": "$color-text"
-                    }
-                  ],
-                  "stroke": null,
-                  "strokeWidth": 0,
-                  "alignItems": "center"
-                },
-                {
-                  "type": "text",
-                  "id": "visual-logo-orange-swatch-classification",
-                  "content": "official-artwork-sample",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 10,
-                  "fontWeight": "400",
-                  "lineHeight": 1.35,
-                  "fill": "$color-text-muted"
-                },
-                {
-                  "type": "text",
-                  "id": "visual-logo-orange-swatch-values",
-                  "content": "backgroundColor: colors.logo-orange · size: 24px",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 7,
-                  "fontWeight": "400",
-                  "lineHeight": 1.35,
-                  "fill": "$color-text-muted"
-                }
-              ],
-              "stroke": "$color-border",
-              "strokeWidth": 1,
-              "metadata": {
-                "contractType": "visual",
-                "contractName": "logo-orange-swatch",
-                "classification": "official-artwork-sample",
-                "component": {
-                  "backgroundColor": "{colors.logo-orange}",
-                  "size": "24px"
-                },
-                "evidence": {
-                  "classification": "official-artwork-sample",
-                  "sourceComponents": [
-                    "site-header"
-                  ],
-                  "sourceUrls": [
-                    "https://www.asiaalliedgroup.com"
-                  ],
-                  "pageLocations": [
-                    "home :: site-header"
-                  ]
-                }
-              }
-            },
-            {
-              "type": "frame",
-              "id": "visual-logo-olive-swatch",
-              "name": "logo-olive-swatch",
-              "layout": "vertical",
-              "gap": 8,
-              "padding": 12,
-              "width": 260,
-              "height": 210,
-              "fill": "$color-surface-subtle",
-              "cornerRadius": "$radius-md",
-              "children": [
-                {
-                  "type": "text",
-                  "id": "visual-logo-olive-swatch-title",
-                  "content": "Logo Olive Swatch",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 12,
-                  "fontWeight": "700",
-                  "lineHeight": 1.35,
-                  "fill": "$color-text"
-                },
-                {
-                  "type": "frame",
-                  "id": "visual-logo-olive-swatch-preview",
-                  "name": "logo-olive-swatch preview",
-                  "layout": "vertical",
-                  "gap": 16,
-                  "padding": 10,
-                  "width": "fill_container",
-                  "height": 54,
-                  "fill": "$color-logo-olive",
-                  "cornerRadius": "$radius-none",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "visual-logo-olive-swatch-sample",
-                      "content": "Aa",
-                      "width": "fill_container",
-                      "height": "fit_content",
-                      "textGrowth": "fixed-width",
-                      "fontFamily": "Roboto",
-                      "fontSize": 12,
-                      "fontWeight": "700",
-                      "lineHeight": 1.35,
-                      "fill": "$color-text"
-                    }
-                  ],
-                  "stroke": null,
-                  "strokeWidth": 0,
-                  "alignItems": "center"
-                },
-                {
-                  "type": "text",
-                  "id": "visual-logo-olive-swatch-classification",
-                  "content": "official-artwork-sample",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 10,
-                  "fontWeight": "400",
-                  "lineHeight": 1.35,
-                  "fill": "$color-text-muted"
-                },
-                {
-                  "type": "text",
-                  "id": "visual-logo-olive-swatch-values",
-                  "content": "backgroundColor: colors.logo-olive · size: 24px",
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "textGrowth": "fixed-width",
-                  "fontFamily": "Roboto",
-                  "fontSize": 7,
-                  "fontWeight": "400",
-                  "lineHeight": 1.35,
-                  "fill": "$color-text-muted"
-                }
-              ],
-              "stroke": "$color-border",
-              "strokeWidth": 1,
-              "metadata": {
-                "contractType": "visual",
-                "contractName": "logo-olive-swatch",
-                "classification": "official-artwork-sample",
-                "component": {
-                  "backgroundColor": "{colors.logo-olive}",
-                  "size": "24px"
-                },
-                "evidence": {
-                  "classification": "official-artwork-sample",
-                  "sourceComponents": [
-                    "site-header"
-                  ],
-                  "sourceUrls": [
-                    "https://www.asiaalliedgroup.com"
-                  ],
-                  "pageLocations": [
-                    "home :: site-header"
                   ]
                 }
               }
@@ -24859,7 +24471,7 @@
       },
       "metadata": {
         "behaviorContracts": 31,
-        "visualContracts": 31,
+        "visualContracts": 29,
         "variantStateMappings": 345,
         "mapped": 48,
         "behaviorOnly": 297

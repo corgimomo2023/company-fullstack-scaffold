@@ -9,9 +9,10 @@
 | [`tailwind.theme.json`](tailwind.theme.json) | Tailwind CSS v3 `theme.extend` mapping | Foundations, responsive tokens, font stacks and composite font-size/line-height settings |
 | [`tailwind.preset.cjs`](tailwind.preset.cjs) | Tailwind CSS v3 preset consumers | Generated CommonJS wrapper around the Tailwind contract |
 | [`tokens.json`](tokens.json) | DTCG Format Module 2025.10 consumers | Foundations and typography; component/evidence contracts in a namespaced `$extensions` record |
-| [`components.json`](components.json) | Framework-neutral component tooling | 31 visual records, behavior contracts, evidence and per-variant/state implementation coverage |
+| [`components.json`](components.json) | Framework-neutral component tooling | 29 visual records, behavior contracts, evidence and per-variant/state implementation coverage |
 | [`source-component-specimens.json`](source-component-specimens.json) | pen.dev source-library exporter | 24 source-derived editable specimen recipes, selectors, exact style facts and observed states; live and CSS-reference modes remain distinct |
 | [`asia-allied-design-system.pen`](asia-allied-design-system.pen) | pen.dev canvas | Complete 35-board visual derivative: foundations, contracts, responsive examples, evidence, coverage, guidance, 24 detailed interactive specimens and all 52 public source families; not a normative source |
+| [`vibe-code-common-look-and-feel-colour-foundation.pptx`](../docs/design-system/vibe-code-common-look-and-feel-colour-foundation.pptx) | Stakeholder PowerPoint | Nine-slide, image-referenced presentation of all 18 semantic UI tokens; logo artwork colors are excluded |
 
 ## Why a wrapper is required
 
@@ -49,13 +50,13 @@ The cover metadata records exporter version `5`, the audit date, validated pen.d
 The catalogue contains **35 separated boards** arranged by category:
 
 1. cover, manifest and governance;
-2. all 20 color tokens with semantic role, evidence classification and usage boundary;
+2. all 18 semantic UI color tokens with role, evidence classification and usage boundary; logo artwork colors are excluded;
 3. eight normative contrast pairs and color-accessibility rules;
 4. all 10 typography roles including size, weight, line height and tracking;
 5. English/CJK/long-copy localization specimens and font governance;
 6. all 10 spacing tokens, four radii, six breakpoints, five containers and layout rules;
 7. two elevations, five motion tokens and shape rules;
-8. two visual-contract boards covering all 31 generated visual records;
+8. two visual-contract boards covering all 29 generated visual records;
 9. four behavior-contract boards covering all 31 components without truncating variants, states or requirements;
 10. the complete 345-cell variant/state implementation matrix;
 11. the complete 101-item requirement register plus icons, imagery and licensing boundaries;

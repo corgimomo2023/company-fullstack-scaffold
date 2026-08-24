@@ -1069,48 +1069,6 @@
       "computed_style_evidence_ref": null,
       "observation_note": "Exact raw value/declaration or media query observed; the semantic token name and role are scaffold normalization."
     },
-    "colors.logo-orange": {
-      "value": "#F7941D",
-      "classification": "normalized-scaffold-token",
-      "source_stylesheets": [
-        "https://www.asiaalliedgroup.com/assets/css/print.css",
-        "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
-      ],
-      "css_declarations": [],
-      "live_page_locations": [],
-      "primary_evidence_url": null,
-      "cross_check_urls": [],
-      "viewport_scope": [],
-      "state_scope": [
-        "not-observed"
-      ],
-      "evidence_methods": [
-        "scaffold-normalization; exact source value not observed"
-      ],
-      "computed_style_evidence_ref": null,
-      "observation_note": "Normalized scaffold token; exact source/live/computed observation not found."
-    },
-    "colors.logo-olive": {
-      "value": "#7B7A1B",
-      "classification": "normalized-scaffold-token",
-      "source_stylesheets": [
-        "https://www.asiaalliedgroup.com/assets/css/print.css",
-        "https://www.asiaalliedgroup.com/assets/css/projectbase.css"
-      ],
-      "css_declarations": [],
-      "live_page_locations": [],
-      "primary_evidence_url": null,
-      "cross_check_urls": [],
-      "viewport_scope": [],
-      "state_scope": [
-        "not-observed"
-      ],
-      "evidence_methods": [
-        "scaffold-normalization; exact source value not observed"
-      ],
-      "computed_style_evidence_ref": null,
-      "observation_note": "Normalized scaffold token; exact source/live/computed observation not found."
-    },
     "typography.display-lg": {
       "value": {
         "fontFamily": "Pragati Narrow",

@@ -21,8 +21,7 @@ colors:
   focus: "#006A63"
   danger: "#DC3545"
   success: "#006A63"
-  logo-orange: "#F7941D"
-  logo-olive: "#7B7A1B"
+
 typography:
   display-lg:
     fontFamily: Pragati Narrow
@@ -316,8 +315,7 @@ x-visual-component-evidence:
   accent-surface-large: {classification: accessibility-correction, sourceComponents: ["tag-filter", "page-title"], sourceUrls: ["https://www.asiaalliedgroup.com/blog"], pageLocations: ["blog :: tag-filter"]}
   divider: {classification: observed-css-adaptation, sourceComponents: ["listing-table", "image-card"], sourceUrls: ["https://www.asiaalliedgroup.com/assets/css/projectbase.css"], pageLocations: ["not observed"]}
   focus-indicator: {sourceBehavior: text-input}
-  logo-orange-swatch: {classification: official-artwork-sample, sourceComponents: ["site-header"], sourceUrls: ["https://www.asiaalliedgroup.com"], pageLocations: ["home :: site-header"]}
-  logo-olive-swatch: {classification: official-artwork-sample, sourceComponents: ["site-header"], sourceUrls: ["https://www.asiaalliedgroup.com"], pageLocations: ["home :: site-header"]}
+
 components:
   button-primary:
     backgroundColor: "{colors.primary}"
@@ -484,12 +482,7 @@ components:
     backgroundColor: "{colors.focus}"
     textColor: "{colors.surface}"
     rounded: "{rounded.md}"
-  logo-orange-swatch:
-    backgroundColor: "{colors.logo-orange}"
-    size: 24px
-  logo-olive-swatch:
-    backgroundColor: "{colors.logo-olive}"
-    size: 24px
+
 ---
 
 # Asia Allied Corporate Digital Design System
@@ -540,7 +533,7 @@ Observed state values retained as evidence but not promoted to independent norma
 - placeholder/card-image grey `#AAAAAA`, which is an implementation fallback rather than a product surface;
 - pagination text `#707070` and light dividers `#EBEBEB`.
 
-The current main logo PNG was independently sampled: dominant opaque pixels are dark `#231F20`, orange `#F7941D` and olive `#7B7A1B`. Keep `logo-orange` and `logo-olive` inside approved brand marks; do not repurpose them for product statuses or controls. The tagline image uses closely rendered/rasterized `#F49233` and `#7C7835`, which must not replace the canonical main-logo values.
+Logo artwork colors are deliberately excluded from the Common Look & Feel production palette. They remain owned by approved logo assets and must not be copied into UI tokens, status colors, controls or charts. Product implementations consume the approved logo file rather than recreating its sampled pixels.
 
 ### Contrast contract
 
