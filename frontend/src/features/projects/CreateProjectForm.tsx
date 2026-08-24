@@ -13,6 +13,6 @@ export function CreateProjectForm({onSubmit,busy,serverError}:Props) {
   <Field name="name" label="Project name" error={errors.name?.message} inputProps={{...register('name'),autoComplete:'off'}}/>
   <Field multiline name="description" label="Description" error={errors.description?.message} inputProps={{...register('description'),rows:4}}/>
   {serverError&&<div className="error-banner" role="alert">{serverError}</div>}
-  <Button type="submit" disabled={busy}>{busy?'Creating...':'Create project'}</Button>
+  <Button type="submit" pending={busy} pendingLabel="Creating project">Create project</Button>
  </form>
 }

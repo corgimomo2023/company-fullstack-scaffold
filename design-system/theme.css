@@ -5,6 +5,7 @@
   --color-accent: #e6762d;
   --color-accent-accessible: #b15315;
   --color-accent-selected: #733208;
+  --color-text-on-accent: #001c19;
   --color-text: #333333;
   --color-text-muted: #6c757d;
   --color-surface: #ffffff;
@@ -18,16 +19,16 @@
   --color-success: #006a63;
   --color-logo-orange: #f7941d;
   --color-logo-olive: #7b7a1b;
-  --font-display-lg: "Pragati Narrow";
-  --font-heading-xl: "Pragati Narrow";
-  --font-heading-lg: "Pragati Narrow";
-  --font-heading-md: "Roboto";
-  --font-heading-sm: "Roboto";
-  --font-body-lg: "Roboto";
-  --font-body-md: "Roboto";
-  --font-body-sm: "Roboto";
-  --font-label: "Roboto";
-  --font-caption: "Roboto";
+  --font-display-lg: "Pragati Narrow", "Noto Sans TC", "Microsoft JhengHei", "Arial Narrow", sans-serif;
+  --font-heading-xl: "Pragati Narrow", "Noto Sans TC", "Microsoft JhengHei", "Arial Narrow", sans-serif;
+  --font-heading-lg: "Pragati Narrow", "Noto Sans TC", "Microsoft JhengHei", "Arial Narrow", sans-serif;
+  --font-heading-md: "Roboto", "Noto Sans TC", "Microsoft JhengHei", "Arial", sans-serif;
+  --font-heading-sm: "Roboto", "Noto Sans TC", "Microsoft JhengHei", "Arial", sans-serif;
+  --font-body-lg: "Roboto", "Noto Sans TC", "Microsoft JhengHei", "Arial", sans-serif;
+  --font-body-md: "Roboto", "Noto Sans TC", "Microsoft JhengHei", "Arial", sans-serif;
+  --font-body-sm: "Roboto", "Noto Sans TC", "Microsoft JhengHei", "Arial", sans-serif;
+  --font-label: "Roboto", "Noto Sans TC", "Microsoft JhengHei", "Arial", sans-serif;
+  --font-caption: "Roboto", "Noto Sans TC", "Microsoft JhengHei", "Arial", sans-serif;
   --text-display-lg: 3.125rem;
   --text-heading-xl: 2.5rem;
   --text-heading-lg: 2rem;
@@ -72,7 +73,7 @@
   --spacing-3xl: 48px;
   --spacing-4xl: 64px;
   --spacing-5xl: 80px;
-  /* Composite typography line heights retained by export wrapper. */
+  /* Composite and extended tokens retained by export wrapper. */
   --leading-display-lg: 1;
   --leading-heading-xl: 1.1;
   --leading-heading-lg: 1.2;
@@ -83,4 +84,22 @@
   --leading-body-sm: 1.45;
   --leading-label: 1.25;
   --leading-caption: 1.35;
+  --breakpoint-compact: 370px;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1600px;
+  --container-sm: 540px;
+  --container-md: 720px;
+  --container-lg: 960px;
+  --container-xl: 1140px;
+  --container-2xl: 1570px;
+  --shadow-none: none;
+  --shadow-low: 0 4px 12px rgba(0, 0, 0, 0.10);
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-brand: 600ms;
+  --ease-standard: ease-out;
+  --ease-brand: cubic-bezier(0.23, 1, 0.32, 1);
 }

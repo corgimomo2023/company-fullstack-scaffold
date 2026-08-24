@@ -1,4 +1,5 @@
-{
+// Generated from DESIGN.md. Do not edit.
+module.exports = {
   "theme": {
     "extend": {
       "colors": {
