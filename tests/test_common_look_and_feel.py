@@ -216,8 +216,15 @@ def test_color_skill_is_narrow_and_preserves_existing_project_style() -> None:
         "copy both color-only files into the target project",
         "merge `theme.extend.colors`",
         "only `--color-*` declarations",
+        "existingProjectColors",
+        "preserve every existing `theme.extend.colors` entry",
+        "shared palette wins only when the same semantic key conflicts",
     ):
         assert phrase in skill
+
+    assert skill.index("...existingProjectColors") < skill.index(
+        "...palette.theme.extend.colors"
+    )
 
 
 def test_copyable_tailwind_json_contains_only_normative_colors() -> None:

@@ -109,6 +109,13 @@ Conceptual merge:
 ```js
 const palette = require('./design-system/colors/tailwind.colors.json')
 
+// Copy every current theme.extend.colors entry here unchanged before adding
+// the shared palette. This object represents the target project's baseline.
+const existingProjectColors = {
+  brandLegacy: '#123456',
+  partnerSpecific: '#abcdef',
+}
+
 module.exports = {
   // preserve existing config
   theme: {
@@ -116,7 +123,7 @@ module.exports = {
     extend: {
       // preserve existing extend keys
       colors: {
-        // preserve deliberate project-specific semantic colors when approved
+        ...existingProjectColors,
         ...palette.theme.extend.colors,
       },
     },
@@ -124,7 +131,7 @@ module.exports = {
 }
 ```
 
-If an existing semantic name conflicts, document its old value and intended mapping before replacing it. Do not use a blind full-object overwrite.
+The example's `existingProjectColors` is a placeholder: preserve every existing `theme.extend.colors` entry from the target config, not only the two sample entries. By default the shared palette wins only when the same semantic key conflicts, so the requested Common Look & Feel role is actually applied while unrelated project-specific colors remain available. Before replacing a conflicting semantic key, document its old value and all current usages. An explicitly approved project override may be applied after the shared palette, but must be recorded as a deliberate exception. Do not use a blind full-object overwrite.
 
 **Tailwind CSS v4**
 
